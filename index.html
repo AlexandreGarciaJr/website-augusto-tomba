@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Augusto Tomba</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;800&family=Spectral:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- filtro duotone: remapeia qualquer imagem para a paleta exata do site -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden;pointer-events:none;">
+  <filter id="duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values="0.33 0.33 0.33 0 0  0.33 0.33 0.33 0 0  0.33 0.33 0.33 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues="0.169 0.608 0.949"/>
+      <feFuncG type="table" tableValues="0.157 0.569 0.937"/>
+      <feFuncB type="table" tableValues="0.145 0.537 0.914"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+<div class="stage-badge">esboço · ui/ux · v1</div>
+
+<header class="site-header">
+  <a href="index.html" class="wordmark">Augusto Tomba</a>
+  <button class="menu-trigger" aria-expanded="false" aria-label="Abrir menu">
+    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+  </button>
+</header>
+
+<nav class="menu-overlay" aria-hidden="true">
+  <ul class="menu-list">
+    <li><a href="index.html" class="current">Início</a></li>
+    <li><a href="livro.html">Livro</a></li>
+    <li><a href="quadros.html">Quadros</a></li>
+    <li><a href="index.html#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-image-band">
+      <div class="hero-parallax" data-parallax>
+        <img class="hero-photo" src="./captura.jpg" alt="" loading="eager" decoding="async">
+      </div>
+      <div class="hero-vignette" aria-hidden="true"></div>
+      <div class="hero-image-content">
+        <h1 class="hero-name">Augusto Tomba</h1>
+        <p class="hero-tagline">[ palavra · palavra · palavra ]</p>
+      </div>
+      <span class="hero-bg-label">[ exemplo de direção visual —<br>substituir pela imagem/vídeo final ]</span>
+    </div>
+
+    <div class="hero-intro">
+      <div class="scroll-cue" aria-hidden="true">
+        <span class="line"></span>
+        <span>scroll</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="ma"></div></div>
+
+  <!-- BIOGRAFIA -->
+  <section class="section">
+    <div class="wrap">
+      <span class="eyebrow">biografia</span>
+      <div class="bio-grid">
+        <div class="ph ratio-portrait reveal-left">
+          <span class="ph-label">[ foto do artista ]</span>
+        </div>
+        <div class="reveal-right delay">
+          <h2 class="section-title">Sobre Augusto</h2>
+          <p class="lede" style="max-width:60ch;">
+            [ Texto provisório — resumo de 3 a 4 frases sobre a trajetória do artista,
+            formação, influências e atuação como escritor e pintor. Conteúdo final
+            a ser fornecido. ]
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="ma"></div></div>
+
+  <!-- LITERATURA -->
+  <section class="section tint">
+    <div class="wrap">
+      <span class="eyebrow">literatura</span>
+      <div class="split reverse">
+        <div class="reveal-left">
+          <h2 class="section-title">[ Título do livro ]</h2>
+          <p class="lede">
+            [ Breve descrição provisória da obra literária — uma ou duas frases que
+            despertem interesse, com convite para conhecer o livro na íntegra. ]
+          </p>
+          <a class="cta" href="livro.html">conhecer o livro →</a>
+        </div>
+        <div class="ph ratio-book reveal-right delay">
+          <span class="ph-label">[ capa do livro ]</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="ma"></div></div>
+
+  <!-- QUADROS -->
+  <section class="section">
+    <div class="wrap">
+      <span class="eyebrow">obras</span>
+      <h2 class="section-title">Quadros</h2>
+      <p class="lede">
+        [ Breve introdução provisória à produção pictórica do artista. ]
+      </p>
+
+      <div class="grid-quadros stagger">
+        <article class="quadro-card">
+          <div class="ph ratio-square"><span class="ph-label">[ obra 01 ]</span></div>
+          <h3>[ Título da obra ]</h3>
+          <p>[ Técnica, ano — breve nota de uma linha. ]</p>
+          <a class="cta" href="quadro.html">ver obra →</a>
+        </article>
+        <article class="quadro-card">
+          <div class="ph ratio-square"><span class="ph-label">[ obra 02 ]</span></div>
+          <h3>[ Título da obra ]</h3>
+          <p>[ Técnica, ano — breve nota de uma linha. ]</p>
+          <a class="cta" href="quadro.html">ver obra →</a>
+        </article>
+        <article class="quadro-card">
+          <div class="ph ratio-square"><span class="ph-label">[ obra 03 ]</span></div>
+          <h3>[ Título da obra ]</h3>
+          <p>[ Técnica, ano — breve nota de uma linha. ]</p>
+          <a class="cta" href="quadro.html">ver obra →</a>
+        </article>
+      </div>
+
+      <a class="cta" href="quadros.html" style="margin-top:3rem;">ver todas as obras →</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="contato">
+  <div class="wrap">
+    <div class="footer-grid stagger">
+      <div class="footer-col">
+        <h4>navegação</h4>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="livro.html">Livro</a></li>
+          <li><a href="quadros.html">Quadros</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>conecte-se</h4>
+        <ul>
+          <li><a href="#" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="#" target="_blank" rel="noopener">Substack</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>imprensa</h4>
+        <ul>
+          <li><a href="#">Mídia kit (PDF) ↓</a></li>
+          <li><a href="mailto:contato@augustotomba.com">contato@augustotomba.com</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>receber novidades</h4>
+        <form class="newsletter-form">
+          <input type="email" placeholder="seu e-mail" required>
+          <button type="submit" class="btn">Enviar</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Augusto Tomba</span>
+      <span>protótipo de layout — conteúdo e imagens provisórios</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
