@@ -71,7 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- parallax do hero ----------
      invertido em relação à rolagem: a imagem desce um pouco enquanto a
      página sobe, então ela assenta rápido perto do limite e fica quase
-     parada em relação aos olhos — mais sensação de profundidade. */
+     parada em relação aos olhos — mais sensação de profundidade.*/
+     
   const parallaxEl = document.querySelector('[data-parallax]');
   if (parallaxEl && !reduceMotion) {
     const band = parallaxEl.parentElement;

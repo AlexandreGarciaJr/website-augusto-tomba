@@ -1,5 +1,5 @@
 ## Site em desenvolvimento...
 
-### visualização: 
+### visualização do protótipo: 
 
 https://alexandregarciajr.github.io/website-augusto-tomba
