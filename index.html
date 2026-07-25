@@ -1,47 +1,51 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Augusto Tomba</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;800&family=Spectral:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Augusto Tomba</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;800&family=Spectral:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-<!-- filtro duotone: remapeia qualquer imagem para a paleta exata do site -->
-<svg width="0" height="0" style="position:absolute;overflow:hidden;pointer-events:none;">
-  <filter id="duotone" color-interpolation-filters="sRGB">
-    <feColorMatrix type="matrix" values="0.33 0.33 0.33 0 0  0.33 0.33 0.33 0 0  0.33 0.33 0.33 0 0  0 0 0 1 0"/>
-    <feComponentTransfer>
-      <feFuncR type="table" tableValues="0.169 0.608 0.949"/>
-      <feFuncG type="table" tableValues="0.157 0.569 0.937"/>
-      <feFuncB type="table" tableValues="0.145 0.537 0.914"/>
-    </feComponentTransfer>
-  </filter>
-</svg>
+  <!-- filtro duotone: remapeia qualquer imagem para a paleta exata do site -->
+  <svg width="0" height="0" style="position:absolute;overflow:hidden;pointer-events:none;">
+    <filter id="duotone" color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix" values="0.33 0.33 0.33 0 0  0.33 0.33 0.33 0 0  0.33 0.33 0.33 0 0  0 0 0 1 0" />
+      <feComponentTransfer>
+        <feFuncR type="table" tableValues="0.169 0.608 0.949" />
+        <feFuncG type="table" tableValues="0.157 0.569 0.937" />
+        <feFuncB type="table" tableValues="0.145 0.537 0.914" />
+      </feComponentTransfer>
+    </filter>
+  </svg>
 
-<div class="stage-badge">esboço · ui/ux · v1</div>
+  <div class="stage-badge">esboço · ui/ux · v1</div>
 
-<header class="site-header">
-  <a href="index.html" class="wordmark">Augusto Tomba</a>
-  <button class="menu-trigger" aria-expanded="false" aria-label="Abrir menu">
-    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-  </button>
-</header>
+  <header class="site-header">
+    <a href="index.html" class="wordmark">Augusto Tomba</a>
+    <button class="menu-trigger" aria-expanded="false" aria-label="Abrir menu">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+  </header>
 
-<nav class="menu-overlay" aria-hidden="true">
-  <ul class="menu-list">
-    <li><a href="index.html" class="current">Início</a></li>
-    <li><a href="livro.html">Livro</a></li>
-    <li><a href="quadros.html">Quadros</a></li>
-    <li><a href="index.html#contato">Contato</a></li>
-  </ul>
-</nav>
+  <nav class="menu-overlay" aria-hidden="true">
+    <ul class="menu-list">
+      <li><a href="index.html" class="current">Início</a></li>
+      <li><a href="livro.html">Livro</a></li>
+      <li><a href="quadros.html">Quadros</a></li>
+      <li><a href="index.html#contato">Contato</a></li>
+    </ul>
+  </nav>
 
-<main>
+  <main>
 
   <!-- HERO -->
   <section class="hero">
@@ -65,171 +69,242 @@
     </div>
   </section>
 
-  <div class="wrap"><div class="ma"></div></div>
-
-  <!-- BIOGRAFIA -->
-  <section class="section">
     <div class="wrap">
-      <span class="eyebrow">sobre</span>
-      <div class="bio-grid">
-        <div class="ph ratio-portrait reveal-left">
-          <span class="ph-label">[ foto do artista ]</span>
-        </div>
-        <div class="reveal-right delay">
-          <h2 class="section-title">Augusto Tomba</h2>
-          <p class="lede">Augusto Tomba vive em São Paulo. Pinta com técnicas históricas, sob luz de vela — um ofício que aprendeu a tratar com a mesma disciplina de quem observou, um dia, um cristal sob o microscópio. Escreve ficções onde essa mesma precisão se volta para o improvável.</p>
-        </div>
-      </div>
-
-      <!-- Declaração de artista -->
-      <div class="declaracao reveal">
-        <span class="eyebrow">declaração de artista</span>
-        <blockquote class="declaracao-bloco">
-          <p class="declaracao-abertura">Antes do traço ou da palavra, a dissolução.<br>
-          Esboçar o rio exige a humildade da pele molhada.</p>
-          <p>Navego entre a literatura e as artes pictóricas. Bebi de fontes diversas e distantes, da iconografia bizantina à ilustração científica, da caligrafia oriental ao surrealismo.</p>
-          <p>Na escrita, cultivo um realismo do absurdo.</p>
-          <p>Dessa síntese, busco equilíbrio na memória e entendimento no improvável.</p>
-        </blockquote>
-      </div>
-    </div>
-  </section>
-
-  <div class="wrap"><div class="ma"></div></div>
-
-  <!-- LITERATURA -->
-  <section class="section tint">
-    <div class="wrap">
-      <span class="eyebrow">literatura</span>
-      <div class="split reverse">
-        <div class="reveal-left">
-          <h2 class="section-title">[ Título do livro ]</h2>
-          <p class="lede">
-            [ Breve descrição provisória da obra literária — uma ou duas frases que
-            despertem interesse, com convite para conhecer o livro na íntegra. ]
-          </p>
-          <a class="cta" href="livro.html">conhecer o livro →</a>
-        </div>
-        <div class="ph ratio-book reveal-right delay">
-          <span class="ph-label">[ capa do livro ]</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="wrap"><div class="ma"></div></div>
-
-  <!-- QUADROS / COLEÇÕES -->
-  <section class="section section-colecoes">
-    <div class="wrap">
-      <span class="eyebrow">obras</span>
-      <h2 class="section-title reveal">Quadros</h2>
+      <div class="ma"></div>
     </div>
 
-    <!-- Coleção 01 -->
-    <div class="colecao">
+    <!-- BIOGRAFIA -->
+    <section class="section">
       <div class="wrap">
-        <div class="colecao-header reveal">
-          <div class="colecao-header-left">
-            <span class="colecao-num">01</span>
-            <h3 class="colecao-title">Primitivo Onipresente</h3>
-            <p class="colecao-desc">
-              Esta coleção reúne desenhos a carvão sobre papel de aquarela. O contraste entre claro e escuro, herdado dos Antigos Mestres da arte ocidental, encontra aqui o silêncio da Arte Oriental — presente na atenção aos temas que remetem ao tempo dos ancestrais.
+        <span class="eyebrow">sobre</span>
+        <div class="bio-grid">
+          <div class="ph ratio-portrait reveal-left">
+            <span class="ph-label">[ foto do artista ]</span>
+          </div>
+          <div class="reveal-right delay">
+            <h2 class="section-title">Augusto Tomba</h2>
+            <p class="lede">
+              [ Texto provisório — resumo de 3 a 4 frases sobre a trajetória do artista,
+              formação, influências e atuação como escritor e pintor. Conteúdo final
+              a ser fornecido. ]
             </p>
           </div>
-          <div class="colecao-header-right">
-            <p class="colecao-texto">
-              Há objetos que não envelhecem. Persistem sobre a mesa, como se o tempo fosse apenas uma luz que muda de ângulo.<br><br>
-              O contraste entre claro e escuro, herdado dos Antigos Mestres, encontra aqui o silêncio dos temas: o figo partido, o anis-estrelado, o gravatá, a pinha já aberta, as flores miúdas sobre a madeira antiga. Em algumas obras, o papel já traz uma primeira pele — laca indiana, escura e silenciosa, anterior ao gesto.<br><br>
-              A mesa que sustenta cada composição é bicentenária. Carrega, ela também, o peso do que não foi dito; os temas, a delicadeza do que teima em existir.<br><br>
-              O primitivo não é o que ficou para trás. É o que permanece sob a superfície das coisas ordinárias — visível a quem se detém.
+        </div>
+
+        <!-- Declaração de artista -->
+        <div class="declaracao reveal">
+          <span class="eyebrow">declaração de artista</span>
+          <blockquote class="declaracao-bloco">
+            <p class="declaracao-abertura">Antes do traço ou da palavra, a dissolução.<br>
+              Esboçar o rio exige a humildade da pele molhada.</p>
+            <p>Navego entre a literatura e as artes pictóricas. Bebi de fontes diversas e distantes, da iconografia
+              bizantina à ilustração científica, da caligrafia oriental ao surrealismo.</p>
+            <p>Na escrita, cultivo um realismo do absurdo.</p>
+            <p>Dessa síntese, busco equilíbrio na memória e entendimento no improvável.</p>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="ma"></div>
+    </div>
+
+    <!-- LITERATURA -->
+    <section class="section tint">
+      <div class="wrap">
+        <span class="eyebrow">literatura</span>
+        <div class="split reverse">
+          <div class="reveal-left">
+            <h2 class="section-title">[ Título do livro ]</h2>
+            <p class="lede">
+              [ Breve descrição provisória da obra literária — uma ou duas frases que
+              despertem interesse, com convite para conhecer o livro na íntegra. ]
             </p>
-            <p class="colecao-meta">Técnica · Carvão sobre papel de aquarela 300 g/m² · 2026</p>
+            <a class="cta" href="livro.html">conhecer o livro →</a>
+          </div>
+          <div class="ph ratio-book reveal-right delay">
+            <span class="ph-label">[ capa do livro ]</span>
           </div>
         </div>
       </div>
+    </section>
 
-      <div class="mosaico reveal">
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">01</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">02</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">03</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">04</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">05</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">06</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">07</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">08</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">09</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">10</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">11</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">12</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">13</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">14</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">15</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">16</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">17</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">18</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">19</span></div></a>
-        <a href="quadro.html" class="mosaico-item"><div class="ph"><span class="ph-label">20</span></div></a>
+    <div class="wrap">
+      <div class="ma"></div>
+    </div>
+
+    <!-- QUADROS / COLEÇÕES -->
+    <section class="section-colecoes">
+      <div class="wrap">
+        <span class="eyebrow">Quadros</span>
+        <h2 class="section-title reveal">Coleções</h2>
+      </div>
+
+      <!-- Coleção 01 -->
+      <div class="colecao">
+        <div class="wrap">
+
+          <!-- Cabeçalho: número, título, descrição curta -->
+          <div class="colecao-header reveal">
+            <div class="colecao-header-left">
+              <span class="colecao-num">01</span>
+              <h3 class="colecao-title">Primitivo Onipresente</h3>
+              <p class="colecao-desc">
+                Esta coleção reúne desenhos a carvão sobre papel de aquarela. O contraste entre claro e escuro, herdado
+                dos Antigos Mestres da arte ocidental, encontra aqui o silêncio da Arte Oriental — presente na atenção
+                aos temas que remetem ao tempo dos ancestrais.
+              </p>
+            </div>
+          </div>
+
+          <!-- Introdução literária — antes do mosaico -->
+          <div class="colecao-intro reveal">
+            <p class="colecao-intro-abertura">Há objetos que não envelhecem. Persistem sobre a mesa, como se o tempo
+              fosse apenas uma luz que muda de ângulo.</p>
+            <div class="colecao-intro-corpo">
+              <p>O contraste entre claro e escuro, herdado dos Antigos Mestres, encontra aqui o silêncio dos temas: o
+                figo partido, o anis-estrelado, o gravatá, a pinha já aberta, as flores miúdas sobre a madeira antiga.
+                Em algumas obras, o papel já traz uma primeira pele — laca indiana, escura e silenciosa, anterior ao
+                gesto.</p>
+              <p>A mesa que sustenta cada composição é bicentenária. Carrega, ela também, o peso do que não foi dito; os
+                temas, a delicadeza do que teima em existir.</p>
+              <p>O primitivo não é o que ficou para trás. É o que permanece sob a superfície das coisas ordinárias —
+                visível a quem se detém.</p>
+              <p class="colecao-meta">Técnica · Carvão sobre papel de aquarela 300 g/m² · 2026</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mosaico reveal">
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">01</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">02</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">03</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">04</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">05</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">06</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">07</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">08</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">09</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">10</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">11</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">12</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">13</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">14</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">15</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">16</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">17</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">18</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">19</span></div>
+          </a>
+          <a href="quadro.html" class="mosaico-item">
+            <div class="ph"><span class="ph-label">20</span></div>
+          </a>
+        </div>
+
+        <div class="wrap">
+          <a class="cta" href="quadros.html">ver toda a coleção →</a>
+        </div>
       </div>
 
       <div class="wrap">
-        <a class="cta" href="quadros.html" style="margin-top:2.4rem; display:inline-flex;">ver toda a coleção →</a>
+        <div class="ma"></div>
+      </div>
+
+      <!-- Placeholder coleção futura -->
+      <div class="section">
+        <div class="wrap">
+          <div class="colecao-placeholder reveal">
+            <span class="colecao-num">02</span>
+            <h3 class="colecao-title" style="color:var(--text-faint); font-style:italic;">[ Próxima coleção ]</h3>
+            <p class="colecao-desc" style="color:var(--text-faint);">[ Título, descrição e obras a definir. ]</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="site-footer" id="contato">
+    <div class="wrap">
+      <div class="footer-grid stagger">
+        <div class="footer-col">
+          <h4>navegação</h4>
+          <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="livro.html">Livro</a></li>
+            <li><a href="quadros.html">Quadros</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>conecte-se</h4>
+          <ul>
+            <li><a href="#" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="#" target="_blank" rel="noopener">Substack</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>imprensa</h4>
+          <ul>
+            <li><a href="#">Mídia kit (PDF) ↓</a></li>
+            <li><a href="mailto:contato@augustotomba.com">contato@augustotomba.com</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>receber novidades</h4>
+          <form class="newsletter-form">
+            <input type="email" placeholder="seu e-mail" required>
+            <button type="submit" class="btn">Enviar</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Augusto Tomba</span>
+        <span>protótipo de layout — conteúdo e imagens provisórios</span>
       </div>
     </div>
+  </footer>
 
-    <!-- Placeholder coleção futura -->
-    <div class="wrap" style="margin-top:var(--section-pad);">
-      <div class="colecao-placeholder reveal">
-        <span class="colecao-num">02</span>
-        <h3 class="colecao-title" style="color:var(--text-faint); font-style:italic;">[ Próxima coleção ]</h3>
-        <p class="colecao-desc" style="color:var(--text-faint);">[ Título, descrição e obras a definir. ]</p>
-      </div>
-    </div>
-
-  </section>
-
-</main>
-
-<footer class="site-footer" id="contato">
-  <div class="wrap">
-    <div class="footer-grid stagger">
-      <div class="footer-col">
-        <h4>navegação</h4>
-        <ul>
-          <li><a href="index.html">Início</a></li>
-          <li><a href="livro.html">Livro</a></li>
-          <li><a href="quadros.html">Quadros</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>conecte-se</h4>
-        <ul>
-          <li><a href="#" target="_blank" rel="noopener">Instagram</a></li>
-          <li><a href="#" target="_blank" rel="noopener">Substack</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>imprensa</h4>
-        <ul>
-          <li><a href="#">Mídia kit (PDF) ↓</a></li>
-          <li><a href="mailto:contato@augustotomba.com">contato@augustotomba.com</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>receber novidades</h4>
-        <form class="newsletter-form">
-          <input type="email" placeholder="seu e-mail" required>
-          <button type="submit" class="btn">Enviar</button>
-        </form>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 Augusto Tomba</span>
-      <span>protótipo de layout — conteúdo e imagens provisórios</span>
-    </div>
-  </div>
-</footer>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>

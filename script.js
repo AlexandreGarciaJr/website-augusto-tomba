@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* revelação suave (linha "ma" + blocos) */
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const revealEls = document.querySelectorAll('.ma, .reveal, .reveal-left, .reveal-right, .stagger');
+  const revealEls = document.querySelectorAll('.ma, .reveal, .reveal-left, .reveal-right, .stagger, .ma2');
 
   if (reduceMotion) {
     revealEls.forEach(el => el.classList.add('is-visible'));
