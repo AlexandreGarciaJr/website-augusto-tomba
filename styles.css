@@ -550,7 +550,6 @@ img{ max-width:100%; display:block; }
   gap:clamp(2.5rem, 6vw, 5rem);
   align-items:start;
   padding-bottom:clamp(2.4rem, 6vw, 4rem);
-  border-bottom:1px solid var(--line-soft);
 }
 @media (max-width:768px){
   .colecao-intro{ grid-template-columns:1fr; }
