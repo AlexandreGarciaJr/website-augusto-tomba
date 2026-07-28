@@ -15,6 +15,9 @@
 
 <body>
 
+  <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+  <div class="page-transition" aria-hidden="true"></div>
+
   <!-- filtro duotone: remapeia qualquer imagem para a paleta exata do site -->
   <svg width="0" height="0" style="position:absolute;overflow:hidden;pointer-events:none;">
     <filter id="duotone" color-interpolation-filters="sRGB">
@@ -45,7 +48,7 @@
     </ul>
   </nav>
 
-  <main>
+  <main id="main-content">
 
   <!-- HERO -->
   <section class="hero">
@@ -136,10 +139,14 @@
       <div class="wrap">
         <span class="eyebrow">Quadros</span>
         <h2 class="section-title reveal">Coleções</h2>
+        <nav class="colecoes-index reveal" aria-label="Navegar entre coleções">
+          <a href="#colecao-01">01 · Primitivo Onipresente</a>
+          <a href="#colecao-02" aria-disabled="true">02 · Próxima coleção</a>
+        </nav>
       </div>
 
       <!-- Coleção 01 -->
-      <div class="colecao">
+      <div class="colecao" id="colecao-01">
         <div class="wrap">
 
           <!-- Cabeçalho: número, título, descrição curta -->
@@ -175,67 +182,90 @@
         </div>
 
         <div class="mosaico reveal">
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-01" data-lightbox data-num="01" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">01</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-02" data-lightbox data-num="02" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">02</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-03" data-lightbox data-num="03" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">03</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-04" data-lightbox data-num="04" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">04</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-05" data-lightbox data-num="05" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">05</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-06" data-lightbox data-num="06" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">06</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-07" data-lightbox data-num="07" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">07</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-08" data-lightbox data-num="08" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">08</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-09" data-lightbox data-num="09" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">09</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-10" data-lightbox data-num="10" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">10</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-11" data-lightbox data-num="11" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">11</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-12" data-lightbox data-num="12" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">12</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-13" data-lightbox data-num="13" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">13</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-14" data-lightbox data-num="14" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">14</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-15" data-lightbox data-num="15" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">15</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-16" data-lightbox data-num="16" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">16</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-17" data-lightbox data-num="17" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">17</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-18" data-lightbox data-num="18" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">18</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-19" data-lightbox data-num="19" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">19</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item">
+          <a href="quadro.html" class="mosaico-item" id="obra-20" data-lightbox data-num="20" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
             <div class="ph"><span class="ph-label">20</span></div>
           </a>
         </div>
+
+        <nav class="mosaico-index" aria-label="Índice de obras">
+          <a href="#obra-01">01</a>
+          <a href="#obra-02">02</a>
+          <a href="#obra-03">03</a>
+          <a href="#obra-04">04</a>
+          <a href="#obra-05">05</a>
+          <a href="#obra-06">06</a>
+          <a href="#obra-07">07</a>
+          <a href="#obra-08">08</a>
+          <a href="#obra-09">09</a>
+          <a href="#obra-10">10</a>
+          <a href="#obra-11">11</a>
+          <a href="#obra-12">12</a>
+          <a href="#obra-13">13</a>
+          <a href="#obra-14">14</a>
+          <a href="#obra-15">15</a>
+          <a href="#obra-16">16</a>
+          <a href="#obra-17">17</a>
+          <a href="#obra-18">18</a>
+          <a href="#obra-19">19</a>
+          <a href="#obra-20">20</a>
+        </nav>
 
         <div class="wrap">
           <a class="cta" href="quadros.html">ver toda a coleção →</a>
@@ -247,7 +277,7 @@
       </div>
 
       <!-- Placeholder coleção futura -->
-      <div class="section">
+      <div class="section" id="colecao-02">
         <div class="wrap">
           <div class="colecao-placeholder reveal">
             <span class="colecao-num">02</span>
@@ -300,6 +330,25 @@
       </div>
     </div>
   </footer>
+
+  <!-- Lightbox de obra (preview rápida ao clicar num item do mosaico) -->
+  <div class="lightbox" aria-hidden="true">
+    <div class="lightbox-backdrop" data-lightbox-close></div>
+    <div class="lightbox-panel" role="dialog" aria-modal="true" aria-label="Visualização da obra">
+      <button class="lightbox-close" data-lightbox-close aria-label="Fechar">✕</button>
+      <div class="lightbox-stage">
+        <button class="lightbox-nav lightbox-prev" aria-label="Obra anterior">←</button>
+        <div class="ph lightbox-image"><span class="ph-label lightbox-image-label"></span></div>
+        <button class="lightbox-nav lightbox-next" aria-label="Próxima obra">→</button>
+      </div>
+      <div class="lightbox-caption">
+        <span class="lightbox-eyebrow">obra <span class="lightbox-num"></span></span>
+        <h3 class="lightbox-title">[ Título da obra ]</h3>
+        <p class="lightbox-meta">[ Técnica, ano ]</p>
+        <a class="cta lightbox-full-link" href="quadro.html">ver página da obra →</a>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
