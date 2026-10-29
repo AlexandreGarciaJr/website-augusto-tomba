@@ -11,6 +11,7 @@
     href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;800&family=Spectral:ital,wght@0,300;0,400;0,500;1,300&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add('js');addEventListener('pagereveal',function(e){if(e.viewTransition)document.documentElement.classList.add('vt')});</script>
 </head>
 
 <body>
@@ -54,7 +55,9 @@
   <section class="hero">
     <div class="hero-image-band">
       <div class="hero-parallax" data-parallax>
-        <img class="hero-photo" src="./captura.jpg" alt="" loading="eager" decoding="async">
+        <!-- versões já em duotone (geradas de ./captura.jpg); a dissolvida entra por opacidade ao rolar -->
+        <img class="hero-photo" src="./captura-duotone.jpg" alt="" loading="eager" decoding="async">
+        <img class="hero-photo hero-photo-dissolvida" src="./captura-duotone-dissolvida.jpg" alt="" loading="eager" decoding="async">
       </div>
       <div class="hero-vignette" aria-hidden="true"></div>
       <div class="hero-image-content">
@@ -152,7 +155,7 @@
           <!-- Cabeçalho: número, título, descrição curta -->
           <div class="colecao-header reveal">
             <div class="colecao-header-left">
-              <span class="colecao-num">01</span>
+              <span class="colecao-num" aria-hidden="true">01</span>
               <h3 class="colecao-title">Primitivo Onipresente</h3>
               <p class="colecao-desc">
                 Esta coleção reúne desenhos a carvão sobre papel de aquarela. O contraste entre claro e escuro, herdado
@@ -280,7 +283,7 @@
       <div class="section" id="colecao-02">
         <div class="wrap">
           <div class="colecao-placeholder reveal">
-            <span class="colecao-num">02</span>
+            <span class="colecao-num" aria-hidden="true">02</span>
             <h3 class="colecao-title" style="color:var(--text-faint); font-style:italic;">[ Próxima coleção ]</h3>
             <p class="colecao-desc" style="color:var(--text-faint);">[ Título, descrição e obras a definir. ]</p>
           </div>

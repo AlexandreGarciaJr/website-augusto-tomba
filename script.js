@@ -83,8 +83,13 @@ document.addEventListener('DOMContentLoaded', () => {
      mais lenta que o fundo, separando visualmente os dois planos. */
 
   const parallaxEl = document.querySelector('[data-parallax]');
-  const heroPhotoEl = document.querySelector('.hero-photo');
+  const heroDissolveEl = document.querySelector('.hero-photo-dissolvida');
   const heroTextEl = document.querySelector('.hero-image-content');
+
+  // depois que a imagem emergiu do papel, a máscara sai de cena (nada de custo extra por frame)
+  if (parallaxEl) {
+    parallaxEl.addEventListener('animationend', () => parallaxEl.classList.add('is-emerged'), { once: true });
+  }
 
   if (parallaxEl && !reduceMotion) {
     const band = parallaxEl.parentElement;
@@ -94,20 +99,24 @@ document.addEventListener('DOMContentLoaded', () => {
       const rect = band.getBoundingClientRect();
       const bandHeight = rect.height || 1;
 
-      // deslocamento vertical da imagem (invertido: desce enquanto a página sobe)
-      const maxShift = bandHeight * 1;
-      let offset = -rect.top * 0.6;
-      offset = Math.max(-maxShift, Math.min(maxShift, offset));
+      // quanto a faixa já subiu desde a posição de repouso (topo da página).
+      // Medir pela rolagem, e não por rect.top, evita puxar a imagem para cima
+      // por causa da altura do header — era isso que abria o vão em 1024px.
+      const scrolled = Math.max(0, window.scrollY);
 
-      // progresso de 0 (topo da faixa no topo da tela) a 1 (faixa já rolou por completo)
-      const progress = Math.min(1, Math.max(0, -rect.top / bandHeight));
+      // deslocamento vertical da imagem (desce enquanto a página sobe): quase parada
+      // em relação ao olhar, nunca 100% fixa
+      const maxShift = bandHeight * 1;
+      const offset = Math.min(maxShift, scrolled * 0.6);
+
+      // progresso de 0 (repouso) a 1 (faixa já rolou por completo)
+      const progress = Math.min(1, scrolled / bandHeight);
       const scale = 1 + progress * 0.08;   // zoom sutil, até 8%
-      const blur = progress * 3;            // desfoque progressivo, até 3px — a "dissolução"
-      const textOffset = -rect.top * 0.22;  // texto em velocidade própria — separa os planos
+      const textOffset = scrolled * 0.22;  // texto em velocidade própria — separa os planos
 
       parallaxEl.style.transform = `translateY(${offset}px) scale(${scale})`;
-      if (heroPhotoEl) {
-        heroPhotoEl.style.filter = `contrast(.78) brightness(1.06) blur(${blur}px) url(#duotone)`;
+      if (heroDissolveEl) {
+        heroDissolveEl.style.opacity = progress.toFixed(3); // a "dissolução", só por opacidade
       }
       if (heroTextEl) {
         heroTextEl.style.transform = `translateY(${textOffset}px)`;
@@ -178,10 +187,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- transição suave entre páginas ---------- */
   const transitionEl = document.querySelector('.page-transition');
-  if (transitionEl) {
-    // revela a página atual (o overlay começa opaco e desaparece)
-    requestAnimationFrame(() => {
-      setTimeout(() => transitionEl.classList.add('is-hidden'), 20);
+  // navegadores com View Transitions entre documentos cuidam da saída sozinhos (CSS @view-transition)
+  const nativeTransitions = 'PageRevealEvent' in window;
+  if (transitionEl && !nativeTransitions) {
+    // voltando pelo histórico (bfcache), a página volta congelada com o overlay opaco: limpa
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) transitionEl.classList.remove('is-exiting');
     });
 
     const NAV_DURATION = 420;
@@ -202,7 +213,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // deixa cliques com modificador (nova aba, etc.) passarem direto
         if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
         e.preventDefault();
-        transitionEl.classList.remove('is-hidden');
         transitionEl.classList.add('is-exiting');
         setTimeout(() => { window.location.href = href; }, NAV_DURATION);
       });
@@ -243,22 +253,68 @@ document.addEventListener('DOMContentLoaded', () => {
       if (fullLink) fullLink.setAttribute('href', href);
     }
 
+    const panel = lightbox.querySelector('.lightbox-panel');
+    const imageEl = lightbox.querySelector('.lightbox-image');
+
+    // a obra "abre" a partir do quadro clicado: a imagem do lightbox nasce
+    // no retângulo do item do mosaico e cresce até o lugar dela (FLIP)
+    function growFrom(trigger) {
+      if (reduceMotion || !imageEl || !imageEl.animate) return;
+      const from = trigger.getBoundingClientRect();
+      const to = imageEl.getBoundingClientRect();
+      if (!from.width || !to.width) return;
+      const dx = (from.left + from.width / 2) - (to.left + to.width / 2);
+      const dy = (from.top + from.height / 2) - (to.top + to.height / 2);
+      imageEl.animate([
+        { transform: `translate(${dx}px, ${dy}px) scale(${from.width / to.width}, ${from.height / to.height})` },
+        { transform: 'none' }
+      ], { duration: 620, easing: 'cubic-bezier(.22,.61,.36,1)' });
+    }
+
     function open(i) {
       lastFocused = document.activeElement;
       renderAt(i);
       lightbox.classList.add('is-open');
       lightbox.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      growFrom(triggers[current]);
       const closeBtn = lightbox.querySelector('.lightbox-close');
-      if (closeBtn) closeBtn.focus();
+      if (closeBtn) closeBtn.focus({ preventScroll: true });
     }
 
     function close() {
       lightbox.classList.remove('is-open');
       lightbox.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
-      if (lastFocused && lastFocused.focus) lastFocused.focus();
+      if (lastFocused && lastFocused.focus) lastFocused.focus({ preventScroll: true });
     }
+
+    // focus trap: Tab e Shift+Tab circulam só dentro do painel enquanto ele está aberto
+    function trapFocus(e) {
+      const focusables = Array.from(panel.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])'))
+        .filter(el => el.offsetParent !== null);
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && (document.activeElement === first || !panel.contains(document.activeElement))) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && (document.activeElement === last || !panel.contains(document.activeElement))) {
+        e.preventDefault(); first.focus();
+      }
+    }
+
+    // swipe horizontal no toque: anterior / próxima
+    let touchX = null, touchY = null;
+    panel.addEventListener('touchstart', (e) => {
+      touchX = e.touches[0].clientX; touchY = e.touches[0].clientY;
+    }, { passive: true });
+    panel.addEventListener('touchend', (e) => {
+      if (touchX === null) return;
+      const dx = e.changedTouches[0].clientX - touchX;
+      const dy = e.changedTouches[0].clientY - touchY;
+      touchX = touchY = null;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) renderAt(current + (dx < 0 ? 1 : -1));
+    }, { passive: true });
 
     triggers.forEach((trigger, i) => {
       trigger.addEventListener('click', (e) => {
@@ -275,6 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('keydown', (e) => {
       if (!lightbox.classList.contains('is-open')) return;
+      if (e.key === 'Tab') trapFocus(e);
       if (e.key === 'Escape') close();
       if (e.key === 'ArrowLeft') renderAt(current - 1);
       if (e.key === 'ArrowRight') renderAt(current + 1);
