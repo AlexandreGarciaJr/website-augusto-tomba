@@ -1,0 +1,122 @@
+<!--page {
+  "out": "index.html",
+  "nav": "index",
+  "title": "Augusto Tomba — artista visual e escritor",
+  "description": "Augusto Tomba, artista visual e escritor. Desenhos a carvão sobre papel de aquarela, ficção e a coleção Primitivo Onipresente.",
+  "ogType": "website",
+  "jsonld": "person"
+} -->
+{{> head}}
+
+  <main id="main-content">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-image-band">
+      <div class="hero-parallax" data-parallax>
+        <!-- versões já em duotone (geradas de ./captura.jpg); a dissolvida entra por opacidade ao rolar -->
+        <img class="hero-photo" src="./captura-duotone.jpg" alt="" loading="eager" decoding="async">
+        <img class="hero-photo hero-photo-dissolvida" src="./captura-duotone-dissolvida.jpg" alt="" loading="eager" decoding="async">
+      </div>
+      <div class="hero-vignette" aria-hidden="true"></div>
+      <div class="hero-image-content">
+        <!-- o nome como paisagem: as letras se afastam e se dissolvem ao rolar (script.js) -->
+        <h1 class="hero-name"><span class="hero-word">Augusto</span> <span class="hero-word">Tomba</span></h1>
+        <p class="hero-tagline">[ palavra · palavra · palavra ]</p>
+      </div>
+      <span class="hero-bg-label">[ exemplo de direção visual —<br>substituir pela imagem/vídeo final ]</span>
+    </div>
+
+    <div class="hero-intro">
+      <div class="scroll-cue" aria-hidden="true">
+        <span class="line"></span>
+        <span>scroll</span>
+      </div>
+    </div>
+  </section>
+
+    <div class="wrap">
+      <div class="ma"></div>
+    </div>
+
+    <!-- BIOGRAFIA -->
+    <section class="section">
+      <div class="wrap">
+        <span class="eyebrow">sobre</span>
+        <div class="bio-grid">
+          <div class="ph ratio-portrait reveal-left">
+            <span class="ph-label">[ foto do artista ]</span>
+          </div>
+          <div class="reveal-right delay">
+            <h2 class="section-title">Augusto Tomba</h2>
+            <p class="lede">Augusto Tomba vive em São Paulo. Pinta com técnicas históricas, sob luz de vela — um ofício que aprendeu a tratar com a mesma disciplina de quem observou, um dia, um cristal sob o microscópio. Escreve ficções onde essa mesma precisão se volta para o improvável.
+            </p>
+          </div>
+        </div>
+
+        <!-- Declaração de artista: a primeira frase é uma pausa — fica presa na tela
+             e acende palavra por palavra enquanto a pessoa rola -->
+        <div class="declaracao-pausa">
+          <div class="declaracao-pausa-quadro">
+            <span class="eyebrow">declaração de artista</span>
+            <p class="declaracao-pausa-frase">Antes do traço ou da palavra, a dissolução.</p>
+          </div>
+        </div>
+
+        <div class="declaracao reveal">
+          <blockquote class="declaracao-bloco">
+            <p class="declaracao-abertura">Esboçar o rio exige a humildade da pele molhada.</p>
+            <p>Navego entre a literatura e as artes pictóricas. Bebi de fontes diversas e distantes, da iconografia
+              bizantina à ilustração científica, da caligrafia oriental ao surrealismo.</p>
+            <p>Na escrita, cultivo um realismo do absurdo.</p>
+            <p>Dessa síntese, busco equilíbrio na memória e entendimento no improvável.</p>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="ma"></div>
+    </div>
+
+    <!-- LITERATURA -->
+    <section class="section tint breath-tight">
+      <div class="wrap">
+        <span class="eyebrow">literatura</span>
+        <div class="split reverse">
+          <div class="reveal-left">
+            <h2 class="section-title">[ Título do livro ]</h2>
+            <p class="lede">
+              [ Breve descrição provisória da obra literária — uma ou duas frases que
+              despertem interesse, com convite para conhecer o livro na íntegra. ]
+            </p>
+            <a class="cta" href="livro.html">conhecer o livro →</a>
+          </div>
+          <div class="ph ratio-book reveal-right delay">
+            <span class="ph-label">[ capa do livro ]</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="ma"></div>
+    </div>
+
+    <!-- QUADROS / COLEÇÕES (gerado de src/data/obras.json) -->
+    <section class="section-colecoes breath-wide">
+      <div class="wrap">
+        <span class="eyebrow">Quadros</span>
+        <h2 class="section-title reveal">Coleções</h2>
+{{colecoes-index}}
+      </div>
+
+{{colecoes}}
+    </section>
+
+  </main>
+
+{{> footer}}
+
+{{> lightbox}}
+{{> end}}

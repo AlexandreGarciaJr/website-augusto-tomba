@@ -1,0 +1,247 @@
+{
+  "colecoes": [
+    {
+      "id": "colecao-01",
+      "num": "01",
+      "slug": "primitivo-onipresente",
+      "titulo": "Primitivo Onipresente",
+      "desc": "Esta coleção reúne desenhos a carvão sobre papel de aquarela. O contraste entre claro e escuro, herdado dos Antigos Mestres da arte ocidental, encontra aqui o silêncio da Arte Oriental — presente na atenção aos temas que remetem ao tempo dos ancestrais.",
+      "introAbertura": "Há objetos que não envelhecem. Persistem sobre a mesa, como se o tempo fosse apenas uma luz que muda de ângulo.",
+      "intro": [
+        "O contraste entre claro e escuro, herdado dos Antigos Mestres, encontra aqui o silêncio dos temas: o figo partido, o anis-estrelado, o gravatá, a pinha já aberta, as flores miúdas sobre a madeira antiga. Em algumas obras, o papel já traz uma primeira pele — laca indiana, escura e silenciosa, anterior ao gesto.",
+        "A mesa que sustenta cada composição é bicentenária. Carrega, ela também, o peso do que não foi dito; os temas, a delicadeza do que teima em existir.",
+        "O primitivo não é o que ficou para trás. É o que permanece sob a superfície das coisas ordinárias — visível a quem se detém."
+      ],
+      "meta": "Técnica · Carvão sobre papel de aquarela 300 g/m² · 2026",
+      "obras": [
+        {
+          "num": "01",
+          "slug": "primitivo-onipresente-01",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "02",
+          "slug": "primitivo-onipresente-02",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "03",
+          "slug": "primitivo-onipresente-03",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "04",
+          "slug": "primitivo-onipresente-04",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "05",
+          "slug": "primitivo-onipresente-05",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "06",
+          "slug": "primitivo-onipresente-06",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "07",
+          "slug": "primitivo-onipresente-07",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "08",
+          "slug": "primitivo-onipresente-08",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "09",
+          "slug": "primitivo-onipresente-09",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "10",
+          "slug": "primitivo-onipresente-10",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "11",
+          "slug": "primitivo-onipresente-11",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "12",
+          "slug": "primitivo-onipresente-12",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "13",
+          "slug": "primitivo-onipresente-13",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "14",
+          "slug": "primitivo-onipresente-14",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "15",
+          "slug": "primitivo-onipresente-15",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "16",
+          "slug": "primitivo-onipresente-16",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "17",
+          "slug": "primitivo-onipresente-17",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "18",
+          "slug": "primitivo-onipresente-18",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "19",
+          "slug": "primitivo-onipresente-19",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "20",
+          "slug": "primitivo-onipresente-20",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Carvão sobre papel de aquarela 300 g/m²",
+          "ano": "2026",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        }
+      ]
+    },
+    {
+      "id": "colecao-02",
+      "num": "02",
+      "titulo": "[ Próxima coleção ]",
+      "desc": "[ Título, descrição e obras a definir. ]",
+      "placeholder": true
+    }
+  ]
+}

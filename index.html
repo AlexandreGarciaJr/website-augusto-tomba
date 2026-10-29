@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+<!-- gerado por build.js a partir de src/pages/index.html — não edite este arquivo; edite src/ e rode: node build.js -->
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Augusto Tomba</title>
+  <title>Augusto Tomba — artista visual e escritor</title>
+  <meta name="description" content="Augusto Tomba, artista visual e escritor. Desenhos a carvão sobre papel de aquarela, ficção e a coleção Primitivo Onipresente.">
+  <link rel="canonical" href="https://alexandregarciajr.github.io/website-augusto-tomba/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Augusto Tomba">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="Augusto Tomba — artista visual e escritor">
+  <meta property="og:description" content="Augusto Tomba, artista visual e escritor. Desenhos a carvão sobre papel de aquarela, ficção e a coleção Primitivo Onipresente.">
+  <meta property="og:url" content="https://alexandregarciajr.github.io/website-augusto-tomba/">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -12,24 +23,29 @@
     rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script>document.documentElement.classList.add('js');addEventListener('pagereveal',function(e){if(e.viewTransition)document.documentElement.classList.add('vt')});</script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Augusto Tomba",
+  "url": "https://alexandregarciajr.github.io/website-augusto-tomba/",
+  "jobTitle": [
+    "Artista visual",
+    "Escritor"
+  ],
+  "homeLocation": {
+    "@type": "Place",
+    "name": "São Paulo"
+  },
+  "description": "Augusto Tomba, artista visual e escritor. Desenhos a carvão e ficção."
+}
+  </script>
 </head>
 
 <body>
 
   <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
   <div class="page-transition" aria-hidden="true"></div>
-
-  <!-- filtro duotone: remapeia qualquer imagem para a paleta exata do site -->
-  <svg width="0" height="0" style="position:absolute;overflow:hidden;pointer-events:none;">
-    <filter id="duotone" color-interpolation-filters="sRGB">
-      <feColorMatrix type="matrix" values="0.33 0.33 0.33 0 0  0.33 0.33 0.33 0 0  0.33 0.33 0.33 0 0  0 0 0 1 0" />
-      <feComponentTransfer>
-        <feFuncR type="table" tableValues="0.169 0.608 0.949" />
-        <feFuncG type="table" tableValues="0.157 0.569 0.937" />
-        <feFuncB type="table" tableValues="0.145 0.537 0.914" />
-      </feComponentTransfer>
-    </filter>
-  </svg>
 
   <div class="stage-badge">esboço · ui/ux · v1</div>
 
@@ -61,7 +77,8 @@
       </div>
       <div class="hero-vignette" aria-hidden="true"></div>
       <div class="hero-image-content">
-        <h1 class="hero-name">Augusto Tomba</h1>
+        <!-- o nome como paisagem: as letras se afastam e se dissolvem ao rolar (script.js) -->
+        <h1 class="hero-name"><span class="hero-word">Augusto</span> <span class="hero-word">Tomba</span></h1>
         <p class="hero-tagline">[ palavra · palavra · palavra ]</p>
       </div>
       <span class="hero-bg-label">[ exemplo de direção visual —<br>substituir pela imagem/vídeo final ]</span>
@@ -94,12 +111,18 @@
           </div>
         </div>
 
-        <!-- Declaração de artista -->
+        <!-- Declaração de artista: a primeira frase é uma pausa — fica presa na tela
+             e acende palavra por palavra enquanto a pessoa rola -->
+        <div class="declaracao-pausa">
+          <div class="declaracao-pausa-quadro">
+            <span class="eyebrow">declaração de artista</span>
+            <p class="declaracao-pausa-frase">Antes do traço ou da palavra, a dissolução.</p>
+          </div>
+        </div>
+
         <div class="declaracao reveal">
-          <span class="eyebrow">declaração de artista</span>
           <blockquote class="declaracao-bloco">
-            <p class="declaracao-abertura">Antes do traço ou da palavra, a dissolução.<br>
-              Esboçar o rio exige a humildade da pele molhada.</p>
+            <p class="declaracao-abertura">Esboçar o rio exige a humildade da pele molhada.</p>
             <p>Navego entre a literatura e as artes pictóricas. Bebi de fontes diversas e distantes, da iconografia
               bizantina à ilustração científica, da caligrafia oriental ao surrealismo.</p>
             <p>Na escrita, cultivo um realismo do absurdo.</p>
@@ -114,7 +137,7 @@
     </div>
 
     <!-- LITERATURA -->
-    <section class="section tint">
+    <section class="section tint breath-tight">
       <div class="wrap">
         <span class="eyebrow">literatura</span>
         <div class="split reverse">
@@ -137,8 +160,8 @@
       <div class="ma"></div>
     </div>
 
-    <!-- QUADROS / COLEÇÕES -->
-    <section class="section-colecoes">
+    <!-- QUADROS / COLEÇÕES (gerado de src/data/obras.json) -->
+    <section class="section-colecoes breath-wide">
       <div class="wrap">
         <span class="eyebrow">Quadros</span>
         <h2 class="section-title reveal">Coleções</h2>
@@ -147,6 +170,7 @@
           <a href="#colecao-02" aria-disabled="true">02 · Próxima coleção</a>
         </nav>
       </div>
+
 
       <!-- Coleção 01 -->
       <div class="colecao" id="colecao-01">
@@ -157,27 +181,17 @@
             <div class="colecao-header-left">
               <span class="colecao-num" aria-hidden="true">01</span>
               <h3 class="colecao-title">Primitivo Onipresente</h3>
-              <p class="colecao-desc">
-                Esta coleção reúne desenhos a carvão sobre papel de aquarela. O contraste entre claro e escuro, herdado
-                dos Antigos Mestres da arte ocidental, encontra aqui o silêncio da Arte Oriental — presente na atenção
-                aos temas que remetem ao tempo dos ancestrais.
-              </p>
+              <p class="colecao-desc">Esta coleção reúne desenhos a carvão sobre papel de aquarela. O contraste entre claro e escuro, herdado dos Antigos Mestres da arte ocidental, encontra aqui o silêncio da Arte Oriental — presente na atenção aos temas que remetem ao tempo dos ancestrais.</p>
             </div>
           </div>
 
           <!-- Introdução literária — antes do mosaico -->
           <div class="colecao-intro reveal">
-            <p class="colecao-intro-abertura">Há objetos que não envelhecem. Persistem sobre a mesa, como se o tempo
-              fosse apenas uma luz que muda de ângulo.</p>
+            <p class="colecao-intro-abertura">Há objetos que não envelhecem. Persistem sobre a mesa, como se o tempo fosse apenas uma luz que muda de ângulo.</p>
             <div class="colecao-intro-corpo">
-              <p>O contraste entre claro e escuro, herdado dos Antigos Mestres, encontra aqui o silêncio dos temas: o
-                figo partido, o anis-estrelado, o gravatá, a pinha já aberta, as flores miúdas sobre a madeira antiga.
-                Em algumas obras, o papel já traz uma primeira pele — laca indiana, escura e silenciosa, anterior ao
-                gesto.</p>
-              <p>A mesa que sustenta cada composição é bicentenária. Carrega, ela também, o peso do que não foi dito; os
-                temas, a delicadeza do que teima em existir.</p>
-              <p>O primitivo não é o que ficou para trás. É o que permanece sob a superfície das coisas ordinárias —
-                visível a quem se detém.</p>
+                <p>O contraste entre claro e escuro, herdado dos Antigos Mestres, encontra aqui o silêncio dos temas: o figo partido, o anis-estrelado, o gravatá, a pinha já aberta, as flores miúdas sobre a madeira antiga. Em algumas obras, o papel já traz uma primeira pele — laca indiana, escura e silenciosa, anterior ao gesto.</p>
+                <p>A mesa que sustenta cada composição é bicentenária. Carrega, ela também, o peso do que não foi dito; os temas, a delicadeza do que teima em existir.</p>
+                <p>O primitivo não é o que ficou para trás. É o que permanece sob a superfície das coisas ordinárias — visível a quem se detém.</p>
               <p class="colecao-meta">Técnica · Carvão sobre papel de aquarela 300 g/m² · 2026</p>
             </div>
           </div>
@@ -185,64 +199,64 @@
         </div>
 
         <div class="mosaico reveal">
-          <a href="quadro.html" class="mosaico-item" id="obra-01" data-lightbox data-num="01" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-01.html" class="mosaico-item" id="obra-01" data-lightbox data-num="01" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">01</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-02" data-lightbox data-num="02" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-02.html" class="mosaico-item" id="obra-02" data-lightbox data-num="02" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">02</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-03" data-lightbox data-num="03" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-03.html" class="mosaico-item" id="obra-03" data-lightbox data-num="03" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">03</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-04" data-lightbox data-num="04" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-04.html" class="mosaico-item" id="obra-04" data-lightbox data-num="04" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">04</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-05" data-lightbox data-num="05" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-05.html" class="mosaico-item" id="obra-05" data-lightbox data-num="05" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">05</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-06" data-lightbox data-num="06" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-06.html" class="mosaico-item" id="obra-06" data-lightbox data-num="06" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">06</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-07" data-lightbox data-num="07" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-07.html" class="mosaico-item" id="obra-07" data-lightbox data-num="07" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">07</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-08" data-lightbox data-num="08" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-08.html" class="mosaico-item" id="obra-08" data-lightbox data-num="08" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">08</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-09" data-lightbox data-num="09" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-09.html" class="mosaico-item" id="obra-09" data-lightbox data-num="09" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">09</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-10" data-lightbox data-num="10" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-10.html" class="mosaico-item" id="obra-10" data-lightbox data-num="10" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">10</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-11" data-lightbox data-num="11" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-11.html" class="mosaico-item" id="obra-11" data-lightbox data-num="11" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">11</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-12" data-lightbox data-num="12" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-12.html" class="mosaico-item" id="obra-12" data-lightbox data-num="12" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">12</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-13" data-lightbox data-num="13" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-13.html" class="mosaico-item" id="obra-13" data-lightbox data-num="13" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">13</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-14" data-lightbox data-num="14" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-14.html" class="mosaico-item" id="obra-14" data-lightbox data-num="14" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">14</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-15" data-lightbox data-num="15" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-15.html" class="mosaico-item" id="obra-15" data-lightbox data-num="15" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">15</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-16" data-lightbox data-num="16" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-16.html" class="mosaico-item" id="obra-16" data-lightbox data-num="16" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">16</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-17" data-lightbox data-num="17" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-17.html" class="mosaico-item" id="obra-17" data-lightbox data-num="17" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">17</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-18" data-lightbox data-num="18" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-18.html" class="mosaico-item" id="obra-18" data-lightbox data-num="18" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">18</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-19" data-lightbox data-num="19" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-19.html" class="mosaico-item" id="obra-19" data-lightbox data-num="19" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">19</span></div>
           </a>
-          <a href="quadro.html" class="mosaico-item" id="obra-20" data-lightbox data-num="20" data-title="[ Título da obra ]" data-meta="[ Técnica, ano ]">
+          <a href="obras/primitivo-onipresente-20.html" class="mosaico-item" id="obra-20" data-lightbox data-num="20" data-title="[ Título da obra ]" data-meta="Carvão sobre papel de aquarela 300 g/m², 2026">
             <div class="ph"><span class="ph-label">20</span></div>
           </a>
         </div>
@@ -289,7 +303,6 @@
           </div>
         </div>
       </div>
-
     </section>
 
   </main>
@@ -322,11 +335,16 @@
         <div class="footer-col">
           <h4>receber novidades</h4>
           <form class="newsletter-form">
-            <input type="email" placeholder="seu e-mail" required>
+            <input type="email" placeholder="seu e-mail" aria-label="seu e-mail" required>
             <button type="submit" class="btn">Enviar</button>
           </form>
         </div>
       </div>
+
+      <!-- assinatura: o nome em traço fino fecha o site, como o fim de um rolo -->
+      <div class="ma"></div>
+      <p class="footer-signature" aria-hidden="true">Augusto Tomba</p>
+
       <div class="footer-bottom">
         <span>© 2026 Augusto Tomba</span>
         <span>protótipo de layout — conteúdo e imagens provisórios</span>
@@ -348,7 +366,7 @@
         <span class="lightbox-eyebrow">obra <span class="lightbox-num"></span></span>
         <h3 class="lightbox-title">[ Título da obra ]</h3>
         <p class="lightbox-meta">[ Técnica, ano ]</p>
-        <a class="cta lightbox-full-link" href="quadro.html">ver página da obra →</a>
+        <a class="cta lightbox-full-link" href="#">ver página da obra →</a>
       </div>
     </div>
   </div>

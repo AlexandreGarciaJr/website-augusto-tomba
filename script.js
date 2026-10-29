@@ -56,6 +56,19 @@ document.addEventListener('DOMContentLoaded', () => {
     revealEls.forEach(el => el.classList.add('is-visible'));
   }
 
+  /* declaração pausada: cada palavra recebe sua faixa de rolagem (--a → --b, em %);
+     o acender em si é CSS (animation-timeline), aqui só se divide a frase */
+  document.querySelectorAll('.declaracao-pausa-frase').forEach(frase => {
+    const words = frase.textContent.trim().split(/\s+/);
+    const span = 70 / words.length;
+    frase.setAttribute('aria-label', frase.textContent.trim());
+    frase.innerHTML = words.map((w, i) => {
+      const a = (5 + i * span).toFixed(1);
+      const b = (5 + (i + 1) * span + 8).toFixed(1);
+      return `<span class="pausa-palavra" aria-hidden="true" style="--a:${a};--b:${b}">${w}</span>`;
+    }).join(' ');
+  });
+
   /* entrada do hero ao carregar */
   requestAnimationFrame(() => {
     setTimeout(() => document.body.classList.add('is-loaded'), 80);
@@ -91,6 +104,34 @@ document.addEventListener('DOMContentLoaded', () => {
     parallaxEl.addEventListener('animationend', () => parallaxEl.classList.add('is-emerged'), { once: true });
   }
 
+  /* o nome como paisagem: cada letra vira um span para poder se afastar e se
+     dissolver ao rolar (da esquerda para a direita). O h1 mantém o nome inteiro
+     como rótulo acessível. */
+  const heroNameEl = document.querySelector('.hero-name');
+  let heroLetters = [];
+  if (heroNameEl && !reduceMotion) {
+    heroNameEl.setAttribute('aria-label', heroNameEl.textContent.replace(/\s+/g, ' ').trim());
+    heroNameEl.querySelectorAll('.hero-word').forEach(word => {
+      word.setAttribute('aria-hidden', 'true');
+      word.innerHTML = Array.from(word.textContent)
+        .map(ch => `<span class="hero-letter">${ch}</span>`).join('');
+    });
+    heroLetters = Array.from(heroNameEl.querySelectorAll('.hero-letter'));
+  }
+
+  function dissolveName(progress) {
+    const n = heroLetters.length;
+    if (!n) return;
+    const center = (n - 1) / 2;
+    heroLetters.forEach((letter, i) => {
+      // cada letra começa a se desfazer um pouco depois da anterior
+      const local = Math.min(1, Math.max(0, (progress - (i / n) * 0.35) / 0.5));
+      const spread = (i - center) * 0.07 * progress; // as letras se afastam do centro
+      letter.style.transform = `translate(${spread.toFixed(3)}em, ${(-local * 0.18).toFixed(3)}em)`;
+      letter.style.opacity = (1 - local).toFixed(3);
+    });
+  }
+
   if (parallaxEl && !reduceMotion) {
     const band = parallaxEl.parentElement;
     let ticking = false;
@@ -121,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (heroTextEl) {
         heroTextEl.style.transform = `translateY(${textOffset}px)`;
       }
+      dissolveName(progress);
 
       ticking = false;
     }
@@ -239,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const num = trigger.dataset.num || '';
       const title = trigger.dataset.title || '[ Título da obra ]';
       const meta = trigger.dataset.meta || '[ Técnica, ano ]';
-      const href = trigger.dataset.href || trigger.getAttribute('href') || 'quadro.html';
+      const href = trigger.dataset.href || trigger.getAttribute('href') || '#';
       return { num, title, meta, href };
     }
 

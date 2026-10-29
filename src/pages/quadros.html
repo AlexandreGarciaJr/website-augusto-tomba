@@ -1,0 +1,38 @@
+<!--page {
+  "out": "quadros.html",
+  "nav": "quadros",
+  "title": "Quadros — Augusto Tomba",
+  "description": "Desenhos a carvão de Augusto Tomba, organizados em coleções. Coleção 01: Primitivo Onipresente.",
+  "ogType": "website",
+  "jsonld": "colecoes"
+} -->
+{{> head}}
+
+<main id="main-content">
+
+  <section class="page-banner">
+    <div class="wrap">
+      <a class="back-link" href="index.html">← início</a>
+      <span class="eyebrow">obras</span>
+      <h1 class="section-title" style="font-size:clamp(2rem,4.4vw,3.1rem);">Quadros</h1>
+      <p class="lede">
+        [ Texto provisório de introdução à produção pictórica — período, técnicas
+        recorrentes ou linha curatorial. ]
+      </p>
+{{colecoes-index}}
+    </div>
+  </section>
+
+  <div class="wrap"><div class="ma"></div></div>
+
+  <!-- COLEÇÕES (gerado de src/data/obras.json) — mesmo modelo de coleção + mosaico da home -->
+  <section class="section-colecoes section-colecoes--pagina">
+{{colecoes:h2}}
+  </section>
+
+</main>
+
+{{> footer}}
+
+{{> lightbox}}
+{{> end}}

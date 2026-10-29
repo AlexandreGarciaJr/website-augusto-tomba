@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<!-- gerado por build.js a partir de {{source}} — não edite este arquivo; edite src/ e rode: node build.js -->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <meta name="description" content="{{description}}">
+  <link rel="canonical" href="{{url}}">
+  <meta property="og:type" content="{{ogType}}">
+  <meta property="og:site_name" content="Augusto Tomba">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:url" content="{{url}}">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="{{root}}favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;800&family=Spectral:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="{{root}}styles.css">
+  <script>document.documentElement.classList.add('js');addEventListener('pagereveal',function(e){if(e.viewTransition)document.documentElement.classList.add('vt')});</script>
+{{jsonld}}
+</head>
+
+<body>
+
+  <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+  <div class="page-transition" aria-hidden="true"></div>
+
+  <div class="stage-badge">esboço · ui/ux · v1</div>
+
+  <header class="site-header">
+    <a href="{{root}}index.html" class="wordmark">Augusto Tomba</a>
+    <button class="menu-trigger" aria-expanded="false" aria-label="Abrir menu">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+  </header>
+
+  <nav class="menu-overlay" aria-hidden="true">
+    <ul class="menu-list">
+      <li><a href="{{root}}index.html"{{cur:index}}>Início</a></li>
+      <li><a href="{{root}}livro.html"{{cur:livro}}>Livro</a></li>
+      <li><a href="{{root}}quadros.html"{{cur:quadros}}>Quadros</a></li>
+      <li><a href="{{root}}index.html#contato">Contato</a></li>
+    </ul>
+  </nav>
