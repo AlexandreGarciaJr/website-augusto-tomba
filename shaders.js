@@ -154,9 +154,10 @@
   /* ---------- 4. abertura do conto: o título se desfaz, o desenho se forma ----------
      Título e desenho dividem a mesma tela. No primeiro gesto para baixo a página não
      desce: as letras do título se desfazem uma a uma e, no lugar delas, o desenho se
-     forma em manchas de carvão, impresso no mesmo papel da página. Só quando ele está
-     inteiro a rolagem é liberada. De volta ao topo, rolar para cima faz o inverso.
-     A animação tem tempo próprio (não segue a rolagem), então rolar rápido não pula nada. */
+     forma em manchas de carvão, impresso no mesmo papel da página. O efeito acompanha
+     a rolagem aos poucos (cada gesto avança um pouco, com um limite por gesto, então
+     rolar rápido não pula nada); só quando o desenho está inteiro a página desce.
+     De volta ao topo, rolar para cima faz o inverso. */
   (function leitura() {
     const palco = document.querySelector('.leitura-palco');
     const quadro = palco && palco.querySelector('.leitura-quadro');
@@ -188,12 +189,18 @@
         // a ordem em que cada ponto aparece: manchas largas de carvão com um grão fino
         // por cima (ruído contínuo, não por pixel — por pixel vira chuvisco de TV)
         float n = fbm(vUv*asp*2.6)*.8 + fbm(vUv*asp*38.)*.2;
-        float th = mix(-.12, 1.05, 1. - uForm);
+        // o limiar percorre a faixa em que o ruído de fato vive (~.15–.7), para o desenho
+        // ir aparecendo ao longo de toda a rolagem, e não só no fim
+        float th = mix(.64, .16, uForm);
         float keep = smoothstep(th, th + .06, n);
         float edge = smoothstep(th - .015, th + .015, n) * (1. - smoothstep(th + .015, th + .07, n));
+        // em 0 o papel está liso: os picos do ruído não podem acender antes da rolagem
+        float inicio = smoothstep(0., .12, uForm);
+        keep *= inicio; edge *= inicio;
         vec3 col = mix(PAPER, draw, keep);
         // a borda de tinta só onde há desenho (sobre o papel vazio, ficaria um risco solto)
         col = mix(col, INK, edge * clamp(ink * 1.6, 0., .35));
+        col = mix(col, draw, smoothstep(.9, 1., uForm));   // no fim, o desenho inteiro, sem falhas
         gl_FragColor = vec4(col, 1.);
       }`);
     if (!ctx) return;
@@ -218,8 +225,12 @@
     }
     const resto = Array.from(cabeca.querySelectorAll('.back-link, .eyebrow, .leitura-autor')).concat(convite);
 
-    let ready = false, t = 0, anim = 0, travaAte = 0;
-    const DUR = 2400;   // ida completa: letras ~0–40%, desenho ~25–100%
+    // alvo: o quanto a rolagem já pediu (0 a 1); t: o que está na tela, que segue o alvo
+    // com suavidade. Letras ~0–40%, desenho ~12–100% (as duas fases se sobrepõem)
+    let ready = false, t = 0, alvo = 0, raf = 0, travaAte = 0;
+    const PERCURSO = () => window.innerHeight * 1.1;   // quanto de rolagem leva a sequência inteira
+    const PASSO_MAX = 120;                              // limite por evento de rolagem (px)
+    const VEL_MAX = .022;   // a tela avança no máximo isso por quadro: rolar rápido não pula nada
 
     // cor do papel do desenho: média das bordas da imagem (onde quase sempre só há papel)
     function paperOf(im) {
@@ -247,7 +258,7 @@
       gl.uniform3fv(u('uWhite'), paperOf(img));
       ready = true;
       // chegou já rolado (voltar no histórico, link com âncora): o desenho já está inteiro
-      if (window.scrollY > 2) t = 1;
+      if (window.scrollY > 2) t = alvo = 1;
       render();
     }
 
@@ -270,46 +281,52 @@
       fit(canvas, 1);
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.uniform2f(u('uRes'), canvas.width, canvas.height);
-      gl.uniform1f(u('uForm'), suave(clamp01((t - .25) / .75)));
+      gl.uniform1f(u('uForm'), clamp01((t - .12) / .88));
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
 
-    function animar(alvo) {
-      const de = t, ini = performance.now(), dur = DUR * Math.abs(alvo - de);
-      if (anim) cancelAnimationFrame(anim);
-      const passo = (now) => {
-        const p = clamp01((now - ini) / Math.max(1, dur));
-        t = de + (alvo - de) * (p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2);
-        render();
-        if (p < 1) anim = requestAnimationFrame(passo);
-        else { anim = 0; travaAte = performance.now() + 450; }   // absorve a inércia do trackpad
-      };
-      anim = requestAnimationFrame(passo);
+    // a tela segue o alvo com suavidade (sem isso, cada clique da roda seria um degrau)
+    function seguir() {
+      raf = 0;
+      t += Math.max(-VEL_MAX, Math.min(VEL_MAX, (alvo - t) * .14));
+      if (Math.abs(alvo - t) < .0015) t = alvo;
+      render();
+      if (t !== alvo) raf = requestAnimationFrame(seguir);
     }
 
     // o gesto de rolar no topo da página: para baixo forma o desenho, para cima o desfaz
-    function gesto(dir, e) {
-      if (!ready || window.scrollY > 2) return;
-      if (anim || performance.now() < travaAte) { e.preventDefault(); return; }
-      if (dir > 0 && t < 1) { e.preventDefault(); animar(1); }
-      else if (dir < 0 && t > 0) { e.preventDefault(); animar(0); }
+    function gesto(px, e) {
+      if (!ready || window.scrollY > 2 || !px) return;
+      const fim = alvo >= 1 && t >= .995;
+      // desenho inteiro e rolando para baixo: a página desce (depois de absorver a inércia)
+      if (px > 0 && fim && performance.now() >= travaAte) return;
+      // título inteiro e rolando para cima: nada a desfazer
+      if (px < 0 && alvo <= 0) return;
+      e.preventDefault();
+      if (px > 0 && fim) return;   // ainda absorvendo a inércia do gesto que terminou o desenho
+      const antes = alvo;
+      alvo = clamp01(alvo + Math.max(-PASSO_MAX, Math.min(PASSO_MAX, px)) / PERCURSO());
+      if (antes < 1 && alvo >= 1) travaAte = performance.now() + 500;
+      if (!raf) raf = requestAnimationFrame(seguir);
     }
-    window.addEventListener('wheel', (e) => { if (e.deltaY) gesto(Math.sign(e.deltaY), e); }, { passive: false });
+    // a roda em modo "linha" (Firefox) vem em linhas, não em pixels
+    window.addEventListener('wheel', (e) => gesto(e.deltaY * (e.deltaMode === 1 ? 16 : 1), e), { passive: false });
     let toqueY = null;
     window.addEventListener('touchstart', (e) => { toqueY = e.touches[0].clientY; }, { passive: true });
     window.addEventListener('touchmove', (e) => {
       if (toqueY === null) return;
-      const dy = toqueY - e.touches[0].clientY;
-      if (Math.abs(dy) > 6) gesto(Math.sign(dy), e);
+      const y = e.touches[0].clientY;
+      gesto((toqueY - y) * 1.4, e);
+      toqueY = y;
     }, { passive: false });
     window.addEventListener('touchend', () => { toqueY = null; }, { passive: true });
     window.addEventListener('keydown', (e) => {
       if (e.target.closest && e.target.closest('input, textarea, select, [contenteditable]')) return;
       const baixo = ['ArrowDown', 'PageDown', 'End', ' '], cima = ['ArrowUp', 'PageUp', 'Home'];
-      if (baixo.includes(e.key)) gesto(1, e); else if (cima.includes(e.key)) gesto(-1, e);
+      if (baixo.includes(e.key)) gesto(PASSO_MAX, e); else if (cima.includes(e.key)) gesto(-PASSO_MAX, e);
     });
     // se a página desceu por outro caminho (barra de rolagem, âncora), o desenho fica inteiro
-    window.addEventListener('scroll', () => { if (window.scrollY > 2 && t < 1 && !anim) { t = 1; render(); } }, { passive: true });
+    window.addEventListener('scroll', () => { if (window.scrollY > 2 && alvo < 1) { t = alvo = 1; render(); } }, { passive: true });
     window.addEventListener('resize', render);
 
     // sem once: ao cruzar 700px o <picture> troca entre o desenho largo e o vertical

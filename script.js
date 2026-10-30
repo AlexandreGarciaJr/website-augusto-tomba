@@ -561,4 +561,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })();
 
+  /* ---------- rolagem suave ----------
+     A roda do mouse e o trackpad levam a página até o destino com desaceleração, em vez
+     de saltos secos. Só em telas com cursor (no toque a rolagem nativa já é suave) e
+     sem movimento reduzido. Este arquivo roda depois do shaders.js, então a abertura dos
+     contos decide primeiro: quando ela segura o gesto (defaultPrevented), nada se faz aqui. */
+  (function initSmoothScroll() {
+    if (reduceMotion || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    let alvo = window.scrollY, atual = window.scrollY, raf = 0, escrevendo = false;
+    const maxY = () => document.documentElement.scrollHeight - window.innerHeight;
+
+    // um elemento com rolagem própria (lista, painel) cuida da sua roda
+    function rolaPorDentro(el, dy) {
+      for (; el && el !== document.body && el !== document.documentElement; el = el.parentElement) {
+        const s = getComputedStyle(el);
+        if (!/(auto|scroll)/.test(s.overflowY) || el.scrollHeight <= el.clientHeight) continue;
+        if ((dy < 0 && el.scrollTop > 0) || (dy > 0 && el.scrollTop + el.clientHeight < el.scrollHeight)) return true;
+      }
+      return false;
+    }
+
+    function passo() {
+      atual += (alvo - atual) * .065;   // menor = mais suave (a página desliza por mais tempo)
+      if (Math.abs(alvo - atual) < .5) atual = alvo;
+      escrevendo = true;
+      window.scrollTo({ top: atual, behavior: 'instant' });
+      raf = atual !== alvo ? requestAnimationFrame(passo) : 0;
+    }
+
+    window.addEventListener('wheel', (e) => {
+      if (e.defaultPrevented || e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      if (document.body.style.overflow === 'hidden') return;   // menu ou lightbox aberto
+      const dy = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1);
+      if (rolaPorDentro(e.target, dy)) return;
+      e.preventDefault();
+      if (!raf) alvo = atual = window.scrollY;   // parte de onde a página realmente está
+      alvo = Math.max(0, Math.min(maxY(), alvo + dy));
+      if (!raf) raf = requestAnimationFrame(passo);
+    }, { passive: false });
+
+    // teclado, barra de rolagem, âncoras: a página andou por outro caminho; acompanha
+    window.addEventListener('scroll', () => {
+      if (escrevendo) { escrevendo = false; return; }
+      if (!raf) alvo = atual = window.scrollY;
+    }, { passive: true });
+  })();
+
 });
