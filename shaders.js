@@ -151,6 +151,129 @@
     if (img.complete && img.naturalWidth) upload(); else img.addEventListener('load', upload, { once: true });
   })();
 
+  /* ---------- 4. abertura do conto: o desenho se forma e se desfaz ----------
+     O desenho largo ocupa a tela de ponta a ponta, impresso no mesmo papel da página
+     (o branco do desenho vira o papel do site). Quando aparece, ele se forma em grão
+     de carvão; com a tela presa, avança devagar e, no fim, volta ao papel — a
+     dissolução antes da palavra. Depois disso o texto começa. */
+  (function leitura() {
+    const sec = document.querySelector('.leitura-abertura');
+    const quadro = sec && sec.querySelector('.leitura-quadro');
+    const img = quadro && quadro.querySelector('img');
+    if (!img) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.className = 'leitura-gl';
+    canvas.setAttribute('aria-hidden', 'true');
+    const ctx = createGL(canvas, `precision highp float; varying vec2 vUv;
+      uniform sampler2D uTex; uniform vec2 uRes; uniform vec3 uWhite; uniform float uImgAsp, uForm, uOut, uZoom;
+      ${PAPER} ${NOISE}
+      void main(){
+        vec2 asp = vec2(uRes.x/uRes.y, 1.);
+        // o desenho inteiro cabe na tela (contain), centrado; o resto é papel
+        float a = uRes.x/uRes.y;
+        vec2 s = a > uImgAsp ? vec2(a/uImgAsp, 1.) : vec2(1., uImgAsp/a);
+        vec2 uv = (vUv - .5) * s / uZoom + .5;
+        float inside = step(0., uv.x) * step(uv.x, 1.) * step(0., uv.y) * step(uv.y, 1.);
+        vec3 img = texture2D(uTex, clamp(uv, 0., 1.)).rgb;
+        // o papel do desenho (uWhite, medido na própria imagem) vira o papel do site
+        vec3 draw = mix(PAPER, PAPER * clamp(img / uWhite, 0., 1.), inside);
+        // as bordas do desenho se desfazem no papel (sem corte reto onde a imagem acaba)
+        vec2 e = smoothstep(0., .05, uv) * smoothstep(1., .95, uv);
+        draw = mix(PAPER, draw, e.x * e.y);
+        float ink = 1. - dot(draw, vec3(.333)) / dot(PAPER, vec3(.333));
+        // a ordem em que cada ponto aparece/some: manchas largas de carvão com um grão fino
+        // por cima (ruído contínuo, não por pixel — por pixel vira chuvisco de TV)
+        float n = fbm(vUv*asp*2.6)*.8 + fbm(vUv*asp*38.)*.2;
+        float th = mix(-.12, 1.05, max(1. - uForm, uOut));
+        float keep = smoothstep(th, th + .06, n);
+        float edge = smoothstep(th - .015, th + .015, n) * (1. - smoothstep(th + .015, th + .07, n));
+        vec3 col = mix(PAPER, draw, keep);
+        // a borda de tinta só onde há desenho (sobre o papel vazio, ficaria um risco solto)
+        col = mix(col, INK, edge * clamp(ink * 1.6, 0., .35));
+        gl_FragColor = vec4(col, 1.);
+      }`);
+    if (!ctx) return;
+    const { gl, u } = ctx;
+
+    let ready = false, visible = false, raf = 0;
+    let form = 0, formStart = 0, out = 0, zoom = 1;
+
+    // cor do papel do desenho: média das bordas da imagem (onde quase sempre só há papel)
+    function paperOf(im) {
+      const c2 = document.createElement('canvas'); c2.width = c2.height = 24;
+      const x = c2.getContext('2d'); x.drawImage(im, 0, 0, 24, 24);
+      const d = x.getImageData(0, 0, 24, 24).data; const sum = [0, 0, 0]; let n = 0;
+      for (let i = 0; i < 24 * 24; i++) {
+        const px = i % 24, py = (i / 24) | 0;
+        if (px > 1 && px < 22 && py > 1 && py < 22) continue;
+        sum[0] += d[i * 4]; sum[1] += d[i * 4 + 1]; sum[2] += d[i * 4 + 2]; n++;
+      }
+      return sum.map(v => Math.max(.5, v / n / 255));
+    }
+
+    function upload() {
+      const tex = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, tex);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
+      gl.uniform1f(u('uImgAsp'), img.naturalWidth / img.naturalHeight);
+      gl.uniform3fv(u('uWhite'), paperOf(img));
+      ready = true;
+      quadro.appendChild(canvas);
+      sec.style.setProperty('--asp', (img.naturalWidth / img.naturalHeight).toFixed(4));
+      sec.classList.add('has-gl');   // o CSS prende o quadro e esconde a imagem estática
+      onScroll();
+    }
+
+    function frame(now) {
+      raf = 0;
+      if (!ready || !visible) return;
+      fit(canvas, 1);
+      // o desenho se forma uma vez, no tempo (não na rolagem): 2,6 s, devagar no começo e no fim
+      if (formStart) {
+        const t = Math.min(1, (now - formStart) / 2600);
+        form = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+      }
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.uniform2f(u('uRes'), canvas.width, canvas.height);
+      gl.uniform1f(u('uForm'), form);
+      gl.uniform1f(u('uOut'), out);
+      gl.uniform1f(u('uZoom'), zoom);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      if (formStart && form < 1) request();
+    }
+    function request() { if (!raf) raf = requestAnimationFrame(frame); }
+
+    function onScroll() {
+      const r = sec.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // começa a se formar quando o quadro já ocupa a maior parte da tela
+      if (!formStart && r.top < vh * .45) formStart = performance.now();
+      // com a tela presa, o desenho avança devagar; quando a tela se solta, ele volta ao
+      // papel enquanto sobe — o texto já vem entrando por baixo, nunca fica tela vazia
+      // o quadro fica preso centrado: de topo em (vh - H)/2 até a base passar de (vh + H)/2
+      const H = quadro.offsetHeight || vh;
+      const pinTop = (vh - H) / 2;
+      const pinned = Math.min(1, Math.max(0, (pinTop - r.top) / Math.max(1, sec.offsetHeight - H)));
+      zoom = 1 + pinned * .06;
+      const saida = (vh + H) / 2;
+      const o = Math.min(1, Math.max(0, (saida - r.bottom) / (saida * .8)));
+      out = o * o * (3 - 2 * o);
+      request();
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', request);
+    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; if (visible) request(); }).observe(sec);
+    // sem once: ao cruzar 700px o <picture> troca entre o desenho largo e o vertical
+    img.addEventListener('load', upload);
+    if (img.complete && img.naturalWidth) upload();
+  })();
+
   /* ---------- 3. mosaico: cada obra se revela em tinta ----------
      O mesmo grão de carvão do hero, ao contrário: uma folha de papel cobre cada
      obra e se desfaz quando ela entra na tela. Um único canvas fixo por cima do

@@ -1615,15 +1615,37 @@ main{ overflow-x:clip; }
   font-weight:300;
   color:var(--text-soft);
 }
-/* a mesma imagem do card, como frontispício: estreita e centrada */
-.leitura-imagem .escrito-imagem{
-  max-width:min(520px, 100%);
-  margin:0 auto;
+/* com imagem: sem moldura de placeholder; o papel do desenho se funde ao papel do site
+   (multiply sobre o fundo, com o branco do desenho levemente clareado para sumir) */
+.escrito-imagem.tem-imagem{ background:none; }
+.escrito-imagem.tem-imagem::before{ display:none; }
+.escrito-imagem.tem-imagem img,
+.leitura-quadro img{ mix-blend-mode:multiply; filter:brightness(1.04); }
+
+/* abertura do conto: o desenho largo de ponta a ponta, sem moldura (no celular, o vertical) */
+.leitura-abertura{ position:relative; }
+.leitura-quadro{ position:relative; }
+.leitura-quadro img{ display:block; width:100%; height:auto; }
+/* com o shader (shaders.js marca .has-gl): a tela fica presa enquanto o desenho
+   se forma no papel, avança devagar e se desfaz antes do texto começar */
+/* o quadro tem a altura do próprio desenho (--asp vem de shaders.js) e fica preso
+   centrado na tela; assim não sobra papel vazio acima ou abaixo dele */
+.leitura-abertura.has-gl{
+  --quadro-h:min(100svh, calc(100vw / var(--asp, 1.6)));
+  height:calc(var(--quadro-h) + 70vh);
 }
+.leitura-abertura.has-gl .leitura-quadro{
+  position:sticky;
+  top:calc((100svh - var(--quadro-h)) / 2);
+  height:var(--quadro-h);
+}
+.leitura-abertura.has-gl .leitura-quadro img{ visibility:hidden; position:absolute; }
+.leitura-gl{ position:absolute; inset:0; width:100%; height:100%; display:block; }
 
 .leitura-texto{
   max-width:36em;
   margin:0 auto;
+  padding-top:clamp(2.5rem, 6vw, 4.5rem);
   padding-bottom:clamp(3rem, 8vw, 5rem);
   font-weight:300;
   font-size:clamp(1.05rem, 1.25vw, 1.18rem);

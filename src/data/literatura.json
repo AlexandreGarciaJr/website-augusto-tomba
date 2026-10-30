@@ -7,6 +7,7 @@
       "tipo": "conto",
       "chamada": "A casa dorme, mas a cozinha ainda ferve.",
       "imagem": "literatura/o-virado.jpg",
+      "imagemLarga": "literatura/o-virado-larga.jpg",
       "secoes": [
         {
           "num": null,
@@ -27,6 +28,7 @@
       "tipo": "conto",
       "chamada": "Porque ninguém desconfiaria de um guarda-chuva.",
       "imagem": "literatura/uma-picada.jpg",
+      "imagemLarga": "literatura/uma-picada-larga.jpg",
       "secoes": [
         {
           "num": "I",

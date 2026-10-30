@@ -113,11 +113,26 @@ const palavras = (e) => e.secoes.reduce((n, s) => n + s.paragrafos.join(' ').spl
 const minutosLeitura = (e) => Math.max(1, Math.round(palavras(e) / 200));
 
 // imagem do escrito: usa o arquivo se já existir, senão o placeholder com o nome esperado
+const existe = (rel) => rel && fs.existsSync(path.join(ROOT, rel));
 function escritoImagem(root, e, label) {
-  if (e.imagem && fs.existsSync(path.join(ROOT, e.imagem))) {
-    return `<div class="ph escrito-imagem"><img src="${root}${e.imagem}" alt="" loading="lazy" decoding="async"></div>`;
+  if (existe(e.imagem)) {
+    return `<div class="ph escrito-imagem tem-imagem"><img src="${root}${e.imagem}" alt="" loading="lazy" decoding="async"></div>`;
   }
   return `<div class="ph escrito-imagem"><span class="ph-label">[ ${label} — ${e.imagem} ]</span></div>`;
+}
+
+// abertura da página do conto: o desenho largo de ponta a ponta (no celular, o vertical);
+// shaders.js faz o desenho se formar no papel e depois se desfazer antes do texto
+function escritoAbertura(root, e) {
+  if (!existe(e.imagemLarga)) {
+    return `<div class="wrap">${escritoImagem(root, e, 'imagem do conto')}</div>`;
+  }
+  const vertical = existe(e.imagem) ? `<source media="(max-width:700px)" srcset="${root}${e.imagem}">` : '';
+  return `<div class="leitura-abertura">
+      <div class="leitura-quadro">
+        <picture>${vertical}<img src="${root}${e.imagemLarga}" alt="" decoding="async"></picture>
+      </div>
+    </div>`;
 }
 
 function renderLiteratura(root) {
@@ -263,7 +278,7 @@ literatura.escritos.forEach((e, i) => {
     url: site.url + `literatura/${e.slug}.html`,
     proxTitulo: prox.titulo, proxTipo: prox.tipo, proxHref: `${prox.slug}.html`,
     source: 'src/pages/_escrito.html',
-    raw: { texto: renderTexto(e), imagem: escritoImagem('../', e, 'imagem do conto') }
+    raw: { texto: renderTexto(e), abertura: escritoAbertura('../', e) }
   };
   vars.jsonld = jsonld('escrito', vars);
   write(`literatura/${e.slug}.html`, render(escritoTpl, vars, `_escrito.html (${e.slug})`));
