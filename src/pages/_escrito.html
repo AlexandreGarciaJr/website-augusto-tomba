@@ -1,0 +1,48 @@
+<!--escrito: template de um conto/livro; build.js gera literatura/<slug>.html para cada escrito de src/data/literatura.json -->
+{{> head}}
+
+<main id="main-content">
+
+  <article class="leitura">
+
+    <header class="leitura-cabeca">
+      <div class="wrap">
+        <a class="back-link" href="{{root}}index.html#literatura">← literatura</a>
+        <span class="eyebrow">{{tipo}} · {{minutos}} min de leitura</span>
+        <h1 class="leitura-titulo" data-split>{{titulo}}</h1>
+        <p class="leitura-autor">Augusto Tomba</p>
+      </div>
+    </header>
+
+    <div class="wrap leitura-imagem">
+      {{imagem}}
+    </div>
+
+    <div class="wrap"><div class="ma"></div></div>
+
+    <div class="wrap">
+      <div class="leitura-texto">
+{{texto}}
+        <p class="leitura-fim" aria-label="fim">fim</p>
+      </div>
+    </div>
+
+  </article>
+
+  <div class="wrap"><div class="ma"></div></div>
+
+  <nav class="section breath-tight leitura-proximo" aria-label="Continuar lendo">
+    <div class="wrap">
+      <span class="eyebrow">continuar lendo</span>
+      <a class="leitura-proximo-link" href="{{proxHref}}">
+        <span class="leitura-proximo-titulo">{{proxTitulo}}</span>
+        <span class="escrito-ler">ler o {{proxTipo}} →</span>
+      </a>
+      <a class="back-link" href="{{root}}index.html#literatura">← todos os escritos</a>
+    </div>
+  </nav>
+
+</main>
+
+{{> footer}}
+{{> end}}

@@ -12,6 +12,7 @@ const ROOT = __dirname;
 const SRC = path.join(ROOT, 'src');
 const site = readJSON('data/site.json');
 const data = readJSON('data/obras.json');
+const literatura = readJSON('data/literatura.json');
 
 function readJSON(rel) { return JSON.parse(fs.readFileSync(path.join(SRC, rel), 'utf8')); }
 function read(rel) { return fs.readFileSync(path.join(SRC, rel), 'utf8'); }
@@ -105,6 +106,38 @@ function renderColecoes(opts) {
   return data.colecoes.map(c => renderColecao(c, opts)).join('\n');
 }
 
+/* ---------- literatura (contos, depois livros) ---------- */
+
+const escritoHref = (root, e) => `${root}literatura/${e.slug}.html`;
+const palavras = (e) => e.secoes.reduce((n, s) => n + s.paragrafos.join(' ').split(/\s+/).length, 0);
+const minutosLeitura = (e) => Math.max(1, Math.round(palavras(e) / 200));
+
+// imagem do escrito: usa o arquivo se já existir, senão o placeholder com o nome esperado
+function escritoImagem(root, e, label) {
+  if (e.imagem && fs.existsSync(path.join(ROOT, e.imagem))) {
+    return `<div class="ph escrito-imagem"><img src="${root}${e.imagem}" alt="" loading="lazy" decoding="async"></div>`;
+  }
+  return `<div class="ph escrito-imagem"><span class="ph-label">[ ${label} — ${e.imagem} ]</span></div>`;
+}
+
+function renderLiteratura(root) {
+  return literatura.escritos.map(e => `          <a class="escrito" href="${escritoHref(root, e)}">
+            ${escritoImagem(root, e, 'imagem do conto')}
+            <span class="escrito-meta">${e.num} · ${esc(e.tipo)} · ${minutosLeitura(e)} min de leitura</span>
+            <h3 class="escrito-titulo">${esc(e.titulo)}</h3>
+            <p class="escrito-chamada">${esc(e.chamada)}</p>
+            <span class="escrito-ler">ler o ${esc(e.tipo)} →</span>
+          </a>`).join('\n');
+}
+
+// o texto completo, em seções numeradas (I, II…) quando houver
+function renderTexto(e) {
+  return e.secoes.map(s => {
+    const ps = s.paragrafos.map(p => `          <p>${esc(p)}</p>`).join('\n');
+    return `        <section class="leitura-secao">${s.num ? `\n          <h2 class="leitura-num">${s.num}</h2>` : ''}\n${ps}\n        </section>`;
+  }).join('\n');
+}
+
 /* ---------- JSON-LD ---------- */
 
 const person = {
@@ -134,6 +167,10 @@ function jsonld(kind, page) {
       dateCreated: o.ano, description: o.descricao, isPartOf: { '@type': 'Collection', name: page.colecaoTitulo }
     };
   }
+  if (kind === 'escrito') obj = {
+    '@type': 'CreativeWork', genre: 'Conto', name: page.titulo, url: page.url, author: person,
+    inLanguage: 'pt-BR', wordCount: palavras(page.escrito)
+  };
   if (!obj) return '';
   const json = JSON.stringify({ '@context': 'https://schema.org', ...obj }, null, 2).replace(/</g, '\\u003c');
   return `  <script type="application/ld+json">\n${json}\n  </script>`;
@@ -152,9 +189,11 @@ function render(template, vars, source) {
   // blocos gerados a partir dos dados
   out = out.replace(/{{colecoes-index}}/g, () => renderColecoesIndex());
   out = out.replace(/{{colecoes(?::(h\d))?}}/g, (_, h) => renderColecoes({ root: vars.root, h: h || 'h3', cta: !h }));
-  // variáveis simples (escapadas), exceto jsonld que já vem pronto
+  out = out.replace(/{{literatura}}/g, () => renderLiteratura(vars.root));
+  // variáveis simples (escapadas), exceto as que já vêm prontas em HTML (jsonld, raw)
   out = out.replace(/{{(\w+)}}/g, (m, key) => {
     if (key === 'jsonld') return vars.jsonld;
+    if (vars.raw && key in vars.raw) return vars.raw[key];
     if (!(key in vars)) throw new Error(`${source}: variável desconhecida ${m}`);
     return esc(vars[key]);
   });
@@ -205,6 +244,31 @@ for (const c of data.colecoes) {
     urls.push(vars.url);
   }
 }
+
+// uma página por escrito (texto completo)
+// (a pasta também guarda as imagens dos contos: só os .html gerados são apagados)
+const litDir = path.join(ROOT, 'literatura');
+if (fs.existsSync(litDir)) {
+  for (const f of fs.readdirSync(litDir)) if (f.endsWith('.html')) fs.rmSync(path.join(litDir, f));
+}
+const escritoTpl = read('pages/_escrito.html').replace(/^<!--escrito:[\s\S]*?-->\s*\n/, '');
+literatura.escritos.forEach((e, i) => {
+  const prox = literatura.escritos[(i + 1) % literatura.escritos.length];
+  const vars = {
+    ...e, escrito: e, nav: 'literatura', root: '../',
+    minutos: String(minutosLeitura(e)),
+    title: `${e.titulo} — conto de Augusto Tomba`,
+    description: `${e.titulo}, ${e.tipo} de Augusto Tomba. ${e.chamada}`,
+    ogType: 'article',
+    url: site.url + `literatura/${e.slug}.html`,
+    proxTitulo: prox.titulo, proxTipo: prox.tipo, proxHref: `${prox.slug}.html`,
+    source: 'src/pages/_escrito.html',
+    raw: { texto: renderTexto(e), imagem: escritoImagem('../', e, 'imagem do conto') }
+  };
+  vars.jsonld = jsonld('escrito', vars);
+  write(`literatura/${e.slug}.html`, render(escritoTpl, vars, `_escrito.html (${e.slug})`));
+  urls.push(vars.url);
+});
 
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

@@ -59,6 +59,7 @@
   <nav class="menu-overlay" aria-hidden="true">
     <ul class="menu-list">
       <li><a href="index.html" class="current">Início</a></li>
+      <li><a href="index.html#literatura">Literatura</a></li>
       <li><a href="livro.html">Livro</a></li>
       <li><a href="quadros.html">Quadros</a></li>
       <li><a href="index.html#contato">Contato</a></li>
@@ -139,23 +140,31 @@
       <div class="ma"></div>
     </div>
 
-    <!-- LITERATURA -->
-    <section class="section tint breath-tight">
+    <!-- LITERATURA (gerado de src/data/literatura.json): contos agora, livros depois -->
+    <section class="section breath-wide literatura" id="literatura">
       <div class="wrap">
         <span class="eyebrow">literatura</span>
-        <div class="split reverse">
-          <div class="reveal-left">
-            <h2 class="section-title">[ Título do livro ]</h2>
-            <p class="lede">
-              [ Breve descrição provisória da obra literária — uma ou duas frases que
-              despertem interesse, com convite para conhecer o livro na íntegra. ]
-            </p>
-            <a class="cta" href="livro.html">conhecer o livro →</a>
-          </div>
-          <div class="ph ratio-book reveal-right delay">
-            <span class="ph-label">[ capa do livro ]</span>
-          </div>
+        <h2 class="section-title">Escritos</h2>
+        <p class="lede">Contos de Augusto Tomba, para ler na íntegra.</p>
+
+        <div class="escritos">
+          <a class="escrito" href="literatura/o-virado.html">
+            <div class="ph escrito-imagem"><span class="ph-label">[ imagem do conto — literatura/o-virado.jpg ]</span></div>
+            <span class="escrito-meta">01 · conto · 2 min de leitura</span>
+            <h3 class="escrito-titulo">O Virado</h3>
+            <p class="escrito-chamada">A casa dorme, mas a cozinha ainda ferve.</p>
+            <span class="escrito-ler">ler o conto →</span>
+          </a>
+          <a class="escrito" href="literatura/uma-picada.html">
+            <div class="ph escrito-imagem"><span class="ph-label">[ imagem do conto — literatura/uma-picada.jpg ]</span></div>
+            <span class="escrito-meta">02 · conto · 8 min de leitura</span>
+            <h3 class="escrito-titulo">Uma Picada</h3>
+            <p class="escrito-chamada">Porque ninguém desconfiaria de um guarda-chuva.</p>
+            <span class="escrito-ler">ler o conto →</span>
+          </a>
         </div>
+
+        <p class="escritos-em-breve">livros · em preparação</p>
       </div>
     </section>
 
