@@ -379,15 +379,15 @@ img{ max-width:100%; display:block; }
   transition:opacity 1.2s var(--ease) .6s;
 }
 .is-loaded .scroll-cue{ opacity:1; }
-/* o traço do "scroll" se desenha uma vez e fica — nenhum movimento perpétuo no site */
 .scroll-cue .line{
   width:1px; height:40px;
   background:var(--line);
-  transform:scaleY(0);
-  transform-origin:top;
-  transition:transform 1.4s var(--ease) 1.4s;
+  animation:cue 2.6s ease-in-out infinite;
 }
-.is-loaded .scroll-cue .line{ transform:scaleY(1); }
+@keyframes cue{
+  0%,100%{ transform:scaleY(.4); opacity:.3; transform-origin:top; }
+  50%{ transform:scaleY(1); opacity:1; transform-origin:top; }
+}
 .scroll-cue span{
   font-size:.62rem;
   letter-spacing:.18em;
@@ -973,37 +973,82 @@ img{ max-width:100%; display:block; }
   font-style:italic;
 }
 
-/* entrada única do site: só tinta aparecendo no papel — sem deslizar, sem cascata.
-   (.reveal-left/.reveal-right/.stagger continuam nos HTMLs, mas falam a mesma língua)
-   Fallback: a classe .is-visible, aplicada pelo IntersectionObserver em script.js. */
-.reveal,
-.reveal-left,
-.reveal-right,
+/* utilitário de revelação suave (disparado pelo IntersectionObserver em script.js) */
+.reveal{
+  opacity:0;
+  transform:translateY(34px);
+  transition:opacity 1.1s var(--ease), transform 1.1s var(--ease);
+}
+.reveal.is-visible{ opacity:1; transform:translateY(0); }
+
+.reveal-left{
+  opacity:0;
+  transform:translateX(-46px);
+  transition:opacity 1.15s var(--ease), transform 1.15s var(--ease);
+}
+.reveal-left.is-visible{ opacity:1; transform:translateX(0); }
+
+.reveal-right{
+  opacity:0;
+  transform:translateX(46px);
+  transition:opacity 1.15s var(--ease), transform 1.15s var(--ease);
+}
+.reveal-right.is-visible{ opacity:1; transform:translateX(0); }
+
+.reveal-right.delay,
+.reveal-left.delay{ transition-delay:.18s; }
+
+/* grupos com entrada escalonada (depoimentos, botões, colunas do rodapé...) */
 .stagger > *{
   opacity:0;
-  transition:opacity 1.4s var(--ease) .25s;
+  transform:translateY(26px);
+  transition:opacity .85s var(--ease), transform .85s var(--ease);
 }
-.reveal.is-visible,
-.reveal-left.is-visible,
-.reveal-right.is-visible,
-.stagger.is-visible > *{ opacity:1; }
+.stagger.is-visible > *{ opacity:1; transform:translateY(0); }
+.stagger.is-visible > *:nth-child(1){ transition-delay:.02s; }
+.stagger.is-visible > *:nth-child(2){ transition-delay:.10s; }
+.stagger.is-visible > *:nth-child(3){ transition-delay:.18s; }
+.stagger.is-visible > *:nth-child(4){ transition-delay:.26s; }
+.stagger.is-visible > *:nth-child(5){ transition-delay:.34s; }
+.stagger.is-visible > *:nth-child(6){ transition-delay:.42s; }
+.stagger.is-visible > *:nth-child(7){ transition-delay:.50s; }
+.stagger.is-visible > *:nth-child(8){ transition-delay:.58s; }
 
-/* o "ma" conduz: a linha se desenha primeiro (cover 0–20%) e o conteúdo só
-   aparece depois de um respiro, preso à mesma rolagem (cover 8–30%) */
-@supports (animation-timeline: view()){
-  @media (prefers-reduced-motion: no-preference){
-    .reveal,
-    .reveal-left,
-    .reveal-right,
-    .stagger > *{
-      transition:none;
-      animation:tinta linear both;
-      animation-timeline:view();
-      animation-range:cover 8% cover 30%;
-    }
-  }
+/* títulos sobem linha a linha de dentro de uma máscara (script.js divide em palavras) */
+.line-mask{
+  display:inline-block;
+  overflow:hidden;
+  overflow:clip;
+  vertical-align:top;
+  padding-bottom:.12em;   /* folga para descendentes (g, ç, p) não serem cortados */
+  margin-bottom:-.12em;
 }
-@keyframes tinta{ from{ opacity:0; } to{ opacity:1; } }
+.line-mask > span{
+  display:inline-block;
+  transform:translateY(105%);
+  transition:transform 1.1s var(--ease);
+  transition-delay:calc(var(--w, 0) * 55ms);
+}
+.split-reveal.is-visible .line-mask > span{ transform:translateY(0); }
+
+/* imagens (e placeholders) se descobrem como papel puxado para cima: uma folha
+   da cor do fundo cobre a imagem e se recolhe (só transform; não usa clip-path no
+   próprio elemento porque o IntersectionObserver ignora alvos totalmente recortados) */
+.img-reveal::after{
+  content:'';
+  position:absolute;
+  inset:-1px;
+  z-index:3;
+  background-color:var(--bg);
+  background-image:var(--paper-noise);
+  background-attachment:fixed;
+  background-blend-mode:var(--paper-blend);
+  transform-origin:top;
+  transition:transform 1.3s var(--ease) .1s;
+  pointer-events:none;
+}
+.tint .img-reveal::after{ background-color:#E9E5DF; } /* --bg com o véu do .tint */
+.img-reveal.is-visible::after{ transform:scaleY(0); }
 
 /* leve "respiração" ao passar o mouse sobre um card de quadro */
 .quadro-card{ transition:transform .6s var(--ease); }

@@ -37,7 +37,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* revelação suave (linha "ma" + blocos) */
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const revealEls = document.querySelectorAll('.ma, .reveal, .reveal-left, .reveal-right, .stagger, .ma2');
+
+  // tudo o que aparece ao rolar, mesmo o que não foi marcado à mão no HTML:
+  // títulos sobem palavra por palavra de dentro de uma máscara; imagens se
+  // descobrem como papel; textos soltos entram com o .reveal de sempre
+  const ANIMATED = '.reveal, .reveal-left, .reveal-right, .stagger, .split-reveal';
+  const outsideAnimated = (el) => !el.parentElement || !el.parentElement.closest(ANIMATED);
+  const skip = (el) => el.closest('.hero, .site-footer, .lightbox, .menu-overlay, .declaracao-pausa');
+
+  function splitWords(el) {
+    let i = 0;
+    const frag = document.createDocumentFragment();
+    Array.from(el.childNodes).forEach(node => {
+      if (node.nodeType !== 3) { frag.appendChild(node.cloneNode(true)); return; }
+      node.textContent.split(/(\s+)/).forEach(part => {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+        const mask = document.createElement('span');
+        const word = document.createElement('span');
+        mask.className = 'line-mask';
+        word.textContent = part;
+        word.style.setProperty('--w', i++);
+        mask.appendChild(word);
+        frag.appendChild(mask);
+      });
+    });
+    el.textContent = '';
+    el.appendChild(frag);
+  }
+
+  document.querySelectorAll('main .section-title, main .colecao-title').forEach(title => {
+    if (skip(title)) return;
+    title.classList.remove('reveal');
+    if (!outsideAnimated(title)) return;
+    splitWords(title);
+    title.classList.add('split-reveal');
+  });
+  document.querySelectorAll('main .ph:not(.obra-imagem)').forEach(ph => {
+    if (skip(ph) || ph.closest('.mosaico')) return;
+    ph.classList.add('img-reveal');
+  });
+  document.querySelectorAll('main .eyebrow, main .lede, main .back-link, main .colecao-intro-corpo > p, main .declaracao-bloco > p').forEach(el => {
+    if (skip(el) || !outsideAnimated(el)) return;
+    el.classList.add('reveal');
+  });
+  document.querySelectorAll('main .meta-list, main .quotes').forEach(el => el.classList.add('stagger'));
+
+  const revealEls = document.querySelectorAll('.ma, .reveal, .reveal-left, .reveal-right, .stagger, .ma2, .split-reveal, .img-reveal');
 
   if (reduceMotion) {
     revealEls.forEach(el => el.classList.add('is-visible'));
