@@ -345,6 +345,15 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    // a obra atravessa a página: indo do lightbox para a página da obra, a imagem
+    // do lightbox ganha o mesmo nome de transição da imagem da página de destino
+    window.addEventListener('pageswap', (e) => {
+      if (!e.viewTransition || !imageEl || !fullLink || !lightbox.classList.contains('is-open')) return;
+      const to = e.activation && e.activation.entry && e.activation.entry.url;
+      if (to === fullLink.href) imageEl.style.viewTransitionName = 'obra-imagem';
+    });
+    window.addEventListener('pageshow', () => { if (imageEl) imageEl.style.viewTransitionName = ''; });
+
     // swipe horizontal no toque: anterior / próxima
     let touchX = null, touchY = null;
     panel.addEventListener('touchstart', (e) => {
