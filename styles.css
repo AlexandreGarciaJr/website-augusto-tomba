@@ -1880,3 +1880,111 @@ main{ overflow-x:clip; }
 /* no itálico a ponta das letras passa da caixa: a máscara ganha folga para não cortá-la */
 .manifesto-texto--citacao .line-mask,
 .manifesto-coda .line-mask{ padding-left:.14em; padding-right:.14em; margin-left:-.14em; margin-right:-.14em; }
+
+/* ---------- mosaico de 7 obras (data-n="7", vindo do build) ----------
+   Posições explícitas (linha início / coluna início / linha fim / coluna fim): todas as
+   colunas fecham na mesma linha, então não sobra buraco; os quadros ficam em retrato,
+   como as obras reais. O conjunto de 20 continua valendo para coleções maiores. */
+.mosaico[data-n="7"] .mosaico-item:nth-child(1){ grid-area:1 / 1 / 12 / 4; }
+.mosaico[data-n="7"] .mosaico-item:nth-child(2){ grid-area:1 / 4 / 7 / 6; }
+.mosaico[data-n="7"] .mosaico-item:nth-child(3){ grid-area:1 / 6 / 13 / 9; }
+.mosaico[data-n="7"] .mosaico-item:nth-child(4){ grid-area:7 / 4 / 14 / 6; }
+.mosaico[data-n="7"] .mosaico-item:nth-child(5){ grid-area:12 / 1 / 21 / 4; }
+.mosaico[data-n="7"] .mosaico-item:nth-child(6){ grid-area:13 / 6 / 21 / 9; }
+.mosaico[data-n="7"] .mosaico-item:nth-child(7){ grid-area:14 / 4 / 21 / 6; }
+@media (max-width:1024px){
+  .mosaico[data-n="7"] .mosaico-item:nth-child(1){ grid-area:1 / 1 / 10 / 4; }
+  .mosaico[data-n="7"] .mosaico-item:nth-child(2){ grid-area:1 / 4 / 8 / 7; }
+  .mosaico[data-n="7"] .mosaico-item:nth-child(3){ grid-area:10 / 1 / 20 / 4; }
+  .mosaico[data-n="7"] .mosaico-item:nth-child(4){ grid-area:8 / 4 / 15 / 7; }
+  .mosaico[data-n="7"] .mosaico-item:nth-child(5){ grid-area:15 / 4 / 22 / 7; }
+  .mosaico[data-n="7"] .mosaico-item:nth-child(6){ grid-area:20 / 1 / 29 / 4; }
+  .mosaico[data-n="7"] .mosaico-item:nth-child(7){ grid-area:22 / 4 / 29 / 7; }
+}
+@media (max-width:640px){
+  .mosaico[data-n="7"] .mosaico-item:nth-child(1){ grid-area:1 / 1 / 10 / 3; }
+  .mosaico[data-n="7"] .mosaico-item:nth-child(2){ grid-area:1 / 3 / 8 / 5; }
+  .mosaico[data-n="7"] .mosaico-item:nth-child(3){ grid-area:10 / 1 / 20 / 3; }
+  .mosaico[data-n="7"] .mosaico-item:nth-child(4){ grid-area:8 / 3 / 15 / 5; }
+  .mosaico[data-n="7"] .mosaico-item:nth-child(5){ grid-area:15 / 3 / 22 / 5; }
+  .mosaico[data-n="7"] .mosaico-item:nth-child(6){ grid-area:20 / 1 / 29 / 3; }
+  .mosaico[data-n="7"] .mosaico-item:nth-child(7){ grid-area:22 / 3 / 29 / 5; }
+}
+
+/* ============================================================
+   NIGRETURA — dossiê da técnica
+   A definição em destaque; o resto como ficha: termo à esquerda, texto à direita,
+   separados pelo fio fino. O processo em quatro etapas numeradas.
+   ============================================================ */
+.nigretura-titulo{
+  font-weight:400;
+  font-size:clamp(2.4rem, 6vw, 4.6rem);
+  line-height:1.05;
+  margin-bottom:.6rem;
+}
+.nigretura-sub{
+  font-style:italic;
+  font-weight:300;
+  color:var(--text-soft);
+  margin:0 0 clamp(2.4rem, 6vw, 4rem);
+}
+.nigretura-definicao{
+  max-width:32em;
+  font-family:var(--serif-display);
+  font-size:clamp(1.2rem, 2.2vw, 1.6rem);
+  line-height:1.6;
+  margin:0 0 clamp(3rem, 8vw, 5.5rem);
+}
+.nigretura-ficha{ margin:0; max-width:62rem; }
+.nigretura-item{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:.6rem;
+  padding:clamp(1.4rem, 3vw, 2rem) 0;
+  border-top:1px solid var(--line-soft);
+}
+.nigretura-item:last-child{ border-bottom:1px solid var(--line-soft); }
+@media (min-width:760px){
+  .nigretura-item{ grid-template-columns:minmax(11rem, 15rem) 1fr; gap:clamp(2rem, 5vw, 4rem); }
+}
+.nigretura-item dt{
+  font-style:italic;
+  font-weight:300;
+  font-size:.82rem;
+  letter-spacing:.14em;
+  color:var(--text-soft);
+  padding-top:.35em;
+}
+.nigretura-item dd{
+  margin:0;
+  max-width:40em;
+  font-weight:300;
+  line-height:1.8;
+  color:var(--text);
+}
+.nigretura-processo{
+  list-style:none;
+  margin:0;
+  padding:0;
+  counter-reset:etapa;
+}
+.nigretura-processo li{
+  counter-increment:etapa;
+  position:relative;
+  padding:0 0 1.1rem 2.6rem;
+}
+.nigretura-processo li:last-child{ padding-bottom:0; }
+.nigretura-processo li::before{
+  content:counter(etapa, decimal-leading-zero);
+  position:absolute;
+  left:0; top:.1em;
+  font-family:var(--serif-display);
+  font-size:.82rem;
+  color:var(--line);
+}
+.nigretura-processo li span{
+  display:block;
+  font-style:italic;
+  font-size:.86rem;
+  color:var(--text-soft);
+}

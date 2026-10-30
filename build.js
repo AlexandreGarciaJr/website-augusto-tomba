@@ -88,7 +88,7 @@ ${intro}
 
         </div>
 
-        <div class="mosaico reveal">
+        <div class="mosaico reveal" data-n="${c.obras.length}">
 ${items}
         </div>
 
