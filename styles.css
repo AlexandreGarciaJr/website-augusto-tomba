@@ -1317,11 +1317,37 @@ img{ max-width:100%; display:block; }
   margin:0 auto;
   color:var(--text);
 }
+/* o texto da declaração mora no mesmo quadro da frase; sem animação, vem logo abaixo dela */
+.declaracao-pausa .declaracao-bloco{
+  max-width:46ch;
+  margin:clamp(3rem, 8vw, 5rem) auto 0;
+}
+.declaracao-pausa .declaracao-abertura{
+  font-size:clamp(1.25rem, 2.5vw, 1.75rem);
+  font-style:normal;
+  color:var(--text);
+  margin-bottom:1.4em;
+}
+.declaracao-pausa .declaracao-bloco p:not(.declaracao-abertura){ font-size:1.02rem; }
 @supports (animation-timeline: view()){
   @media (prefers-reduced-motion: no-preference){
     .declaracao-pausa{
-      height:240vh;
+      height:400vh;
       view-timeline:--pausa block;
+    }
+    /* frase e texto ocupam o mesmo lugar: um se dissolve, o outro surge */
+    .pausa-palco{ display:grid; align-items:center; }
+    .pausa-palco > *{ grid-area:1 / 1; }
+    .declaracao-pausa .declaracao-bloco{ margin-top:0; }
+    .declaracao-pausa-frase{
+      animation:pausa-sai linear both;
+      animation-timeline:--pausa;
+      animation-range:contain 44% contain 54%;
+    }
+    .declaracao-pausa .declaracao-bloco > *{
+      animation:pausa-entra linear both;
+      animation-timeline:--pausa;
+      animation-range:contain calc(var(--a) * 1%) contain calc(var(--b) * 1%);
     }
     .declaracao-pausa-quadro{
       position:sticky;
@@ -1341,6 +1367,11 @@ img{ max-width:100%; display:block; }
   }
 }
 @keyframes palavra-acende{ to{ opacity:1; } }
+@keyframes pausa-sai{ to{ opacity:0; filter:blur(8px); transform:scale(1.03); } }
+@keyframes pausa-entra{
+  from{ opacity:0; filter:blur(4px); transform:translateY(.6em); }
+  to{ opacity:1; filter:none; transform:none; }
+}
 
 /* ---------- mosaico revelado como papel ----------
    Cada obra se descobre de cima para baixo, como papel de seda puxado,
@@ -1442,6 +1473,10 @@ main{ overflow-x:clip; }
    com o shader ativo (shaders.js marca .is-pinned), o hero fica parado enquanto a
    pintura se dissolve; o ::after é o trecho de rolagem que essa dissolução consome */
 .hero.is-pinned .hero-pin{ position:sticky; top:0; }
+/* o hero sobe para baixo do header (e devolve o espaço por dentro do pin): assim o pin
+   já está preso no topo desde o primeiro pixel de rolagem, sem a página andar antes */
+.hero.is-pinned{ margin-top:calc(-1 * var(--pin-offset, 0px)); }
+.hero.is-pinned .hero-pin{ padding-top:var(--pin-offset, 0px); }
 .hero.is-pinned::after{ content:''; display:block; height:110vh; }
 @media (max-width:640px){ .hero.is-pinned::after{ height:85vh; } }
 
@@ -1450,3 +1485,40 @@ main{ overflow-x:clip; }
   transition-duration:.9s;
   transition-delay:calc(var(--w, 0) * 14ms);
 }
+
+/* ---------- mosaico: revelação em tinta (shaders.js) ---------- */
+.mosaico-gl{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:30;           /* acima das obras, abaixo do índice lateral (35) e do header (50) */
+  pointer-events:none;
+}
+.mosaico.has-gl .mosaico-item .ph{ animation:none; }
+
+/* ---------- mosaico: legenda que acompanha o cursor ---------- */
+.mosaico-legenda{
+  position:fixed;
+  left:0; top:0;
+  z-index:40;
+  display:flex;
+  align-items:baseline;
+  gap:.7em;
+  padding:.45em .9em;
+  background:var(--bg);
+  border:1px solid var(--line-soft);
+  font-family:var(--serif-body);
+  font-style:italic;
+  font-weight:300;
+  font-size:.82rem;
+  letter-spacing:.03em;
+  color:var(--text);
+  white-space:nowrap;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .3s var(--ease);
+}
+.mosaico-legenda.is-on{ opacity:1; }
+.mosaico-legenda-num{ font-family:var(--serif-display); font-style:normal; }
+.mosaico-legenda-ver{ color:var(--text-soft); padding-left:.7em; border-left:1px solid var(--line-soft); }

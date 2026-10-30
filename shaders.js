@@ -78,6 +78,7 @@
         float edge = smoothstep(th - .015, th + .015, n) * (1. - smoothstep(th + .015, th + .07, n));
         vec3 col = mix(PAPER, img, keep);
         col = mix(col, INK, edge*.55);
+        col += (hash(gl_FragCoord.xy) - .5) * .03 * (1. - keep);   // o papel revelado tem o mesmo grão da página
         gl_FragColor = vec4(col, 1.);
       }`);
     if (!ctx) return;
@@ -101,7 +102,11 @@
       band.classList.add('has-gl');   // o CSS esconde as imagens estáticas
       // o hero passa a ficar preso enquanto a pintura se dissolve; só então a página desce
       const hero = band.closest('.hero');
-      if (hero && hero.querySelector('.hero-pin')) hero.classList.add('is-pinned');
+      if (hero && hero.querySelector('.hero-pin')) {
+        // altura do header acima do hero: o pin a devolve por dentro (ver styles.css)
+        hero.style.setProperty('--pin-offset', hero.offsetTop + 'px');
+        hero.classList.add('is-pinned');
+      }
       window.dispatchEvent(new Event('scroll'));   // parallax e nome recalculam com o pin
       onScroll();
     }
@@ -144,6 +149,103 @@
     new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; if (visible) request(); }).observe(band);
     onScroll();
     if (img.complete && img.naturalWidth) upload(); else img.addEventListener('load', upload, { once: true });
+  })();
+
+  /* ---------- 3. mosaico: cada obra se revela em tinta ----------
+     O mesmo grão de carvão do hero, ao contrário: uma folha de papel cobre cada
+     obra e se desfaz quando ela entra na tela. Um único canvas fixo por cima do
+     mosaico desenha todas as folhas; fora das obras ele é transparente, então
+     cliques e hover passam direto. Quando todas se revelaram, o canvas sai. */
+  (function mosaico() {
+    const grid = document.querySelector('.mosaico');
+    if (!grid) return;
+    const items = Array.from(grid.querySelectorAll('.mosaico-item'));
+    const MAX = 32;
+    if (!items.length || items.length > MAX) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.className = 'mosaico-gl';
+    canvas.setAttribute('aria-hidden', 'true');
+    const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false });
+    if (!gl) return;
+    const frag = `precision highp float;
+      uniform vec4 uR[${MAX}]; uniform float uPr[${MAX}]; uniform float uN, uDpr, uVh;
+      ${PAPER} ${NOISE}
+      void main(){
+        vec2 px = vec2(gl_FragCoord.x, uVh*uDpr - gl_FragCoord.y) / uDpr;   // em px de CSS, y para baixo
+        for (int i = 0; i < ${MAX}; i++) {
+          if (float(i) >= uN) break;
+          vec4 r = uR[i];
+          if (px.x >= r.x && px.y >= r.y && px.x < r.x + r.z && px.y < r.y + r.w) {
+            float n = fbm((px - r.xy)/90. + float(i)*3.1)*.78 + hash(floor(gl_FragCoord.xy/1.5))*.22;
+            float th = mix(1.05, -.12, uPr[i]);
+            float shown = smoothstep(th, th + .06, n);
+            float edge = smoothstep(th - .015, th + .015, n) * (1. - smoothstep(th + .015, th + .07, n));
+            vec3 paper = PAPER + (hash(gl_FragCoord.xy) - .5)*.03;
+            float a = max(1. - shown, edge*.55);
+            vec3 col = mix(paper, INK, edge*.55 / max(a, .001));
+            gl_FragColor = vec4(col*a, a);
+            return;
+          }
+        }
+        gl_FragColor = vec4(0.);
+      }`;
+    const compile = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : (console.warn(gl.getShaderInfoLog(s)), null); };
+    const vs = compile(gl.VERTEX_SHADER, 'attribute vec2 p; void main(){ gl_Position = vec4(p,0.,1.); }');
+    const fs = compile(gl.FRAGMENT_SHADER, frag);
+    if (!vs || !fs) return;
+    const prog = gl.createProgram();
+    gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+    gl.useProgram(prog);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(prog, 'p');
+    gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    const uR = gl.getUniformLocation(prog, 'uR'), uPr = gl.getUniformLocation(prog, 'uPr');
+    const uN = gl.getUniformLocation(prog, 'uN'), uDpr = gl.getUniformLocation(prog, 'uDpr'), uVh = gl.getUniformLocation(prog, 'uVh');
+
+    document.body.appendChild(canvas);
+    grid.classList.add('has-gl');   // desliga a revelação em CSS: quem revela agora é a tinta
+
+    const shown = new Float32Array(MAX);   // progresso de cada obra; só cresce (não se cobre de novo)
+    const rects = new Float32Array(MAX * 4);
+    let raf = 0, visible = false, done = false;
+
+    function frame() {
+      raf = 0;
+      if (done || !visible) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const vw = document.documentElement.clientWidth, vh = window.innerHeight;
+      const w = Math.round(vw * dpr), h = Math.round(vh * dpr);
+      if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+      let pending = 0;
+      items.forEach((el, i) => {
+        const r = el.getBoundingClientRect();
+        rects.set([r.left, r.top, r.width, r.height], i * 4);
+        // a obra se forma enquanto sobe pelos 55% de baixo da tela
+        const p = Math.min(1, Math.max(0, (vh - r.top) / (vh * .55)));
+        if (p > shown[i]) shown[i] = Math.min(1, shown[i] + Math.min(.06, p - shown[i]));   // tinta tem seu tempo
+        if (shown[i] < 1) pending++;
+      });
+      gl.viewport(0, 0, w, h);
+      gl.uniform4fv(uR, rects); gl.uniform1fv(uPr, shown);
+      gl.uniform1f(uN, items.length); gl.uniform1f(uDpr, dpr); gl.uniform1f(uVh, vh);
+      gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      if (!pending) { done = true; canvas.remove(); return; }   // tudo revelado: o canvas sai de cena
+      // continua enquanto alguma obra visível ainda está se formando
+      if (items.some((el, i) => shown[i] < 1 && el.getBoundingClientRect().top < vh)) request();
+    }
+    function request() { if (!raf && !done) raf = requestAnimationFrame(frame); }
+
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', request);
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      canvas.style.visibility = visible ? 'visible' : 'hidden';
+      if (visible) request();
+    }, { rootMargin: '0px 0px 10% 0px' }).observe(grid);
   })();
 
   /* ---------- 2. declaração: fumaça de sumi ---------- */

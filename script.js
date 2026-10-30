@@ -102,17 +102,22 @@ document.addEventListener('DOMContentLoaded', () => {
     revealEls.forEach(el => el.classList.add('is-visible'));
   }
 
-  /* declaração pausada: cada palavra recebe sua faixa de rolagem (--a → --b, em %);
-     o acender em si é CSS (animation-timeline), aqui só se divide a frase */
+  /* declaração pausada: cada palavra (e depois cada parágrafo da declaração) recebe
+     sua faixa de rolagem (--a → --b, em %); a animação em si é CSS (animation-timeline).
+     0–41%: a frase acende · 44–54%: ela se dissolve · 54–88%: o texto surge · resto: pausa */
   document.querySelectorAll('.declaracao-pausa-frase').forEach(frase => {
     const words = frase.textContent.trim().split(/\s+/);
-    const span = 70 / words.length;
+    const span = 32 / words.length;
     frase.setAttribute('aria-label', frase.textContent.trim());
     frase.innerHTML = words.map((w, i) => {
-      const a = (5 + i * span).toFixed(1);
-      const b = (5 + (i + 1) * span + 8).toFixed(1);
+      const a = (3 + i * span).toFixed(1);
+      const b = (3 + (i + 1) * span + 6).toFixed(1);
       return `<span class="pausa-palavra" aria-hidden="true" style="--a:${a};--b:${b}">${w}</span>`;
     }).join(' ');
+  });
+  document.querySelectorAll('.declaracao-pausa .declaracao-bloco > *').forEach((p, k) => {
+    p.style.setProperty('--a', 54 + k * 8);
+    p.style.setProperty('--b', 64 + k * 8);
   });
 
   /* entrada do hero ao carregar */
@@ -144,6 +149,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const parallaxEl = document.querySelector('[data-parallax]');
   const heroDissolveEl = document.querySelector('.hero-photo-dissolvida');
   const heroTextEl = document.querySelector('.hero-image-content');
+  const heroVignetteEl = document.querySelector('.hero-vignette');
+  const heroTaglineEl = document.querySelector('.hero-tagline');
 
   // depois que a imagem emergiu do papel, a máscara sai de cena (nada de custo extra por frame)
   if (parallaxEl) {
@@ -224,6 +231,18 @@ document.addEventListener('DOMContentLoaded', () => {
         heroTextEl.style.transform = `translateY(${textOffset}px)`;
       }
       dissolveName(progress);
+      // a névoa atrás do nome e a tagline se vão junto com a pintura
+      // (sem isso, sobra o contorno da névoa sobre o papel liso)
+      [heroVignetteEl, heroTaglineEl].forEach(el => {
+        if (!el) return;
+        if (progress > 0.001) {
+          el.style.transition = 'none';
+          el.style.opacity = Math.max(0, 1 - progress * 1.4).toFixed(3);
+        } else {
+          el.style.transition = '';
+          el.style.opacity = '';
+        }
+      });
 
       ticking = false;
     }
@@ -448,6 +467,52 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'ArrowLeft') renderAt(current - 1);
       if (e.key === 'ArrowRight') renderAt(current + 1);
     });
+  })();
+
+  /* ---------- legenda que acompanha o cursor no mosaico ----------
+     só em dispositivos com mouse; as outras obras recuam pelo CSS (:has) e a
+     legenda (número, título, "ver") segue o cursor com um leve atraso */
+  (function initMosaicoLegenda() {
+    const grid = document.querySelector('.mosaico');
+    if (!grid || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    const cap = document.createElement('div');
+    cap.className = 'mosaico-legenda';
+    cap.setAttribute('aria-hidden', 'true');
+    cap.innerHTML = '<span class="mosaico-legenda-num"></span><span class="mosaico-legenda-titulo"></span><span class="mosaico-legenda-ver">ver</span>';
+    document.body.appendChild(cap);
+    const numEl = cap.querySelector('.mosaico-legenda-num');
+    const titleEl = cap.querySelector('.mosaico-legenda-titulo');
+
+    let x = 0, y = 0, cx = 0, cy = 0, raf = 0, active = false;
+    const follow = reduceMotion ? 1 : 0.18;
+
+    function loop() {
+      cx += (x - cx) * follow;
+      cy += (y - cy) * follow;
+      cap.style.transform = `translate(${cx.toFixed(1)}px, ${cy.toFixed(1)}px)`;
+      raf = (active && (Math.abs(x - cx) > .5 || Math.abs(y - cy) > .5)) ? requestAnimationFrame(loop) : 0;
+    }
+    function hide() { active = false; cap.classList.remove('is-on'); }
+
+    grid.addEventListener('pointerover', (e) => {
+      const item = e.target.closest('.mosaico-item');
+      if (!item) { hide(); return; }
+      numEl.textContent = item.dataset.num || '';
+      titleEl.textContent = item.dataset.title || '';
+      if (!active) { cx = x; cy = y; }   // aparece já no lugar, sem atravessar a tela
+      active = true;
+      cap.classList.add('is-on');
+      if (!raf) raf = requestAnimationFrame(loop);
+    });
+    grid.addEventListener('pointermove', (e) => {
+      x = e.clientX + 18;
+      y = e.clientY + 18;
+      if (active && !raf) raf = requestAnimationFrame(loop);
+    }, { passive: true });
+    grid.addEventListener('pointerleave', hide);
+    grid.addEventListener('click', hide);   // o lightbox abre por cima
+    window.addEventListener('scroll', hide, { passive: true });
   })();
 
   /* ---------- índice lateral do mosaico ---------- */
