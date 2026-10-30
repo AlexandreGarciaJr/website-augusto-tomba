@@ -26,7 +26,7 @@ Site do artista visual e escritor Augusto Tomba: pintura a carvão, a técnica N
 
 O site reúne a obra dele em um só lugar: biografia, declaração de artista, o manifesto *A Ferida como Forma*, os contos, as coleções e a técnica. Ele foi pensado para parecer **papel**, não interface: fundo de papel com grão, tinta de carvão e muito espaço vazio.
 
-Foi construído em etapas com o [Claude Code](https://claude.com/claude-code). Cada etapa termina com verificação em navegador real e screenshots em quatro larguras de tela.
+Foi construído em etapas. Cada etapa termina com verificação em navegador real e screenshots em quatro larguras de tela.
 
 Três regras guiam tudo:
 
