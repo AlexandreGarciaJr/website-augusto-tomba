@@ -11,7 +11,9 @@
   <main id="main-content">
 
   <!-- HERO -->
+  <!-- o hero fica preso na tela enquanto a pintura se dissolve; só depois a página desce -->
   <section class="hero">
+   <div class="hero-pin">
     <div class="hero-image-band">
       <div class="hero-parallax" data-parallax>
         <!-- versões já em duotone (geradas de ./captura.jpg); a dissolvida entra por opacidade ao rolar -->
@@ -33,6 +35,7 @@
         <span>scroll</span>
       </div>
     </div>
+   </div>
   </section>
 
     <div class="wrap">
@@ -47,9 +50,9 @@
           <div class="ph ratio-portrait reveal-left">
             <span class="ph-label">[ foto do artista ]</span>
           </div>
-          <div class="reveal-right delay">
+          <div class="bio-texto">
             <h2 class="section-title">Augusto Tomba</h2>
-            <p class="lede">Augusto Tomba vive em São Paulo. Pinta com técnicas históricas, sob luz de vela — um ofício que aprendeu a tratar com a mesma disciplina de quem observou, um dia, um cristal sob o microscópio. Escreve ficções onde essa mesma precisão se volta para o improvável.
+            <p class="lede" data-split>Augusto Tomba vive em São Paulo. Pinta com técnicas históricas, sob luz de vela — um ofício que aprendeu a tratar com a mesma disciplina de quem observou, um dia, um cristal sob o microscópio. Escreve ficções onde essa mesma precisão se volta para o improvável.
             </p>
           </div>
         </div>
@@ -119,4 +122,5 @@
 {{> footer}}
 
 {{> lightbox}}
+  <script src="shaders.js" defer></script>
 {{> end}}

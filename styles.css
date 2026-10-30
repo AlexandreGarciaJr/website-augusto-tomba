@@ -1406,3 +1406,47 @@ img{ max-width:100%; display:block; }
   animation-duration:.8s;
   animation-timing-function:cubic-bezier(.22,.61,.36,1);
 }
+
+/* ---------- shaders (shaders.js) ---------- */
+/* hero: com WebGL, o canvas substitui as duas imagens estáticas (que ficam como fallback) */
+.hero-gl{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+}
+.hero-image-band.has-gl .hero-photo{ visibility:hidden; }
+
+/* declaração: a fumaça fica atrás da frase, na largura da janela */
+.declaracao-pausa-quadro.has-gl{ position:relative; isolation:isolate; }
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .declaracao-pausa-quadro.has-gl{ position:sticky; }
+  }
+}
+.pausa-gl{
+  position:absolute;
+  top:0;
+  height:100%;
+  z-index:-1;
+  display:block;
+  pointer-events:none;
+}
+
+/* os slides laterais de entrada (reveal-left/right) não podem criar rolagem horizontal
+   antes de aparecer; clip (e não hidden) para não quebrar os elementos sticky */
+main{ overflow-x:clip; }
+
+/* ---------- hero preso na tela ----------
+   com o shader ativo (shaders.js marca .is-pinned), o hero fica parado enquanto a
+   pintura se dissolve; o ::after é o trecho de rolagem que essa dissolução consome */
+.hero.is-pinned .hero-pin{ position:sticky; top:0; }
+.hero.is-pinned::after{ content:''; display:block; height:110vh; }
+@media (max-width:640px){ .hero.is-pinned::after{ height:85vh; } }
+
+/* parágrafos marcados com data-split entram palavra por palavra, mais depressa que títulos */
+.split-reveal[data-split] .line-mask > span{
+  transition-duration:.9s;
+  transition-delay:calc(var(--w, 0) * 14ms);
+}

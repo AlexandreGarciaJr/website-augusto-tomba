@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     el.appendChild(frag);
   }
 
-  document.querySelectorAll('main .section-title, main .colecao-title').forEach(title => {
+  document.querySelectorAll('main .section-title, main .colecao-title, main [data-split]').forEach(title => {
     if (skip(title)) return;
     title.classList.remove('reveal');
     if (!outsideAnimated(title)) return;
@@ -178,6 +178,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* progresso do hero (0 a 1), compartilhado com shaders.js: com o hero preso
+     (.is-pinned), vai do topo da página até o ponto em que ele se solta;
+     sem o pin, é quanto da faixa já rolou */
+  const heroEl = document.querySelector('.hero');
+  const heroPinEl = document.querySelector('.hero-pin');
+  function heroProgress() {
+    const band = document.querySelector('.hero-image-band');
+    if (!heroEl || !band) return { pinned: false, progress: 0 };
+    const pinned = heroEl.classList.contains('is-pinned') && !!heroPinEl;
+    const end = pinned
+      ? heroEl.offsetTop + heroEl.offsetHeight - heroPinEl.offsetHeight
+      : band.offsetHeight;
+    return { pinned, progress: Math.min(1, Math.max(0, window.scrollY / Math.max(1, end))) };
+  }
+  window.heroProgress = heroProgress;
+
   if (parallaxEl && !reduceMotion) {
     const band = parallaxEl.parentElement;
     let ticking = false;
@@ -190,16 +206,15 @@ document.addEventListener('DOMContentLoaded', () => {
       // Medir pela rolagem, e não por rect.top, evita puxar a imagem para cima
       // por causa da altura do header — era isso que abria o vão em 1024px.
       const scrolled = Math.max(0, window.scrollY);
+      const { pinned, progress } = heroProgress();
 
       // deslocamento vertical da imagem (desce enquanto a página sobe): quase parada
-      // em relação ao olhar, nunca 100% fixa
+      // em relação ao olhar, nunca 100% fixa. Com o hero preso, a faixa já está
+      // parada na tela: a imagem não desliza (senão abriria vão), só respira no zoom.
       const maxShift = bandHeight * 1;
-      const offset = Math.min(maxShift, scrolled * 0.6);
-
-      // progresso de 0 (repouso) a 1 (faixa já rolou por completo)
-      const progress = Math.min(1, scrolled / bandHeight);
+      const offset = pinned ? 0 : Math.min(maxShift, scrolled * 0.6);
       const scale = 1 + progress * 0.08;   // zoom sutil, até 8%
-      const textOffset = scrolled * 0.22;  // texto em velocidade própria — separa os planos
+      const textOffset = pinned ? 0 : scrolled * 0.22;  // texto em velocidade própria — separa os planos
 
       parallaxEl.style.transform = `translateY(${offset}px) scale(${scale})`;
       if (heroDissolveEl) {
