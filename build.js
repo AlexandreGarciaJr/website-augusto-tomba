@@ -141,16 +141,21 @@ function renderLiteratura(root) {
             <span class="escrito-meta">${e.num} · ${esc(e.tipo)} · ${minutosLeitura(e)} min de leitura</span>
             <h3 class="escrito-titulo">${esc(e.titulo)}</h3>
             <p class="escrito-chamada">${esc(e.chamada)}</p>
-            <span class="escrito-ler">ler o ${esc(e.tipo)} →</span>
+            <span class="escrito-ler">conhecer o ${esc(e.tipo)} →</span>
           </a>`).join('\n');
 }
 
-// o texto completo, em seções numeradas (I, II…) quando houver
-function renderTexto(e) {
-  return e.secoes.map(s => {
-    const ps = s.paragrafos.map(p => `          <p>${esc(p)}</p>`).join('\n');
-    return `        <section class="leitura-secao">${s.num ? `\n          <h2 class="leitura-num">${s.num}</h2>` : ''}\n${ps}\n        </section>`;
-  }).join('\n');
+// primeiras linhas do conto: os primeiros parágrafos até umas 80 palavras
+// (o texto completo vai em PDF para quem assina a newsletter)
+function renderTrecho(e) {
+  const ps = [];
+  let n = 0;
+  for (const p of e.secoes[0].paragrafos) {
+    ps.push(p);
+    n += p.split(/\s+/).length;
+    if (n >= 80) break;
+  }
+  return ps.map(p => `          <p>${esc(p)}</p>`).join('\n');
 }
 
 /* ---------- JSON-LD ---------- */
@@ -278,7 +283,8 @@ literatura.escritos.forEach((e, i) => {
     url: site.url + `literatura/${e.slug}.html`,
     proxTitulo: prox.titulo, proxTipo: prox.tipo, proxHref: `${prox.slug}.html`,
     source: 'src/pages/_escrito.html',
-    raw: { texto: renderTexto(e), abertura: escritoAbertura('../', e) }
+    pdfHref: '../' + e.pdf,
+    raw: { trecho: renderTrecho(e), abertura: escritoAbertura('../', e) }
   };
   vars.jsonld = jsonld('escrito', vars);
   write(`literatura/${e.slug}.html`, render(escritoTpl, vars, `_escrito.html (${e.slug})`));

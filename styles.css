@@ -1709,3 +1709,174 @@ main{ overflow-x:clip; }
   line-height:1.1;
   margin-bottom:1rem;
 }
+
+/* ============================================================
+   MANIFESTO — A Ferida como Forma
+   Coluna central e estreita; três movimentos separados por um corte fino
+   (1px, a cor da linha "ma") que se abre de cima para baixo com a rolagem.
+   ============================================================ */
+.manifesto .wrap{ text-align:center; }
+.manifesto-titulo{
+  font-weight:400;
+  font-size:clamp(2.2rem, 5.2vw, 4rem);
+  line-height:1.1;
+  margin:0 auto;
+}
+/* o punctum: um único ponto de tinta antes do texto */
+.manifesto-ponto{
+  display:block;
+  width:7px; height:7px;
+  margin:clamp(2.4rem, 6vw, 3.6rem) auto;
+  border-radius:50%;
+  background:var(--text);
+}
+.manifesto-movimento{ max-width:34em; margin:0 auto; }
+.manifesto-nome{
+  font-style:italic;
+  font-weight:300;
+  font-size:.82rem;
+  letter-spacing:.18em;
+  color:var(--text-soft);
+  margin:0 0 1.4rem;
+}
+.manifesto-num{
+  font-family:var(--serif-display);
+  font-style:normal;
+  letter-spacing:.08em;
+  color:var(--line);
+  margin-right:.35em;
+}
+.manifesto-texto{
+  font-family:var(--serif-display);
+  font-weight:400;
+  font-size:clamp(1.2rem, 2.2vw, 1.6rem);
+  line-height:1.6;
+  color:var(--text);
+  margin:0;
+}
+.manifesto-texto--citacao{ font-style:italic; }
+.manifesto-coda{
+  margin:clamp(2.4rem, 6vw, 3.6rem) 0 0;
+  font-style:italic;
+  font-weight:300;
+  font-size:1.02rem;
+  color:var(--text-soft);
+}
+.manifesto-corte{
+  display:block;
+  width:1px;
+  height:clamp(4rem, 12vh, 7rem);
+  margin:clamp(2.2rem, 5vw, 3.2rem) auto;
+  background:var(--line);
+  transform-origin:top;
+}
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .manifesto-corte{
+      animation:corte-abre linear both;
+      animation-timeline:view();
+      animation-range:entry 10% cover 45%;
+    }
+    .manifesto-ponto{
+      animation:ponto-cai linear both;
+      animation-timeline:view();
+      animation-range:entry 20% cover 40%;
+    }
+  }
+}
+@keyframes corte-abre{ from{ transform:scaleY(0); } to{ transform:scaleY(1); } }
+@keyframes ponto-cai{ from{ transform:scale(0); } to{ transform:scale(1); } }
+/* a declaração agora abre a própria seção */
+.section > .wrap > .declaracao-pausa:first-child{ margin-top:0; }
+
+/* ============================================================
+   CONTO — sinopse, primeiras linhas e download pela newsletter
+   ============================================================ */
+.conto-apresentacao{
+  max-width:36em;
+  margin:0 auto;
+  padding-top:clamp(2.5rem, 6vw, 4.5rem);
+}
+.conto-apresentacao .eyebrow{ text-align:center; }
+.conto-sinopse{
+  font-family:var(--serif-display);
+  font-size:clamp(1.15rem, 2vw, 1.4rem);
+  line-height:1.6;
+  text-align:center;
+  margin:0 0 clamp(3rem, 7vw, 4.5rem);
+}
+.conto-trecho{ padding-top:0; padding-bottom:0; position:relative; }
+/* as primeiras linhas se apagam no papel, como texto que continua além da página */
+.conto-trecho::after{
+  content:'';
+  position:absolute;
+  left:0; right:0; bottom:0;
+  height:5.5em;
+  background:linear-gradient(to bottom, rgba(242,239,233,0), var(--bg));
+  pointer-events:none;
+}
+.conto-trecho p:first-child::first-letter{
+  float:left;
+  font-family:var(--serif-display);
+  font-size:3.4em;
+  line-height:.9;
+  padding:.06em .12em 0 0;
+}
+.conto-download{
+  max-width:40rem;
+  margin:clamp(2.5rem, 6vw, 4rem) auto clamp(4rem, 9vw, 6rem);
+  padding:clamp(2.2rem, 5vw, 3.4rem) clamp(1.4rem, 5vw, 3.4rem);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  text-align:center;
+}
+.conto-download-titulo{
+  font-family:var(--serif-display);
+  font-weight:400;
+  font-size:clamp(1.7rem, 3.6vw, 2.5rem);
+  line-height:1.15;
+  margin:0 0 .9rem;
+}
+.conto-download-texto{
+  font-weight:300;
+  color:var(--text-soft);
+  margin:0 auto 1.8rem;
+  max-width:30em;
+}
+.download-form{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:1rem;
+  max-width:30rem;
+  margin:0 auto;
+}
+.download-form input[type="email"]{
+  flex:1;
+  min-width:200px;
+  background:transparent;
+  border:none;
+  border-bottom:1px solid var(--line);
+  padding:.7em .1em;
+  font-family:var(--serif-body);
+  font-style:italic;
+  font-size:1rem;
+  color:var(--text);
+  text-align:center;
+}
+.download-form input::placeholder{ color:var(--text-faint); }
+.download-form input:focus{ outline:none; border-color:var(--text); }
+.btn-download{ padding:1em 2.1em; font-size:.92rem; }
+.conto-download-ok{ font-style:italic; color:var(--text-soft); margin:0; }
+.conto-download-ok .cta{ display:inline-flex; margin:1.2rem 0 0; font-size:1rem; color:var(--text); }
+.conto-download-ok:not([hidden]){ display:flex; flex-direction:column; align-items:center; }
+.conto-download-nota{
+  margin:1.6rem 0 0;
+  font-style:italic;
+  font-size:.78rem;
+  color:var(--text-faint);
+}
+.download-form[hidden]{ display:none; }
+/* no itálico a ponta das letras passa da caixa: a máscara ganha folga para não cortá-la */
+.manifesto-texto--citacao .line-mask,
+.manifesto-coda .line-mask{ padding-left:.14em; padding-right:.14em; margin-left:-.14em; margin-right:-.14em; }

@@ -561,6 +561,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })();
 
+  /* ---------- download do conto pela newsletter (protótipo) ----------
+     Ao assinar, o formulário dá lugar à confirmação com o link do PDF. Na versão
+     final, o envio vai para o serviço de newsletter, que manda o conto por e-mail. */
+  document.querySelectorAll('.download-form').forEach(form => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const ok = form.parentElement.querySelector('.conto-download-ok');
+      if (!ok) return;
+      form.hidden = true;
+      ok.hidden = false;
+      const link = ok.querySelector('a');
+      if (link) link.focus();
+    });
+  });
+
   /* ---------- rolagem suave ----------
      A roda do mouse e o trackpad levam a página até o destino com desaceleração, em vez
      de saltos secos. Só em telas com cursor (no toque a rolagem nativa já é suave) e

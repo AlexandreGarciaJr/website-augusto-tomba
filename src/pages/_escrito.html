@@ -22,11 +22,34 @@
 
     <div class="wrap"><div class="ma"></div></div>
 
+    <!-- apresentação: sinopse e primeiras linhas; o conto inteiro vai em PDF
+         para quem assina a newsletter -->
     <div class="wrap">
-      <div class="leitura-texto">
-{{texto}}
-        <p class="leitura-fim" aria-label="fim">fim</p>
+      <div class="conto-apresentacao">
+        <span class="eyebrow">sinopse</span>
+        <p class="conto-sinopse">{{sinopse}}</p>
+
+        <span class="eyebrow">primeiras linhas</span>
+        <div class="leitura-texto conto-trecho">
+{{trecho}}
+        </div>
       </div>
+    </div>
+
+    <div class="wrap">
+      <section class="conto-download" aria-labelledby="conto-download-titulo">
+        <h2 class="conto-download-titulo" id="conto-download-titulo">Leia o conto completo</h2>
+        <p class="conto-download-texto">Assine a newsletter e receba <em>{{titulo}}</em> em PDF, para ler sem pressa.</p>
+        <form class="download-form" data-pdf="{{pdfHref}}">
+          <input type="email" name="email" placeholder="seu e-mail" aria-label="seu e-mail" autocomplete="email" required>
+          <button type="submit" class="btn btn-download">receber o conto ↓</button>
+        </form>
+        <p class="conto-download-ok" role="status" hidden>
+          Inscrição feita. O conto também segue para o seu e-mail.
+          <a class="cta" href="{{pdfHref}}" download>baixar {{titulo}} (PDF) ↓</a>
+        </p>
+        <p class="conto-download-nota">Sem spam. Só novidades de Augusto Tomba, quando houver.</p>
+      </section>
     </div>
 
   </article>
@@ -38,7 +61,7 @@
       <span class="eyebrow">continuar lendo</span>
       <a class="leitura-proximo-link" href="{{proxHref}}">
         <span class="leitura-proximo-titulo">{{proxTitulo}}</span>
-        <span class="escrito-ler">ler o {{proxTipo}} →</span>
+        <span class="escrito-ler">conhecer o {{proxTipo}} →</span>
       </a>
       <a class="back-link" href="{{root}}index.html#literatura">← todos os escritos</a>
     </div>
