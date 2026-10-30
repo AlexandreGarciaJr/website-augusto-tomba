@@ -5,16 +5,20 @@
 
   <article class="leitura">
 
-    <header class="leitura-cabeca">
-      <div class="wrap">
-        <a class="back-link" href="{{root}}index.html#literatura">← literatura</a>
-        <span class="eyebrow">{{tipo}} · {{minutos}} min de leitura</span>
-        <h1 class="leitura-titulo" data-split>{{titulo}}</h1>
-        <p class="leitura-autor">Augusto Tomba</p>
-      </div>
-    </header>
+    <!-- palco: título e desenho na mesma tela; ao rolar, as letras se desfazem e o
+         desenho se forma (shaders.js), só então a página desce -->
+    <div class="leitura-palco">
+      <header class="leitura-cabeca">
+        <div class="wrap">
+          <a class="back-link" href="{{root}}index.html#literatura">← literatura</a>
+          <span class="eyebrow">{{tipo}} · {{minutos}} min de leitura</span>
+          <h1 class="leitura-titulo">{{titulo}}</h1>
+          <p class="leitura-autor">Augusto Tomba</p>
+        </div>
+      </header>
 
-    {{abertura}}
+      {{abertura}}
+    </div>
 
     <div class="wrap"><div class="ma"></div></div>
 

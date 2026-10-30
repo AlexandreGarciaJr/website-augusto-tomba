@@ -151,29 +151,32 @@
     if (img.complete && img.naturalWidth) upload(); else img.addEventListener('load', upload, { once: true });
   })();
 
-  /* ---------- 4. abertura do conto: o desenho se forma e se desfaz ----------
-     O desenho largo ocupa a tela de ponta a ponta, impresso no mesmo papel da página
-     (o branco do desenho vira o papel do site). Quando aparece, ele se forma em grão
-     de carvão; com a tela presa, avança devagar e, no fim, volta ao papel — a
-     dissolução antes da palavra. Depois disso o texto começa. */
+  /* ---------- 4. abertura do conto: o título se desfaz, o desenho se forma ----------
+     Título e desenho dividem a mesma tela. No primeiro gesto para baixo a página não
+     desce: as letras do título se desfazem uma a uma e, no lugar delas, o desenho se
+     forma em manchas de carvão, impresso no mesmo papel da página. Só quando ele está
+     inteiro a rolagem é liberada. De volta ao topo, rolar para cima faz o inverso.
+     A animação tem tempo próprio (não segue a rolagem), então rolar rápido não pula nada. */
   (function leitura() {
-    const sec = document.querySelector('.leitura-abertura');
-    const quadro = sec && sec.querySelector('.leitura-quadro');
+    const palco = document.querySelector('.leitura-palco');
+    const quadro = palco && palco.querySelector('.leitura-quadro');
     const img = quadro && quadro.querySelector('img');
     if (!img) return;
+    const cabeca = palco.querySelector('.leitura-cabeca');
+    const titulo = palco.querySelector('.leitura-titulo');
 
     const canvas = document.createElement('canvas');
     canvas.className = 'leitura-gl';
     canvas.setAttribute('aria-hidden', 'true');
     const ctx = createGL(canvas, `precision highp float; varying vec2 vUv;
-      uniform sampler2D uTex; uniform vec2 uRes; uniform vec3 uWhite; uniform float uImgAsp, uForm, uOut, uZoom;
+      uniform sampler2D uTex; uniform vec2 uRes; uniform vec3 uWhite; uniform float uImgAsp, uForm;
       ${PAPER} ${NOISE}
       void main(){
         vec2 asp = vec2(uRes.x/uRes.y, 1.);
-        // o desenho inteiro cabe na tela (contain), centrado; o resto é papel
+        // o desenho inteiro cabe no palco (contain), centrado; o resto é papel
         float a = uRes.x/uRes.y;
         vec2 s = a > uImgAsp ? vec2(a/uImgAsp, 1.) : vec2(1., uImgAsp/a);
-        vec2 uv = (vUv - .5) * s / uZoom + .5;
+        vec2 uv = (vUv - .5) * s + .5;
         float inside = step(0., uv.x) * step(uv.x, 1.) * step(0., uv.y) * step(uv.y, 1.);
         vec3 img = texture2D(uTex, clamp(uv, 0., 1.)).rgb;
         // o papel do desenho (uWhite, medido na própria imagem) vira o papel do site
@@ -182,10 +185,10 @@
         vec2 e = smoothstep(0., .05, uv) * smoothstep(1., .95, uv);
         draw = mix(PAPER, draw, e.x * e.y);
         float ink = 1. - dot(draw, vec3(.333)) / dot(PAPER, vec3(.333));
-        // a ordem em que cada ponto aparece/some: manchas largas de carvão com um grão fino
+        // a ordem em que cada ponto aparece: manchas largas de carvão com um grão fino
         // por cima (ruído contínuo, não por pixel — por pixel vira chuvisco de TV)
         float n = fbm(vUv*asp*2.6)*.8 + fbm(vUv*asp*38.)*.2;
-        float th = mix(-.12, 1.05, max(1. - uForm, uOut));
+        float th = mix(-.12, 1.05, 1. - uForm);
         float keep = smoothstep(th, th + .06, n);
         float edge = smoothstep(th - .015, th + .015, n) * (1. - smoothstep(th + .015, th + .07, n));
         vec3 col = mix(PAPER, draw, keep);
@@ -196,8 +199,27 @@
     if (!ctx) return;
     const { gl, u } = ctx;
 
-    let ready = false, visible = false, raf = 0;
-    let form = 0, formStart = 0, out = 0, zoom = 1;
+    // a partir daqui o palco é uma tela só: título por cima, desenho (ainda papel) por baixo
+    palco.classList.add('has-gl');
+    quadro.appendChild(canvas);
+    const convite = document.createElement('span');
+    convite.className = 'leitura-convite';
+    convite.setAttribute('aria-hidden', 'true');
+    convite.textContent = 'role para ver';
+    palco.appendChild(convite);
+
+    // o título vira letras soltas (o h1 guarda o nome inteiro como rótulo acessível)
+    let letras = [];
+    if (titulo) {
+      titulo.setAttribute('aria-label', titulo.textContent.trim());
+      titulo.innerHTML = Array.from(titulo.textContent.trim())
+        .map(ch => ch === ' ' ? ' ' : `<span class="leitura-letra" aria-hidden="true">${ch}</span>`).join('');
+      letras = Array.from(titulo.querySelectorAll('.leitura-letra'));
+    }
+    const resto = Array.from(cabeca.querySelectorAll('.back-link, .eyebrow, .leitura-autor')).concat(convite);
+
+    let ready = false, t = 0, anim = 0, travaAte = 0;
+    const DUR = 2400;   // ida completa: letras ~0–40%, desenho ~25–100%
 
     // cor do papel do desenho: média das bordas da imagem (onde quase sempre só há papel)
     function paperOf(im) {
@@ -224,54 +246,76 @@
       gl.uniform1f(u('uImgAsp'), img.naturalWidth / img.naturalHeight);
       gl.uniform3fv(u('uWhite'), paperOf(img));
       ready = true;
-      quadro.appendChild(canvas);
-      sec.style.setProperty('--asp', (img.naturalWidth / img.naturalHeight).toFixed(4));
-      sec.classList.add('has-gl');   // o CSS prende o quadro e esconde a imagem estática
-      onScroll();
+      // chegou já rolado (voltar no histórico, link com âncora): o desenho já está inteiro
+      if (window.scrollY > 2) t = 1;
+      render();
     }
 
-    function frame(now) {
-      raf = 0;
-      if (!ready || !visible) return;
+    const clamp01 = v => Math.min(1, Math.max(0, v));
+    const suave = v => v * v * (3 - 2 * v);
+
+    function render() {
+      // título: cada letra se desfaz um pouco depois da anterior, subindo e desfocando
+      const tt = clamp01(t / .4), n = letras.length, centro = (n - 1) / 2;
+      letras.forEach((l, i) => {
+        const k = suave(clamp01((tt - (i / Math.max(1, n)) * .45) / .55));
+        l.style.opacity = (1 - k).toFixed(3);
+        l.style.filter = k > .001 ? `blur(${(k * 7).toFixed(2)}px)` : '';
+        l.style.transform = k > .001
+          ? `translate(${((i - centro) * .05 * k).toFixed(3)}em, ${(-k * .35).toFixed(3)}em)` : '';
+      });
+      resto.forEach(el => { el.style.opacity = (1 - suave(clamp01(tt * 1.6))).toFixed(3); });
+      cabeca.style.pointerEvents = t > .2 ? 'none' : '';
+      if (!ready) return;
       fit(canvas, 1);
-      // o desenho se forma uma vez, no tempo (não na rolagem): 2,6 s, devagar no começo e no fim
-      if (formStart) {
-        const t = Math.min(1, (now - formStart) / 2600);
-        form = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-      }
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.uniform2f(u('uRes'), canvas.width, canvas.height);
-      gl.uniform1f(u('uForm'), form);
-      gl.uniform1f(u('uOut'), out);
-      gl.uniform1f(u('uZoom'), zoom);
+      gl.uniform1f(u('uForm'), suave(clamp01((t - .25) / .75)));
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      if (formStart && form < 1) request();
     }
-    function request() { if (!raf) raf = requestAnimationFrame(frame); }
 
-    function onScroll() {
-      const r = sec.getBoundingClientRect();
-      const vh = window.innerHeight;
-      // começa a se formar quando o quadro já ocupa a maior parte da tela
-      if (!formStart && r.top < vh * .45) formStart = performance.now();
-      // com a tela presa, o desenho avança devagar; quando a tela se solta, ele volta ao
-      // papel enquanto sobe — o texto já vem entrando por baixo, nunca fica tela vazia
-      // o quadro fica preso centrado: de topo em (vh - H)/2 até a base passar de (vh + H)/2
-      const H = quadro.offsetHeight || vh;
-      const pinTop = (vh - H) / 2;
-      const pinned = Math.min(1, Math.max(0, (pinTop - r.top) / Math.max(1, sec.offsetHeight - H)));
-      zoom = 1 + pinned * .06;
-      const saida = (vh + H) / 2;
-      const o = Math.min(1, Math.max(0, (saida - r.bottom) / (saida * .8)));
-      out = o * o * (3 - 2 * o);
-      request();
+    function animar(alvo) {
+      const de = t, ini = performance.now(), dur = DUR * Math.abs(alvo - de);
+      if (anim) cancelAnimationFrame(anim);
+      const passo = (now) => {
+        const p = clamp01((now - ini) / Math.max(1, dur));
+        t = de + (alvo - de) * (p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2);
+        render();
+        if (p < 1) anim = requestAnimationFrame(passo);
+        else { anim = 0; travaAte = performance.now() + 450; }   // absorve a inércia do trackpad
+      };
+      anim = requestAnimationFrame(passo);
     }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', request);
-    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; if (visible) request(); }).observe(sec);
+
+    // o gesto de rolar no topo da página: para baixo forma o desenho, para cima o desfaz
+    function gesto(dir, e) {
+      if (!ready || window.scrollY > 2) return;
+      if (anim || performance.now() < travaAte) { e.preventDefault(); return; }
+      if (dir > 0 && t < 1) { e.preventDefault(); animar(1); }
+      else if (dir < 0 && t > 0) { e.preventDefault(); animar(0); }
+    }
+    window.addEventListener('wheel', (e) => { if (e.deltaY) gesto(Math.sign(e.deltaY), e); }, { passive: false });
+    let toqueY = null;
+    window.addEventListener('touchstart', (e) => { toqueY = e.touches[0].clientY; }, { passive: true });
+    window.addEventListener('touchmove', (e) => {
+      if (toqueY === null) return;
+      const dy = toqueY - e.touches[0].clientY;
+      if (Math.abs(dy) > 6) gesto(Math.sign(dy), e);
+    }, { passive: false });
+    window.addEventListener('touchend', () => { toqueY = null; }, { passive: true });
+    window.addEventListener('keydown', (e) => {
+      if (e.target.closest && e.target.closest('input, textarea, select, [contenteditable]')) return;
+      const baixo = ['ArrowDown', 'PageDown', 'End', ' '], cima = ['ArrowUp', 'PageUp', 'Home'];
+      if (baixo.includes(e.key)) gesto(1, e); else if (cima.includes(e.key)) gesto(-1, e);
+    });
+    // se a página desceu por outro caminho (barra de rolagem, âncora), o desenho fica inteiro
+    window.addEventListener('scroll', () => { if (window.scrollY > 2 && t < 1 && !anim) { t = 1; render(); } }, { passive: true });
+    window.addEventListener('resize', render);
+
     // sem once: ao cruzar 700px o <picture> troca entre o desenho largo e o vertical
     img.addEventListener('load', upload);
     if (img.complete && img.naturalWidth) upload();
+    render();
   })();
 
   /* ---------- 3. mosaico: cada obra se revela em tinta ----------

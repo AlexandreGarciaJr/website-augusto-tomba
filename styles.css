@@ -1626,20 +1626,39 @@ main{ overflow-x:clip; }
 .leitura-abertura{ position:relative; }
 .leitura-quadro{ position:relative; }
 .leitura-quadro img{ display:block; width:100%; height:auto; }
-/* com o shader (shaders.js marca .has-gl): a tela fica presa enquanto o desenho
-   se forma no papel, avança devagar e se desfaz antes do texto começar */
-/* o quadro tem a altura do próprio desenho (--asp vem de shaders.js) e fica preso
-   centrado na tela; assim não sobra papel vazio acima ou abaixo dele */
-.leitura-abertura.has-gl{
-  --quadro-h:min(100svh, calc(100vw / var(--asp, 1.6)));
-  height:calc(var(--quadro-h) + 70vh);
+/* com o shader (shaders.js marca .has-gl no palco): título e desenho ocupam a mesma
+   tela; ao rolar, as letras se desfazem e o desenho se forma, e só então a página desce */
+.leitura-palco.has-gl{
+  position:relative;
+  height:calc(100vh - 4.5rem);
+  height:calc(100svh - 4.5rem);
 }
-.leitura-abertura.has-gl .leitura-quadro{
-  position:sticky;
-  top:calc((100svh - var(--quadro-h)) / 2);
-  height:var(--quadro-h);
+.leitura-palco.has-gl .leitura-cabeca{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:0;
 }
-.leitura-abertura.has-gl .leitura-quadro img{ visibility:hidden; position:absolute; }
+.leitura-palco.has-gl .leitura-abertura{ position:absolute; inset:0; }
+.leitura-palco.has-gl .leitura-quadro{ height:100%; }
+.leitura-palco.has-gl .leitura-quadro img{ visibility:hidden; position:absolute; }
+.leitura-letra{ display:inline-block; will-change:transform, opacity, filter; }
+/* convite discreto para rolar, no pé do palco */
+.leitura-convite{
+  position:absolute;
+  left:50%; bottom:clamp(1.2rem, 4vh, 2.4rem);
+  transform:translateX(-50%);
+  z-index:1;
+  font-style:italic;
+  font-weight:300;
+  font-size:.72rem;
+  letter-spacing:.22em;
+  color:var(--text-faint);
+  pointer-events:none;
+}
 .leitura-gl{ position:absolute; inset:0; width:100%; height:100%; display:block; }
 
 .leitura-texto{
