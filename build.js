@@ -15,7 +15,7 @@ const data = readJSON('data/obras.json');
 const literatura = readJSON('data/literatura.json');
 
 function readJSON(rel) { return JSON.parse(fs.readFileSync(path.join(SRC, rel), 'utf8')); }
-function read(rel) { return fs.readFileSync(path.join(SRC, rel), 'utf8'); }
+function read(rel) { return fs.readFileSync(path.join(SRC, rel), 'utf8').replace(/\r\n?/g, '\n'); }   // sempre LF: o Git no Windows pode trazer CRLF
 function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }

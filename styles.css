@@ -292,7 +292,7 @@ img{ max-width:100%; display:block; }
   inset:0;
   z-index:1;
   pointer-events:none;
-  background:radial-gradient(ellipse 78% 46% at 50% 52%,
+  background:radial-gradient(ellipse 46% 26% at 50% 50%,
     rgba(242,239,233,.72) 0%,
     rgba(242,239,233,.38) 45%,
     rgba(242,239,233,0) 74%);
@@ -333,12 +333,12 @@ img{ max-width:100%; display:block; }
   pointer-events:none;
   will-change:transform;
 }
-/* o nome como paisagem: quase de borda a borda, atravessando a faixa da imagem */
+/* o nome discreto sobre a imagem: o que interessa é a obra, não o nome */
 .hero-name{
-  font-size:clamp(3rem, 10.4vw, 10.5rem);
+  font-size:clamp(1.5rem, 2.6vw, 2.4rem);
   font-weight:400;
-  letter-spacing:.02em;
-  line-height:.95;
+  letter-spacing:.06em;
+  line-height:1.1;
   white-space:nowrap;
   color:var(--text-dark);
   opacity:0;
@@ -348,11 +348,6 @@ img{ max-width:100%; display:block; }
 .hero-word,
 .hero-letter{ display:inline-block; }
 .hero-letter{ will-change:transform, opacity; }
-/* no celular, um nome por linha, ainda maior */
-@media (max-width:640px){
-  .hero-name{ font-size:19vw; white-space:normal; line-height:.98; }
-  .hero-word{ display:block; }
-}
 .hero-tagline{
   margin-top:1.3rem;
   font-style:italic;
@@ -523,45 +518,6 @@ img{ max-width:100%; display:block; }
 @media (max-width:720px){
   .bio-grid{ grid-template-columns:1fr; }
 }
-
-/* ---------- declaração de artista ---------- */
-.declaracao{
-  margin-top:clamp(3.5rem, 9vw, 6rem);
-  padding-top:clamp(2rem, 5vw, 3.5rem);
-  border-top:1px solid var(--line-soft);
-  max-width:48ch;
-}
-@media (min-width:721px){
-  /* alinha com a coluna de texto do bio-grid (após a foto), não com a foto em si */
-  .declaracao{ margin-left:calc(260px + clamp(2rem,6vw,5rem)); }
-}
-
-.declaracao .eyebrow{ margin-bottom:2rem; }
-
-.declaracao-bloco{
-  margin:0;
-  padding:0;
-  border:none;
-}
-
-.declaracao-abertura{
-  font-family:var(--serif-display);
-  font-size:clamp(1.1rem, 2.2vw, 1.4rem);
-  font-weight:500;
-  line-height:1.55;
-  margin:0 0 1.8em;
-  color:var(--text);
-}
-
-.declaracao-bloco p{
-  font-style:italic;
-  font-weight:300;
-  font-size:.97rem;
-  line-height:1.95;
-  color:var(--text-soft);
-  margin:0 0 1em;
-}
-.declaracao-bloco p:last-child{ margin-bottom:0; }
 
 /* ---------- literatura / livro teaser ---------- */
 .split{
@@ -1298,81 +1254,6 @@ img{ max-width:100%; display:block; }
    IMPACTO — v3 (contraste: poucos momentos densos, o resto quieto)
    ============================================================ */
 
-/* ---------- declaração pausada ----------
-   A primeira frase fica presa no centro da tela e acende palavra por palavra
-   enquanto a pessoa rola: o "ma" como tempo, não só como linha.
-   Sem suporte a animation-timeline (ou com movimento reduzido), é só a frase. */
-.declaracao-pausa{
-  margin-top:clamp(5rem, 14vw, 10rem);
-  text-align:center;
-}
-.declaracao-pausa .eyebrow{ margin-bottom:2.2rem; }
-.declaracao-pausa-frase{
-  font-family:var(--serif-display);
-  font-weight:400;
-  font-size:clamp(1.9rem, 4.6vw, 3.6rem);
-  line-height:1.3;
-  letter-spacing:.01em;
-  max-width:17ch;
-  margin:0 auto;
-  color:var(--text);
-}
-/* o texto da declaração mora no mesmo quadro da frase; sem animação, vem logo abaixo dela */
-.declaracao-pausa .declaracao-bloco{
-  max-width:46ch;
-  margin:clamp(3rem, 8vw, 5rem) auto 0;
-}
-.declaracao-pausa .declaracao-abertura{
-  font-size:clamp(1.25rem, 2.5vw, 1.75rem);
-  font-style:normal;
-  color:var(--text);
-  margin-bottom:1.4em;
-}
-.declaracao-pausa .declaracao-bloco p:not(.declaracao-abertura){ font-size:1.02rem; }
-@supports (animation-timeline: view()){
-  @media (prefers-reduced-motion: no-preference){
-    .declaracao-pausa{
-      height:400vh;
-      view-timeline:--pausa block;
-    }
-    /* frase e texto ocupam o mesmo lugar: um se dissolve, o outro surge */
-    .pausa-palco{ display:grid; align-items:center; }
-    .pausa-palco > *{ grid-area:1 / 1; }
-    .declaracao-pausa .declaracao-bloco{ margin-top:0; }
-    .declaracao-pausa-frase{
-      animation:pausa-sai linear both;
-      animation-timeline:--pausa;
-      animation-range:contain 44% contain 54%;
-    }
-    .declaracao-pausa .declaracao-bloco > *{
-      animation:pausa-entra linear both;
-      animation-timeline:--pausa;
-      animation-range:contain calc(var(--a) * 1%) contain calc(var(--b) * 1%);
-    }
-    .declaracao-pausa-quadro{
-      position:sticky;
-      top:0;
-      height:100vh;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-    }
-    .pausa-palavra{
-      opacity:.14;
-      animation:palavra-acende linear both;
-      animation-timeline:--pausa;
-      animation-range:contain calc(var(--a) * 1%) contain calc(var(--b) * 1%);
-    }
-  }
-}
-@keyframes palavra-acende{ to{ opacity:1; } }
-@keyframes pausa-sai{ to{ opacity:0; filter:blur(8px); transform:scale(1.03); } }
-@keyframes pausa-entra{
-  from{ opacity:0; filter:blur(4px); transform:translateY(.6em); }
-  to{ opacity:1; filter:none; transform:none; }
-}
-
 /* ---------- mosaico revelado como papel ----------
    Cada obra se descobre de cima para baixo, como papel de seda puxado,
    presa à rolagem; obras mais altas se revelam mais devagar. */
@@ -1396,17 +1277,16 @@ img{ max-width:100%; display:block; }
   margin:clamp(2.2rem, 5vw, 3.6rem) 0 clamp(1.4rem, 3.5vw, 2.4rem);
   font-family:var(--serif-display);
   font-weight:400;
-  font-size:min(10.1vw, 8.1rem);
+  font-size:clamp(1rem, 1.5vw, 1.3rem);
   line-height:1;
-  letter-spacing:.01em;
+  letter-spacing:.08em;
   white-space:nowrap;
   text-align:center;
-  color:transparent;
-  -webkit-text-stroke:1px var(--line);
+  color:var(--text-soft);
   user-select:none;
 }
 /* o nome que se dissolveu na abertura se recompõe no fim:
-   o contorno ganha tinta (diluída) conforme a pessoa chega ao fim da página */
+   o nome ganha tinta conforme a pessoa chega ao fim da página */
 @supports (animation-timeline: view()){
   @media (prefers-reduced-motion: no-preference){
     .footer-signature{
@@ -1418,7 +1298,7 @@ img{ max-width:100%; display:block; }
 }
 @keyframes nome-recompoe{
   from{ color:transparent; }
-  to{ color:rgba(155,145,137,.32); }
+  to{ color:var(--text-soft); }
 }
 
 /* ---------- respiração desigual ----------
@@ -1448,22 +1328,6 @@ img{ max-width:100%; display:block; }
   display:block;
 }
 .hero-image-band.has-gl .hero-photo{ visibility:hidden; }
-
-/* declaração: a fumaça fica atrás da frase, na largura da janela */
-.declaracao-pausa-quadro.has-gl{ position:relative; isolation:isolate; }
-@supports (animation-timeline: view()){
-  @media (prefers-reduced-motion: no-preference){
-    .declaracao-pausa-quadro.has-gl{ position:sticky; }
-  }
-}
-.pausa-gl{
-  position:absolute;
-  top:0;
-  height:100%;
-  z-index:-1;
-  display:block;
-  pointer-events:none;
-}
 
 /* os slides laterais de entrada (reveal-left/right) não podem criar rolagem horizontal
    antes de aparecer; clip (e não hidden) para não quebrar os elementos sticky */
@@ -1716,6 +1580,46 @@ main{ overflow-x:clip; }
    (1px, a cor da linha "ma") que se abre de cima para baixo com a rolagem.
    ============================================================ */
 .manifesto .wrap{ text-align:center; }
+/* fumaça de sumi (fumaca.js): o canvas fica preso à altura da tela enquanto o texto
+   passa por cima; é transparente, então o grão do papel da página continua aparecendo */
+.manifesto{ position:relative; isolation:isolate; }
+.manifesto-fundo{ position:absolute; inset:0; z-index:-1; pointer-events:none; }
+.manifesto-gl{ position:sticky; top:0; display:block; width:100%; height:100vh; }
+/* os textos surgem presos à rolagem, como tinta assentando no papel: saem do desfoque e
+   sobem em onda; voltando a rolagem, somem na ordem inversa. Sem suporte ou com movimento
+   reduzido, é só o texto */
+.acende-junto{ display:inline-block; white-space:nowrap; }
+.acende-letra, .acende-palavra{ display:inline-block; }
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    [data-acende]{ view-timeline:--acende block; }
+    .acende-letra, .acende-palavra{
+      animation-timing-function:cubic-bezier(.22,.61,.36,1);
+      animation-fill-mode:both;
+      animation-timeline:--acende;
+      animation-range:cover calc(var(--a) * 1%) cover calc(var(--b) * 1%);
+    }
+    .acende-letra{ animation-name:acende-letra; }
+    .acende-palavra{ animation-name:acende-palavra; }
+    .manifesto-nome{
+      animation:nome-abre linear both;
+      animation-timeline:view();
+      animation-range:cover 8% cover 34%;
+    }
+  }
+}
+@keyframes acende-letra{
+  from{ opacity:0; filter:blur(14px); transform:translateY(.4em) scale(1.14); }
+  to{ opacity:1; filter:blur(0); transform:none; }
+}
+@keyframes acende-palavra{
+  from{ opacity:0; filter:blur(10px); transform:translateY(.7em); }
+  to{ opacity:1; filter:blur(0); transform:none; }
+}
+@keyframes nome-abre{
+  from{ opacity:0; letter-spacing:.7em; }
+  to{ opacity:1; letter-spacing:.18em; }
+}
 .manifesto-titulo{
   font-weight:400;
   font-size:clamp(2.2rem, 5.2vw, 4rem);
@@ -1786,8 +1690,6 @@ main{ overflow-x:clip; }
 }
 @keyframes corte-abre{ from{ transform:scaleY(0); } to{ transform:scaleY(1); } }
 @keyframes ponto-cai{ from{ transform:scale(0); } to{ transform:scale(1); } }
-/* a declaração agora abre a própria seção */
-.section > .wrap > .declaracao-pausa:first-child{ margin-top:0; }
 
 /* ============================================================
    CONTO — sinopse, primeiras linhas e download pela newsletter
@@ -1877,9 +1779,6 @@ main{ overflow-x:clip; }
   color:var(--text-faint);
 }
 .download-form[hidden]{ display:none; }
-/* no itálico a ponta das letras passa da caixa: a máscara ganha folga para não cortá-la */
-.manifesto-texto--citacao .line-mask,
-.manifesto-coda .line-mask{ padding-left:.14em; padding-right:.14em; margin-left:-.14em; margin-right:-.14em; }
 
 /* ---------- mosaico de 7 obras (data-n="7", vindo do build) ----------
    Posições explícitas (linha início / coluna início / linha fim / coluna fim): todas as

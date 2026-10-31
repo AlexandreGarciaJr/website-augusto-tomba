@@ -81,7 +81,7 @@
       </div>
       <div class="hero-vignette" aria-hidden="true"></div>
       <div class="hero-image-content">
-        <!-- o nome como paisagem: as letras se afastam e se dissolvem ao rolar (script.js) -->
+        <!-- o nome discreto: as letras se afastam e se dissolvem ao rolar (script.js) -->
         <h1 class="hero-name"><span class="hero-word">Augusto</span> <span class="hero-word">Tomba</span></h1>
         <p class="hero-tagline">[ palavra · palavra · palavra ]</p>
       </div>
@@ -122,59 +122,33 @@
       <div class="ma"></div>
     </div>
 
-    <section class="section">
-      <div class="wrap">
-        <!-- Declaração de artista: tudo acontece com a tela presa — a frase acende
-             palavra por palavra, se dissolve, e no lugar dela surge o texto da declaração;
-             só depois a página desce -->
-        <div class="declaracao-pausa">
-          <div class="declaracao-pausa-quadro">
-            <span class="eyebrow">declaração de artista</span>
-            <div class="pausa-palco">
-              <p class="declaracao-pausa-frase">Antes do traço ou da palavra, a dissolução.</p>
-              <blockquote class="declaracao-bloco">
-                <p class="declaracao-abertura">Esboçar o rio exige a humildade da pele molhada.</p>
-                <p>Navego entre a literatura e as artes pictóricas. Bebi de fontes diversas e distantes, da iconografia
-                  bizantina à ilustração científica, da caligrafia oriental ao surrealismo.</p>
-                <p>Na escrita, cultivo um realismo do absurdo.</p>
-                <p>Dessa síntese, busco equilíbrio na memória e entendimento no improvável.</p>
-              </blockquote>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="wrap">
-      <div class="ma"></div>
-    </div>
-
     <!-- MANIFESTO: o norteador da pintura e da escrita. Três movimentos separados por
-         um corte fino que se abre com a rolagem; o "ponto" (punctum) abre o texto -->
+         um corte fino que se abre com a rolagem; o "ponto" (punctum) abre o texto.
+         Os textos surgem presos à rolagem, e somem ao voltar. Ao fundo, fumaça de sumi que o cursor sopra (fumaca.js) -->
     <section class="section manifesto breath-wide" id="manifesto">
       <div class="wrap">
         <span class="eyebrow">manifesto artístico</span>
-        <h2 class="section-title manifesto-titulo">A Ferida como Forma</h2>
+        <h2 class="section-title manifesto-titulo" data-acende="letra">A Ferida como Forma</h2>
         <span class="manifesto-ponto" aria-hidden="true"></span>
 
         <div class="manifesto-movimento">
           <p class="manifesto-nome"><span class="manifesto-num">I.</span> O ponto</p>
-          <p class="manifesto-texto manifesto-texto--citacao" data-split>Punctum, diz Barthes: o detalhe mínimo que fere antes de qualquer interpretação. Para perturbar, um ponto basta.</p>
+          <p class="manifesto-texto manifesto-texto--citacao" data-acende>Punctum, diz Barthes: o detalhe mínimo que fere antes de qualquer interpretação. Para perturbar, um ponto basta.</p>
         </div>
 
         <span class="manifesto-corte" aria-hidden="true"></span>
 
         <div class="manifesto-movimento">
           <p class="manifesto-nome"><span class="manifesto-num">II.</span> A origem</p>
-          <p class="manifesto-texto" data-split>A dor continua dor, o corte continua corte. Muda a matéria, mas ela guarda a origem. A carbonização transforma a madeira, o osso e o caroço sem apagar o que foram. Na origem existe uma memória.</p>
+          <p class="manifesto-texto" data-acende>A dor continua dor, o corte continua corte. Muda a matéria, mas ela guarda a origem. A carbonização transforma a madeira, o osso e o caroço sem apagar o que foram. Na origem existe uma memória.</p>
         </div>
 
         <span class="manifesto-corte" aria-hidden="true"></span>
 
         <div class="manifesto-movimento">
           <p class="manifesto-nome"><span class="manifesto-num">III.</span> Pintura e escrita</p>
-          <p class="manifesto-texto" data-split>Pinto o traço, a mancha, a fenda que concentra o impacto. Escrevo a palavra que corta. Elimino o que não fura. Não explico nem consolo. Deixo as lacunas para quem olha ou lê, e a ferida permanece como marca.</p>
-          <p class="manifesto-coda" data-split>Um figo partido sobre madeira antiga. O fruto apenas permanece. Nenhuma elevação.</p>
+          <p class="manifesto-texto" data-acende>Pinto o traço, a mancha, a fenda que concentra o impacto. Escrevo a palavra que corta. Elimino o que não fura. Não explico nem consolo. Deixo as lacunas para quem olha ou lê, e a ferida permanece como marca.</p>
+          <p class="manifesto-coda" data-acende>Um figo partido sobre madeira antiga. O fruto apenas permanece. Nenhuma elevação.</p>
         </div>
       </div>
     </section>
@@ -389,7 +363,7 @@
         </div>
       </div>
 
-      <!-- assinatura: o nome em traço fino fecha o site, como o fim de um rolo -->
+      <!-- assinatura: o nome, discreto, fecha o site, como o fim de um rolo -->
       <div class="ma"></div>
       <p class="footer-signature" aria-hidden="true">Augusto Tomba</p>
 
@@ -419,6 +393,7 @@
     </div>
   </div>
   <script src="shaders.js" defer></script>
+  <script src="fumaca.js" defer></script>
 
   <script src="script.js"></script>
 </body>

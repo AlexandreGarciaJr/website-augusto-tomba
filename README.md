@@ -2,7 +2,7 @@
 
 # Augusto Tomba
 
-*Antes do traço ou da palavra, a dissolução.*
+*Para perturbar, um ponto basta.*
 
 Site do artista visual e escritor Augusto Tomba: pintura a carvão, a técnica Nigretura e contos.
 
@@ -24,7 +24,7 @@ Site do artista visual e escritor Augusto Tomba: pintura a carvão, a técnica N
 
 **Augusto Tomba** vive em São Paulo. Pinta em carvão, têmpera de ovo e óleo, criou a **Nigretura** (uma técnica de pintura com tinta feita da carbonização de matéria orgânica) e escreve ficção.
 
-O site reúne a obra dele em um só lugar: biografia, declaração de artista, o manifesto *A Ferida como Forma*, os contos, as coleções e a técnica. Ele foi pensado para parecer **papel**, não interface: fundo de papel com grão, tinta de carvão e muito espaço vazio.
+O site reúne a obra dele em um só lugar: biografia, o manifesto *A Ferida como Forma*, os contos, as coleções e a técnica. Ele foi pensado para parecer **papel**, não interface: fundo de papel com grão, tinta de carvão e muito espaço vazio.
 
 Foi construído em etapas. Cada etapa termina com verificação em navegador real e screenshots em quatro larguras de tela.
 
@@ -50,25 +50,22 @@ Três regras guiam tudo:
 |---|---|
 | **Abertura** | O nome sobre uma pintura. Ao rolar, a tela fica presa enquanto a pintura se dissolve em grão de carvão e as letras do nome se afastam. Sob o cursor, a imagem ondula como tinta em papel molhado |
 | **Bio** | Retrato e apresentação, com o texto entrando palavra por palavra |
-| **Declaração de artista** | Com a tela presa, a frase "Antes do traço ou da palavra, a dissolução." acende palavra por palavra, se dissolve, e no lugar dela surge a declaração. Fumaça de sumi se move ao fundo |
-| **Manifesto** | *A Ferida como Forma*, em três movimentos. Um único ponto de tinta (o *punctum*) abre o texto, e cortes verticais finos se abrem entre as partes |
+| **Manifesto** | *A Ferida como Forma*, em três movimentos. Um único ponto de tinta (o *punctum*) abre o texto, e cortes verticais finos se abrem entre as partes. Os textos surgem presos à rolagem e somem ao voltar. Ao fundo, fumaça de sumi que o cursor sopra e espalha |
 | **Literatura** | Os contos, cada um com página própria. Ao rolar, o título se desfaz letra a letra e o desenho do conto se forma em manchas de carvão. Depois vêm sinopse, primeiras linhas e o conto completo em PDF para quem assina a newsletter |
 | **Coleções** | Texto de apresentação e um mosaico em que cada obra se revela em tinta ao entrar na tela. Uma legenda acompanha o cursor, a obra abre num lightbox e atravessa até a sua própria página |
 | **Nigretura** | O dossiê da técnica: definição, nome, nota do artista, relação com a tradição, processo e diferenciação |
-| **Rodapé** | O nome que se dissolveu na abertura volta a se compor, em traço fino, no fim da página |
+| **Rodapé** | O nome que se dissolveu na abertura volta a se compor, discreto, no fim da página |
 
 ## Destaques
 
-**Shaders em WebGL puro, sem bibliotecas.** Quatro efeitos dividem o mesmo ruído de carvão:
+**Shaders em WebGL puro, sem bibliotecas.** Quatro efeitos de tinta e carvão:
 
 - **Abertura:** a pintura se dissolve com a rolagem, com uma borda de tinta onde o papel aparece;
-- **Declaração:** fumaça de tinta diluída se movendo atrás da frase;
+- **Manifesto:** uma simulação de fluido (*stable fluids*) em que tinta diluída sobe atrás do texto. O cursor sopra, e a fumaça se dispersa, enrola e volta a preencher o espaço;
 - **Coleções:** um único canvas desenha uma folha de papel sobre cada obra e a desfaz quando ela entra na tela. Quando todas aparecem, o canvas sai de cena;
 - **Contos:** o desenho é impresso no papel da página. O shader mede a cor do papel da própria imagem e a converte no papel do site, sem moldura.
 
 **A rolagem conduz a narrativa.** Nas aberturas dos contos, a página não desce até o desenho estar formado. Cada gesto avança um pouco, com limite de velocidade, então rolar rápido não pula nada. Para cima, o efeito volta ao título. Em todo o site, mouse e trackpad ganham uma rolagem suave própria; no toque fica a rolagem nativa.
-
-![Declaração de artista: a frase acende palavra por palavra com a tela presa](.github/preview-declaracao.jpg)
 
 **Textos que entram como escrita.** Títulos e frases chegam palavra por palavra por máscara, imagens se descobrem como papel puxado, e a linha *ma* se desenha conforme a rolagem. Tudo com animações ligadas à rolagem (`animation-timeline`) e `IntersectionObserver`.
 
@@ -150,7 +147,7 @@ Edite `src/data/obras.json` e rode `node build.js`. Cada obra ganha a sua págin
 |---|---|---|
 | **1. Revisão** | Revisão visual em quatro larguras de tela e correção do que estava quebrado | ✅ |
 | **2. Base** | Transições, menu acessível, lightbox, contraste AA e mosaico sem buracos | ✅ |
-| **3. Estrutura** | Gerador estático, página por obra, coleções, SEO e o nome como paisagem na abertura | ✅ |
+| **3. Estrutura** | Gerador estático, página por obra, coleções, SEO e a abertura com o nome | ✅ |
 | **4. Movimento** | A linha *ma* conduzindo as entradas, a obra atravessando a página e o nome se recompondo no rodapé | ✅ |
 | **5. Shaders** | Dissolução da abertura, tinta sob o cursor, fumaça de sumi e obras se revelando em tinta | ✅ |
 | **6. Literatura** | Contos com página própria, abertura guiada pela rolagem e download pela newsletter | ✅ |
@@ -172,6 +169,7 @@ Edite `src/data/obras.json` e rode `node build.js`. Cada obra ganha a sua págin
 ├── styles.css               todo o visual: tokens, layout e animações
 ├── script.js                menu, reveals, lightbox, rolagem suave e newsletter
 ├── shaders.js               os efeitos em WebGL
+├── fumaca.js                a simulação de fluido do manifesto (só na home)
 ├── literatura/              imagens e PDFs dos contos (+ páginas geradas)
 ├── obras/                   páginas geradas, uma por obra
 ├── index.html, quadros.html, livro.html, sitemap.xml   (gerados)

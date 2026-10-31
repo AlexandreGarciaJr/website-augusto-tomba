@@ -1,7 +1,7 @@
 // AUGUSTO TOMBA — shaders (WebGL puro, sem bibliotecas)
 // 1. Hero: a imagem se dissolve em grão de carvão conforme a rolagem e,
 //    sob o cursor (ou o dedo), ondula como tinta em papel molhado.
-// 2. Declaração pausada: fumaça de sumi, tinta diluída se movendo atrás da frase.
+// (a fumaça do manifesto é uma simulação de fluido e fica em fumaca.js)
 // Sem WebGL ou com movimento reduzido, nada disso roda e fica o site estático.
 (function () {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -430,64 +430,5 @@
       canvas.style.visibility = visible ? 'visible' : 'hidden';
       if (visible) request();
     }, { rootMargin: '0px 0px 10% 0px' }).observe(grid);
-  })();
-
-  /* ---------- 2. declaração: fumaça de sumi ---------- */
-  (function smoke() {
-    const pausa = document.querySelector('.declaracao-pausa');
-    const quadro = pausa && pausa.querySelector('.declaracao-pausa-quadro');
-    if (!quadro) return;
-
-    const canvas = document.createElement('canvas');
-    canvas.className = 'pausa-gl';
-    canvas.setAttribute('aria-hidden', 'true');
-    const ctx = createGL(canvas, `precision mediump float; varying vec2 vUv;
-      uniform vec2 uRes; uniform float uT, uP;
-      ${PAPER} ${NOISE}
-      void main(){
-        vec2 asp = vec2(uRes.x/uRes.y, 1.);
-        vec2 p = vUv*asp*1.6;
-        float w = fbm(p + vec2(uT*.03, -uT*.05));
-        float f = fbm(p*1.3 + w*2.2 + vec2(-uT*.02, uT*.04));
-        float a = smoothstep(.45, .85, f) * (.06 + .09*uP);
-        a *= smoothstep(0., .22, vUv.y) * smoothstep(1., .78, vUv.y);   // some nas bordas, sem corte
-        float g = (hash(floor(gl_FragCoord.xy)) - .5) * .015;
-        gl_FragColor = vec4(mix(PAPER, INK, a) + g, 1.);
-      }`);
-    if (!ctx) return;
-    const { gl, u } = ctx;
-    quadro.prepend(canvas);
-    quadro.classList.add('has-gl');
-
-    let visible = false, raf = 0;
-    const t0 = performance.now();
-
-    // o canvas ocupa a largura da janela (sem a barra de rolagem), não só a coluna de texto
-    function place() {
-      const vw = document.documentElement.clientWidth;
-      const left = quadro.getBoundingClientRect().left;
-      canvas.style.width = vw + 'px';
-      canvas.style.left = -left + 'px';
-    }
-    function frame(now) {
-      raf = 0;
-      if (!visible) return;
-      fit(canvas, .5);   // fumaça é macia: meia resolução basta
-      const r = pausa.getBoundingClientRect();
-      const span = Math.max(1, r.height - window.innerHeight);
-      const p = Math.min(1, Math.max(0, -r.top / span));
-      gl.viewport(0, 0, canvas.width, canvas.height);
-      gl.uniform2f(u('uRes'), canvas.width, canvas.height);
-      gl.uniform1f(u('uT'), (now - t0) / 1000);
-      gl.uniform1f(u('uP'), p);
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      raf = requestAnimationFrame(frame);
-    }
-    window.addEventListener('resize', place);
-    place();
-    new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
-      if (visible && !raf) raf = requestAnimationFrame(frame);
-    }).observe(pausa);
   })();
 })();

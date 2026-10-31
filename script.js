@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // descobrem como papel; textos soltos entram com o .reveal de sempre
   const ANIMATED = '.reveal, .reveal-left, .reveal-right, .stagger, .split-reveal';
   const outsideAnimated = (el) => !el.parentElement || !el.parentElement.closest(ANIMATED);
-  const skip = (el) => el.closest('.hero, .site-footer, .lightbox, .menu-overlay, .declaracao-pausa');
+  const skip = (el) => el.closest('.hero, .site-footer, .lightbox, .menu-overlay, [data-acende]');
 
   function splitWords(el) {
     let i = 0;
@@ -73,11 +73,33 @@ document.addEventListener('DOMContentLoaded', () => {
     splitWords(title);
     title.classList.add('split-reveal');
   });
+  /* textos presos à rolagem: cada palavra (ou letra, com data-acende="letra") recebe sua
+     faixa (--a → --b, em %) e surge em onda; ao voltar a rolagem, some na ordem inversa.
+     A animação em si é CSS (animation-timeline), aqui só se divide o texto */
+  document.querySelectorAll('main [data-acende]').forEach(el => {
+    const texto = el.textContent.trim();
+    const palavras = texto.split(/\s+/);
+    if (el.dataset.acende === 'letra') {
+      const faixa = 16 / texto.replace(/\s/g, '').length;
+      let n = 0;
+      el.setAttribute('aria-label', texto);
+      el.innerHTML = palavras.map(p => '<span class="acende-junto" aria-hidden="true">' + Array.from(p).map(ch => {
+        const a = (4 + n++ * faixa).toFixed(1);
+        return `<span class="acende-letra" style="--a:${a};--b:${(+a + 16).toFixed(1)}">${ch}</span>`;
+      }).join('') + '</span>').join(' ');
+      return;
+    }
+    const faixa = 26 / palavras.length;
+    el.innerHTML = palavras.map((p, i) => {
+      const a = (12 + i * faixa).toFixed(1);
+      return `<span class="acende-palavra" style="--a:${a};--b:${(+a + 15).toFixed(1)}">${p}</span>`;
+    }).join(' ');
+  });
   document.querySelectorAll('main .ph:not(.obra-imagem)').forEach(ph => {
     if (skip(ph) || ph.closest('.mosaico')) return;
     ph.classList.add('img-reveal');
   });
-  document.querySelectorAll('main .eyebrow, main .lede, main .back-link, main .colecao-intro-corpo > p, main .declaracao-bloco > p').forEach(el => {
+  document.querySelectorAll('main .eyebrow, main .lede, main .back-link, main .colecao-intro-corpo > p').forEach(el => {
     if (skip(el) || !outsideAnimated(el)) return;
     el.classList.add('reveal');
   });
@@ -102,24 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
     revealEls.forEach(el => el.classList.add('is-visible'));
   }
 
-  /* declaração pausada: cada palavra (e depois cada parágrafo da declaração) recebe
-     sua faixa de rolagem (--a → --b, em %); a animação em si é CSS (animation-timeline).
-     0–41%: a frase acende · 44–54%: ela se dissolve · 54–88%: o texto surge · resto: pausa */
-  document.querySelectorAll('.declaracao-pausa-frase').forEach(frase => {
-    const words = frase.textContent.trim().split(/\s+/);
-    const span = 32 / words.length;
-    frase.setAttribute('aria-label', frase.textContent.trim());
-    frase.innerHTML = words.map((w, i) => {
-      const a = (3 + i * span).toFixed(1);
-      const b = (3 + (i + 1) * span + 6).toFixed(1);
-      return `<span class="pausa-palavra" aria-hidden="true" style="--a:${a};--b:${b}">${w}</span>`;
-    }).join(' ');
-  });
-  document.querySelectorAll('.declaracao-pausa .declaracao-bloco > *').forEach((p, k) => {
-    p.style.setProperty('--a', 54 + k * 8);
-    p.style.setProperty('--b', 64 + k * 8);
-  });
-
   /* entrada do hero ao carregar */
   requestAnimationFrame(() => {
     setTimeout(() => document.body.classList.add('is-loaded'), 80);
@@ -141,9 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- parallax do hero, em camadas ----------
      Três camadas se movem em velocidades diferentes, criando profundidade
      real (não só um deslocamento): a imagem desliza e ganha um zoom sutil
-     enquanto desfoca progressivamente — uma "dissolução" na neblina, eco
-     direto da Declaração de Artista ("Antes do traço ou da palavra, a
-     dissolução"). O texto (nome/tagline) se move numa velocidade própria,
+     enquanto desfoca progressivamente — uma "dissolução" na neblina.
+     O texto (nome/tagline) se move numa velocidade própria,
      mais lenta que o fundo, separando visualmente os dois planos. */
 
   const parallaxEl = document.querySelector('[data-parallax]');
@@ -157,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
     parallaxEl.addEventListener('animationend', () => parallaxEl.classList.add('is-emerged'), { once: true });
   }
 
-  /* o nome como paisagem: cada letra vira um span para poder se afastar e se
+  /* o nome: cada letra vira um span para poder se afastar e se
      dissolver ao rolar (da esquerda para a direita). O h1 mantém o nome inteiro
      como rótulo acessível. */
   const heroNameEl = document.querySelector('.hero-name');
