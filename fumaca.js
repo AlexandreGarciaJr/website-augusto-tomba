@@ -44,16 +44,18 @@
 
     const dbg = gl.getExtension('WEBGL_debug_renderer_info');
     const gpu = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : '';
-    if (!forcar && /swiftshader|llvmpipe|software|softpipe|basic render/i.test(gpu)) return;
+    // ao desistir, devolve o contexto na hora (o navegador tem um limite de contextos WebGL)
+    const perder = () => { const e = gl.getExtension('WEBGL_lose_context'); if (e) e.loseContext(); };
+    if (!forcar && /swiftshader|llvmpipe|software|softpipe|basic render/i.test(gpu)) { perder(); return; }
 
     // textura em ponto flutuante (half float)
     let fmt;
     if (gl2) {
-      if (!gl.getExtension('EXT_color_buffer_float') && !gl.getExtension('EXT_color_buffer_half_float')) return;
+      if (!gl.getExtension('EXT_color_buffer_float') && !gl.getExtension('EXT_color_buffer_half_float')) { perder(); return; }
       fmt = { interno: gl.RGBA16F, formato: gl.RGBA, tipo: gl.HALF_FLOAT };
     } else {
       const hf = gl.getExtension('OES_texture_half_float');
-      if (!hf || !gl.getExtension('OES_texture_half_float_linear')) return;
+      if (!hf || !gl.getExtension('OES_texture_half_float_linear')) { perder(); return; }
       fmt = { interno: gl.RGBA, formato: gl.RGBA, tipo: hf.HALF_FLOAT_OES };
     }
 
@@ -118,7 +120,7 @@
         for (let i = 0; i < n; i++) { const inf = gl.getActiveUniform(p, i); u[inf.name] = gl.getUniformLocation(p, inf.name); }
         P[k] = { p, u };
       }
-    } catch (e) { console.warn(e); return; }
+    } catch (e) { console.warn(e); perder(); return; }
 
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
@@ -175,7 +177,7 @@
     medir();
     // confirma que dá para renderizar em half float (alguns celulares mentem)
     gl.bindFramebuffer(gl.FRAMEBUFFER, vel.ler.f);
-    if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) { fundo.remove(); return; }
+    if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) { fundo.remove(); perder(); return; }
 
     function usar(pr, destino, tx) {
       gl.useProgram(pr.p);

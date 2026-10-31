@@ -1,6 +1,24 @@
 // AUGUSTO TOMBA — wireframe v1
 document.addEventListener('DOMContentLoaded', () => {
 
+  /* as setas dos links viram um elemento próprio, para o hover poder animá-las */
+  document.querySelectorAll('.cta, .escrito-ler, .back-link, .btn, .footer-col a').forEach(el => {
+    Array.from(el.childNodes).forEach(no => {
+      if (no.nodeType !== 3 || !/[→←↓]/.test(no.textContent)) return;
+      const frag = document.createDocumentFragment();
+      no.textContent.split(/([→←↓])/).forEach(parte => {
+        if (!parte) return;
+        if (!/[→←↓]/.test(parte)) { frag.appendChild(document.createTextNode(parte)); return; }
+        const seta = document.createElement('span');
+        seta.className = 'seta' + (parte === '←' ? ' seta--volta' : parte === '↓' ? ' seta--baixo' : '');
+        seta.setAttribute('aria-hidden', 'true');
+        seta.textContent = parte;
+        frag.appendChild(seta);
+      });
+      no.replaceWith(frag);
+    });
+  });
+
   /* links marcados aria-disabled não devem ser ativáveis nem por mouse nem por teclado */
   document.querySelectorAll('a[aria-disabled="true"]').forEach(link => {
     link.setAttribute('tabindex', '-1');

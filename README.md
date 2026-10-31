@@ -51,9 +51,10 @@ Três regras guiam tudo:
 | **Abertura** | O nome sobre uma pintura. Ao rolar, a tela fica presa enquanto a pintura se dissolve em grão de carvão e as letras do nome se afastam. Sob o cursor, a imagem ondula como tinta em papel molhado |
 | **Bio** | Retrato e apresentação, com o texto entrando palavra por palavra |
 | **Manifesto** | *A Ferida como Forma*, em três movimentos. Um único ponto de tinta (o *punctum*) abre o texto, e cortes verticais finos se abrem entre as partes. Os textos surgem presos à rolagem e somem ao voltar. Ao fundo, fumaça de sumi que o cursor sopra e espalha |
-| **Literatura** | Os contos, cada um com página própria. Ao rolar, o título se desfaz letra a letra e o desenho do conto se forma em manchas de carvão. Depois vêm sinopse, primeiras linhas e o conto completo em PDF para quem assina a newsletter |
+| **Literatura** | Contos e livros, na home e numa página própria. Cada conto tem sua página. Ao rolar, o título se desfaz letra a letra e o desenho do conto se forma em manchas de carvão. Depois vêm sinopse, primeiras linhas e o conto completo em PDF para quem assina a newsletter |
 | **Coleções** | Texto de apresentação e um mosaico em que cada obra se revela em tinta ao entrar na tela. Uma legenda acompanha o cursor, a obra abre num lightbox e atravessa até a sua própria página |
 | **Nigretura** | O dossiê da técnica: definição, nome, nota do artista, relação com a tradição, processo e diferenciação |
+| **Recursos para Artistas** | Quatro guias do artista em PDF, para baixar: química da arte, segurança no ateliê, certificado e conservação, e direito de sequência |
 | **Rodapé** | O nome que se dissolveu na abertura volta a se compor, discreto, no fim da página |
 
 ## Destaques
@@ -107,7 +108,7 @@ O site é HTML puro, mas não é escrito à mão página por página. Um gerador
 
 ```text
 src/data/*.json ─┐
-src/pages/*.html ├──► node build.js ──► index.html, quadros.html, livro.html
+src/pages/*.html ├──► node build.js ──► index.html, quadros.html, literatura.html
 src/partials/    ┘                      obras/<obra>.html   (uma por obra)
                                         literatura/<conto>.html   (uma por conto)
                                         sitemap.xml
@@ -163,7 +164,7 @@ Edite `src/data/obras.json` e rode `node build.js`. Cada obra ganha a sua págin
 │   │   ├── obras.json       coleções e fichas das obras
 │   │   ├── literatura.json  contos
 │   │   └── site.json        nome, endereço e descrição
-│   ├── pages/               home, quadros, livro e os modelos de obra e conto
+│   ├── pages/               home, quadros, literatura e os modelos de obra e conto
 │   └── partials/            cabeçalho, menu, rodapé e lightbox
 ├── build.js                 gerador estático (sem dependências)
 ├── styles.css               todo o visual: tokens, layout e animações
@@ -171,8 +172,9 @@ Edite `src/data/obras.json` e rode `node build.js`. Cada obra ganha a sua págin
 ├── shaders.js               os efeitos em WebGL
 ├── fumaca.js                a simulação de fluido do manifesto (só na home)
 ├── literatura/              imagens e PDFs dos contos (+ páginas geradas)
+├── recursos/                PDFs para artistas
 ├── obras/                   páginas geradas, uma por obra
-├── index.html, quadros.html, livro.html, sitemap.xml   (gerados)
+├── index.html, quadros.html, literatura.html, sitemap.xml   (gerados)
 └── .github/                 imagens deste README
 ```
 

@@ -231,7 +231,6 @@ img{ max-width:100%; display:block; }
   padding:.55em 2em;
   transition:opacity .3s;
 }
-.menu-list a:hover{ opacity:.5; }
 .menu-list .current{ font-style:italic; opacity:.45; }
 
 /* ---------- hero ---------- */
@@ -548,7 +547,6 @@ img{ max-width:100%; display:block; }
   padding-bottom:.15em;
   transition:opacity .3s, gap .3s;
 }
-.cta:hover{ opacity:.55; gap:.9em; }
 
 .btn{
   display:inline-block;
@@ -563,7 +561,6 @@ img{ max-width:100%; display:block; }
   cursor:pointer;
   transition:background .35s var(--ease), color .35s var(--ease);
 }
-.btn:hover{ background:var(--text); color:var(--bg); }
 .btn-row{
   display:flex; flex-wrap:wrap; gap:.9rem;
   margin-top:1.6rem;
@@ -874,7 +871,7 @@ img{ max-width:100%; display:block; }
   font-style:italic;
 }
 
-/* ---------- banner interno (livro / quadro) ---------- */
+/* ---------- banner interno (literatura / quadro) ---------- */
 .page-banner{
   padding-top:calc(var(--section-pad) + 3rem);
   padding-bottom:var(--section-pad);
@@ -885,7 +882,6 @@ img{ max-width:100%; display:block; }
   color:var(--text-soft);
   margin-bottom:2.4rem;
 }
-.back-link:hover{ color:var(--text); }
 
 /* ---------- rodapé ---------- */
 .site-footer{
@@ -916,7 +912,6 @@ img{ max-width:100%; display:block; }
 }
 .footer-col ul{ list-style:none; margin:0; padding:0; }
 .footer-col li{ margin-bottom:.6em; font-size:.92rem; }
-.footer-col a:hover{ opacity:.55; }
 .footer-bottom{
   border-top:1px solid var(--line-soft);
   padding-top:1.6rem;
@@ -1217,7 +1212,6 @@ img{ max-width:100%; display:block; }
   opacity:.55;
   transition:color .3s var(--ease), opacity .3s var(--ease);
 }
-.mosaico-index a:hover{ color:var(--text); opacity:1; }
 .mosaico-index a.is-current{ color:var(--text); opacity:1; font-weight:500; }
 @media (max-width:1240px){ .mosaico-index{ display:none; } }
 
@@ -1244,7 +1238,6 @@ img{ max-width:100%; display:block; }
   padding-bottom:.15em;
   transition:color .3s var(--ease), border-color .3s var(--ease);
 }
-.colecoes-index a:hover{ color:var(--text); border-color:var(--line); }
 .colecoes-index a[aria-disabled="true"]{
   color:var(--text-faint);
   pointer-events:none;
@@ -1411,7 +1404,6 @@ main{ overflow-x:clip; }
   object-fit:cover;
   transition:transform 1.4s var(--ease);
 }
-.escrito:hover .escrito-imagem img{ transform:scale(1.035); }
 .escrito-meta{
   display:block;
   margin-top:1.5rem;
@@ -1445,18 +1437,6 @@ main{ overflow-x:clip; }
   border-bottom:1px solid var(--line);
   padding-bottom:.15em;
   transition:gap .3s var(--ease), opacity .3s;
-}
-.escrito:hover .escrito-ler,
-.leitura-proximo-link:hover .escrito-ler{ gap:.9em; opacity:.6; }
-.escritos-em-breve{
-  margin-top:clamp(4rem, 9vw, 7rem);
-  padding-top:1.6rem;
-  border-top:1px solid var(--line-soft);
-  font-style:italic;
-  font-weight:300;
-  font-size:.82rem;
-  letter-spacing:.14em;
-  color:var(--text-faint);
 }
 
 /* página de leitura: cabeça centrada, texto numa coluna estreita de livro */
@@ -1888,3 +1868,261 @@ main{ overflow-x:clip; }
   font-size:.86rem;
   color:var(--text-soft);
 }
+
+/* ============================================================
+   RECURSOS PARA ARTISTAS — arquivos para baixar
+   Uma linha por arquivo, como um índice: número, título grande e o botão.
+   ============================================================ */
+.recursos{
+  margin-top:clamp(2.5rem, 6vw, 4.5rem);
+  border-bottom:1px solid var(--line-soft);
+}
+.recurso{
+  display:block;
+  position:relative;
+  color:inherit;
+  border-top:1px solid var(--line-soft);
+}
+.recurso-linha{
+  display:grid;
+  grid-template-columns:3.2rem 1fr auto;
+  gap:clamp(1.2rem, 4vw, 3.5rem);
+  align-items:start;
+  padding:clamp(2rem, 4.5vw, 3.4rem) 0;
+  transition:opacity .5s var(--ease);
+}
+.recurso-num{
+  font-family:var(--serif-display);
+  font-size:1rem;
+  line-height:1;
+  padding-top:.75em;
+  color:var(--line);
+  transition:color .4s var(--ease);
+}
+.recurso-texto{ display:block; transition:transform .8s var(--ease); }
+.recurso-titulo{
+  font-family:var(--serif-display);
+  font-weight:400;
+  font-size:clamp(1.7rem, 3.6vw, 2.9rem);
+  line-height:1.14;
+  letter-spacing:.01em;
+  margin:0 0 .35em;
+}
+.recurso-sub{
+  display:block;
+  font-style:italic;
+  font-weight:300;
+  font-size:.98rem;
+  color:var(--text-soft);
+  margin-bottom:1em;
+}
+.recurso-desc{
+  display:block;
+  max-width:38em;
+  font-weight:300;
+  line-height:1.75;
+  color:var(--text);
+}
+.recurso-acao{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:.8rem;
+  padding-top:.4rem;
+}
+.recurso-meta{
+  font-style:italic;
+  font-weight:300;
+  font-size:.8rem;
+  color:var(--text-faint);
+  white-space:nowrap;
+}
+.recurso-baixar{ padding:1em 1.9em; font-size:.92rem; white-space:nowrap; }
+@media (max-width:720px){
+  .recurso-linha{ grid-template-columns:1fr; gap:1.1rem; }
+  .recurso-num{ padding-top:0; }
+  .recurso-acao{ flex-direction:row; align-items:center; flex-wrap:wrap; gap:1rem; padding-top:.3rem; }
+}
+
+/* ============================================================
+   HOVERS
+   Três gestos, sempre os mesmos: o traço fino que se desenha, a tinta que sobe no
+   botão e a folha que se levanta do papel, com sombra no tom da tinta. Só em telas
+   com cursor; o foco por teclado recebe o mesmo desenho, sem depender do mouse.
+   ============================================================ */
+:root{
+  --sombra-folha:0 28px 60px -22px rgba(43,40,37,.34), 0 8px 20px -10px rgba(43,40,37,.16);
+}
+
+/* ---------- seta: sai por um lado e volta pelo outro (script.js envolve o caractere) ---------- */
+.seta{ display:inline-block; --sx:130%; --sy:0; }
+.seta--volta{ --sx:-130%; }
+.seta--baixo{ --sx:0; --sy:90%; }
+@keyframes seta-passa{
+  0%{ transform:none; opacity:1; }
+  44%{ transform:translate(var(--sx), var(--sy)); opacity:0; }
+  45%{ transform:translate(calc(var(--sx) * -1), calc(var(--sy) * -1)); opacity:0; }
+  100%{ transform:none; opacity:1; }
+}
+
+/* ---------- traço: entra pela esquerda, sai pela direita ---------- */
+.footer-col a,
+.back-link,
+.colecoes-index a{
+  background-image:linear-gradient(var(--line), var(--line));
+  background-repeat:no-repeat;
+  background-position:100% 100%;
+  background-size:0 1px;
+  padding-bottom:.2em;
+  border-bottom:0;
+  transition:background-size .6s var(--ease), color .35s var(--ease);
+}
+
+/* ---------- traço fixo (ver mais): recolhe e se redesenha ---------- */
+.cta,
+.escrito-ler{
+  border-bottom:0;
+  background-image:linear-gradient(var(--line), var(--line));
+  background-repeat:no-repeat;
+  background-position:0 100%;
+  background-size:100% 1px;
+  padding-bottom:.25em;
+}
+@keyframes traco-refaz{
+  0%{ background-size:100% 1px; background-position:100% 100%; }
+  45%{ background-size:0 1px; background-position:100% 100%; }
+  46%{ background-size:0 1px; background-position:0 100%; }
+  100%{ background-size:100% 1px; background-position:0 100%; }
+}
+
+/* ---------- botão: a tinta sobe de baixo ---------- */
+.btn{
+  background-color:transparent;
+  background-image:linear-gradient(var(--text), var(--text));
+  background-repeat:no-repeat;
+  background-position:0 100%;
+  background-size:100% 0;
+  transition:background-size .55s var(--ease), color .3s var(--ease) .06s, transform .3s var(--ease);
+}
+.btn:active{ transform:scale(.98); }
+
+/* ---------- menu: o item fica, os outros recuam ---------- */
+.menu-list a{
+  position:relative;
+  transition:opacity .45s var(--ease), letter-spacing .7s var(--ease);
+}
+.menu-list a::after{
+  content:'';
+  position:absolute;
+  left:0; right:0; bottom:-1px;
+  height:1px;
+  background:var(--text);
+  transform:scaleX(0);
+  transform-origin:right;
+  transition:transform .7s var(--ease);
+}
+
+/* ---------- header ---------- */
+.site-header .wordmark{ transition:font-size .4s var(--ease), opacity .45s var(--ease), letter-spacing .7s var(--ease); }
+.menu-trigger .bar{ transition:transform .45s var(--ease), opacity .3s var(--ease), top .45s var(--ease), width .45s var(--ease); }
+.menu-trigger .bar:nth-child(1){ width:100%; }
+.menu-trigger .bar:nth-child(3){ width:100%; }
+
+/* ---------- índices ---------- */
+.mosaico-index a{ transition:color .3s var(--ease), opacity .3s var(--ease), transform .45s var(--ease); }
+
+/* ---------- imagens: a folha se levanta do papel ---------- */
+.escrito-imagem{
+  isolation:isolate;   /* o desenho se mistura ao papel da própria folha, com ou sem hover */
+  transition:transform .9s var(--ease), box-shadow .9s var(--ease);
+}
+.escrito-imagem.tem-imagem{
+  background-color:var(--bg);
+  background-image:var(--paper-noise);
+  background-blend-mode:var(--paper-blend);
+}
+.escrito-titulo{ transition:transform .8s var(--ease); }
+.escrito-chamada{ transition:color .5s var(--ease); }
+.mosaico-item{
+  position:relative;
+  transition:transform .7s var(--ease), box-shadow .7s var(--ease);
+}
+.bio-grid .ph.reveal-left,
+.ph.ratio-book.reveal-left{
+  transition:opacity 1.15s var(--ease), transform 1.15s var(--ease), box-shadow .8s var(--ease);
+}
+.obra-imagem{ transition:box-shadow .8s var(--ease); }
+.leitura-proximo-titulo{ transition:transform .8s var(--ease); }
+
+@media (hover:hover){
+  .footer-col a:hover,
+  .back-link:hover,
+  .colecoes-index a:hover{
+    background-position:0 100%;
+    background-size:100% 1px;
+    color:var(--text);
+  }
+  .cta:hover,
+  .escrito:hover .escrito-ler,
+  .leitura-proximo-link:hover .escrito-ler{ animation:traco-refaz 1s var(--ease); }
+  a:hover .seta,
+  button:hover .seta{ animation:seta-passa .75s var(--ease); }
+
+  .btn:hover,
+  .recurso:hover .btn{ background-size:100% 100%; color:var(--bg); }
+
+  .menu-list:has(a:hover) a:not(:hover){ opacity:.3; }
+  .menu-list a:hover{ opacity:1; letter-spacing:.07em; }
+  .menu-list a:hover::after{ transform:scaleX(1); transform-origin:left; }
+
+  .site-header .wordmark:hover{ letter-spacing:.2em; }
+  .menu-trigger[aria-expanded="false"]:hover .bar:nth-child(1){ width:60%; }
+  .menu-trigger[aria-expanded="false"]:hover .bar:nth-child(2){ width:100%; }
+  .menu-trigger[aria-expanded="false"]:hover .bar:nth-child(3){ width:80%; }
+
+  .mosaico-index a:hover{ transform:translateX(-.35em); }
+
+  .escrito:hover .escrito-imagem{ transform:translateY(-8px); box-shadow:var(--sombra-folha); }
+  .escrito:hover .escrito-imagem img{ transform:scale(1.035); }
+  .escrito:hover .escrito-titulo{ transform:translateX(.18em); }
+  .escrito:hover .escrito-chamada{ color:var(--text); }
+  .leitura-proximo-link:hover .leitura-proximo-titulo{ transform:translateX(.18em); }
+
+  .mosaico-item:hover{ z-index:3; transform:translateY(-4px); box-shadow:var(--sombra-folha); }
+  .mosaico-item:hover .ph{ transform:scale(1.025); }
+  .bio-grid .ph:hover,
+  .ph.ratio-book:hover,
+  .obra-imagem:hover{ box-shadow:var(--sombra-folha); }
+
+  .recursos:has(.recurso:hover) .recurso:not(:hover) .recurso-linha{ opacity:.42; }
+  .recurso:hover .recurso-texto{ transform:translateX(.6rem); }
+  .recurso:hover .recurso-num{ color:var(--text); }
+}
+
+/* a mesma resposta no teclado */
+.footer-col a:focus-visible,
+.back-link:focus-visible,
+.colecoes-index a:focus-visible{ background-position:0 100%; background-size:100% 1px; color:var(--text); }
+.btn:focus-visible,
+.recurso:focus-visible .btn{ background-size:100% 100%; color:var(--bg); }
+.escrito:focus-visible .escrito-imagem{ transform:translateY(-8px); box-shadow:var(--sombra-folha); }
+.mosaico-item:focus-visible{ z-index:3; box-shadow:var(--sombra-folha); }
+.recurso:focus-visible .recurso-texto{ transform:translateX(.6rem); }
+
+/* ---------- literatura na home: contos e, logo depois, livros ---------- */
+.literatura-sub{
+  font-family:var(--serif-display);
+  font-weight:400;
+  font-size:clamp(1.3rem, 2.2vw, 1.7rem);
+  margin:clamp(2rem, 5vw, 3.2rem) 0 .8rem;
+}
+.literatura-sub--livros{
+  margin-top:clamp(4rem, 9vw, 7rem);
+  padding-top:clamp(2rem, 5vw, 3.2rem);
+  border-top:1px solid var(--line-soft);
+}
+.livro-destaque{ margin-top:clamp(1.6rem, 4vw, 2.6rem); }
+.livro-destaque .escrito-titulo{ margin-top:0; }
+.literatura-tudo{ display:inline-flex; margin-top:clamp(3rem, 7vw, 5rem); margin-bottom:0; }
+.livro-ficha{ margin-top:clamp(1.6rem, 4vw, 2.6rem); }
+.livro-ficha .section-title{ margin-top:0; }

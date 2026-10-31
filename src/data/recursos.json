@@ -1,0 +1,36 @@
+{
+  "arquivos": [
+    {
+      "num": "01",
+      "titulo": "Química da Arte",
+      "subtitulo": "fundamentos para o artista",
+      "descricao": "Pigmentos, aglutinantes e a lógica química por trás do óleo, da têmpera de ovo, da aquarela e da douração.",
+      "arquivo": "recursos/quimica-da-arte.pdf",
+      "paginas": 20
+    },
+    {
+      "num": "02",
+      "titulo": "Manual de Segurança para Artistas",
+      "subtitulo": "proteger a saúde para poder seguir criando",
+      "descricao": "Pigmentos, solventes, equipamentos de proteção e práticas seguras de ateliê.",
+      "arquivo": "recursos/manual-de-seguranca.pdf",
+      "paginas": 16
+    },
+    {
+      "num": "03",
+      "titulo": "Certificado de Autenticidade e Conservação",
+      "subtitulo": "um guia para artistas e colecionadores",
+      "descricao": "Como elaborar um certificado de autenticidade sólido, e como conservar e higienizar uma obra de arte sem colocá-la em risco.",
+      "arquivo": "recursos/certificado-e-conservacao.pdf",
+      "paginas": 15
+    },
+    {
+      "num": "04",
+      "titulo": "O Direito de Sequência na Prática",
+      "subtitulo": "um manual para artistas",
+      "descricao": "Como funciona, o que a jurisprudência já decidiu, e como proteger sua participação nas revendas de suas obras.",
+      "arquivo": "recursos/direito-de-sequencia.pdf",
+      "paginas": 19
+    }
+  ]
+}

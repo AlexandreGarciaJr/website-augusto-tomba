@@ -59,10 +59,10 @@
   <nav class="menu-overlay" aria-hidden="true">
     <ul class="menu-list">
       <li><a href="index.html" class="current">Início</a></li>
-      <li><a href="index.html#literatura">Literatura</a></li>
-      <li><a href="livro.html">Livro</a></li>
+      <li><a href="literatura.html">Literatura</a></li>
       <li><a href="quadros.html">Quadros</a></li>
       <li><a href="index.html#nigretura">Nigretura</a></li>
+      <li><a href="index.html#recursos">Recursos</a></li>
       <li><a href="index.html#contato">Contato</a></li>
     </ul>
   </nav>
@@ -157,31 +157,47 @@
       <div class="ma"></div>
     </div>
 
-    <!-- LITERATURA (gerado de src/data/literatura.json): contos agora, livros depois -->
+    <!-- LITERATURA: contos (gerado de src/data/literatura.json) e, logo depois, livros -->
     <section class="section breath-wide literatura" id="literatura">
       <div class="wrap">
         <span class="eyebrow">literatura</span>
         <h2 class="section-title">Escritos</h2>
-        <p class="lede">Contos de Augusto Tomba. O texto completo chega em PDF para quem assina a newsletter.</p>
+        <h3 class="literatura-sub">Contos</h3>
+        <p class="lede">O texto completo chega em PDF para quem assina a newsletter.</p>
 
         <div class="escritos">
           <a class="escrito" href="literatura/o-virado.html">
             <div class="ph escrito-imagem tem-imagem"><img src="literatura/o-virado.jpg" alt="" loading="lazy" decoding="async"></div>
             <span class="escrito-meta">01 · conto · 2 min de leitura</span>
-            <h3 class="escrito-titulo">O Virado</h3>
+            <h4 class="escrito-titulo">O Virado</h4>
             <p class="escrito-chamada">A casa dorme, mas a cozinha ainda ferve.</p>
             <span class="escrito-ler">conhecer o conto →</span>
           </a>
           <a class="escrito" href="literatura/uma-picada.html">
             <div class="ph escrito-imagem tem-imagem"><img src="literatura/uma-picada.jpg" alt="" loading="lazy" decoding="async"></div>
             <span class="escrito-meta">02 · conto · 8 min de leitura</span>
-            <h3 class="escrito-titulo">Uma Picada</h3>
+            <h4 class="escrito-titulo">Uma Picada</h4>
             <p class="escrito-chamada">Porque ninguém desconfiaria de um guarda-chuva.</p>
             <span class="escrito-ler">conhecer o conto →</span>
           </a>
         </div>
 
-        <p class="escritos-em-breve">livros · em preparação</p>
+        <h3 class="literatura-sub literatura-sub--livros">Livros</h3>
+        <div class="split livro-destaque">
+          <div class="ph ratio-book reveal-left">
+            <span class="ph-label">[ capa do livro ]</span>
+          </div>
+          <div class="reveal-right delay">
+            <h4 class="escrito-titulo">[ Título do livro ]</h4>
+            <p class="lede">
+              [ Breve descrição provisória da obra literária — uma ou duas frases que
+              despertem interesse, com convite para conhecer o livro na íntegra. ]
+            </p>
+            <a class="cta" href="literatura.html#livros">conhecer o livro →</a>
+          </div>
+        </div>
+
+        <a class="cta literatura-tudo" href="literatura.html">ver toda a literatura →</a>
       </div>
     </section>
 
@@ -327,6 +343,78 @@
       </div>
     </section>
 
+    <div class="wrap">
+      <div class="ma"></div>
+    </div>
+
+    <!-- RECURSOS PARA ARTISTAS (gerado de src/data/recursos.json): PDFs para baixar -->
+    <section class="section breath-wide" id="recursos">
+      <div class="wrap">
+        <span class="eyebrow">recursos</span>
+        <h2 class="section-title">Recursos para Artistas</h2>
+        <p class="lede">Guias de Augusto Tomba sobre o ofício: materiais, saúde, autenticidade e direitos. Para baixar em PDF.</p>
+
+        <div class="recursos">
+          <a class="recurso reveal" href="recursos/quimica-da-arte.pdf" download aria-label="Baixar Química da Arte (PDF, 20 páginas)">
+            <div class="recurso-linha">
+              <span class="recurso-num" aria-hidden="true">01</span>
+              <div class="recurso-texto">
+                <h3 class="recurso-titulo">Química da Arte</h3>
+                <span class="recurso-sub">fundamentos para o artista</span>
+                <span class="recurso-desc">Pigmentos, aglutinantes e a lógica química por trás do óleo, da têmpera de ovo, da aquarela e da douração.</span>
+              </div>
+              <span class="recurso-acao">
+                <span class="btn recurso-baixar">baixar PDF ↓</span>
+                <span class="recurso-meta">PDF · 20 páginas</span>
+              </span>
+            </div>
+          </a>
+          <a class="recurso reveal" href="recursos/manual-de-seguranca.pdf" download aria-label="Baixar Manual de Segurança para Artistas (PDF, 16 páginas)">
+            <div class="recurso-linha">
+              <span class="recurso-num" aria-hidden="true">02</span>
+              <div class="recurso-texto">
+                <h3 class="recurso-titulo">Manual de Segurança para Artistas</h3>
+                <span class="recurso-sub">proteger a saúde para poder seguir criando</span>
+                <span class="recurso-desc">Pigmentos, solventes, equipamentos de proteção e práticas seguras de ateliê.</span>
+              </div>
+              <span class="recurso-acao">
+                <span class="btn recurso-baixar">baixar PDF ↓</span>
+                <span class="recurso-meta">PDF · 16 páginas</span>
+              </span>
+            </div>
+          </a>
+          <a class="recurso reveal" href="recursos/certificado-e-conservacao.pdf" download aria-label="Baixar Certificado de Autenticidade e Conservação (PDF, 15 páginas)">
+            <div class="recurso-linha">
+              <span class="recurso-num" aria-hidden="true">03</span>
+              <div class="recurso-texto">
+                <h3 class="recurso-titulo">Certificado de Autenticidade e Conservação</h3>
+                <span class="recurso-sub">um guia para artistas e colecionadores</span>
+                <span class="recurso-desc">Como elaborar um certificado de autenticidade sólido, e como conservar e higienizar uma obra de arte sem colocá-la em risco.</span>
+              </div>
+              <span class="recurso-acao">
+                <span class="btn recurso-baixar">baixar PDF ↓</span>
+                <span class="recurso-meta">PDF · 15 páginas</span>
+              </span>
+            </div>
+          </a>
+          <a class="recurso reveal" href="recursos/direito-de-sequencia.pdf" download aria-label="Baixar O Direito de Sequência na Prática (PDF, 19 páginas)">
+            <div class="recurso-linha">
+              <span class="recurso-num" aria-hidden="true">04</span>
+              <div class="recurso-texto">
+                <h3 class="recurso-titulo">O Direito de Sequência na Prática</h3>
+                <span class="recurso-sub">um manual para artistas</span>
+                <span class="recurso-desc">Como funciona, o que a jurisprudência já decidiu, e como proteger sua participação nas revendas de suas obras.</span>
+              </div>
+              <span class="recurso-acao">
+                <span class="btn recurso-baixar">baixar PDF ↓</span>
+                <span class="recurso-meta">PDF · 19 páginas</span>
+              </span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer class="site-footer section tint" id="contato">
@@ -336,7 +424,7 @@
           <h4>navegação</h4>
           <ul>
             <li><a href="index.html">Início</a></li>
-            <li><a href="livro.html">Livro</a></li>
+            <li><a href="literatura.html">Literatura</a></li>
             <li><a href="quadros.html">Quadros</a></li>
           </ul>
         </div>

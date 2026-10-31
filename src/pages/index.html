@@ -98,18 +98,34 @@
       <div class="ma"></div>
     </div>
 
-    <!-- LITERATURA (gerado de src/data/literatura.json): contos agora, livros depois -->
+    <!-- LITERATURA: contos (gerado de src/data/literatura.json) e, logo depois, livros -->
     <section class="section breath-wide literatura" id="literatura">
       <div class="wrap">
         <span class="eyebrow">literatura</span>
         <h2 class="section-title">Escritos</h2>
-        <p class="lede">Contos de Augusto Tomba. O texto completo chega em PDF para quem assina a newsletter.</p>
+        <h3 class="literatura-sub">Contos</h3>
+        <p class="lede">O texto completo chega em PDF para quem assina a newsletter.</p>
 
         <div class="escritos">
 {{literatura}}
         </div>
 
-        <p class="escritos-em-breve">livros · em preparação</p>
+        <h3 class="literatura-sub literatura-sub--livros">Livros</h3>
+        <div class="split livro-destaque">
+          <div class="ph ratio-book reveal-left">
+            <span class="ph-label">[ capa do livro ]</span>
+          </div>
+          <div class="reveal-right delay">
+            <h4 class="escrito-titulo">[ Título do livro ]</h4>
+            <p class="lede">
+              [ Breve descrição provisória da obra literária — uma ou duas frases que
+              despertem interesse, com convite para conhecer o livro na íntegra. ]
+            </p>
+            <a class="cta" href="literatura.html#livros">conhecer o livro →</a>
+          </div>
+        </div>
+
+        <a class="cta literatura-tudo" href="literatura.html">ver toda a literatura →</a>
       </div>
     </section>
 
@@ -170,6 +186,23 @@
             <dd>Em relação ao desenho a carvão, a nigretura usa tinta líquida, não bastão nem pó seco. Em relação à aquarela, é monocromática. A tinta é sempre líquida e sem adição de goma arábica. Em relação ao sumi-e, tem origem material própria: cada lote de tinta depende da matéria que o produziu.</dd>
           </div>
         </dl>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="ma"></div>
+    </div>
+
+    <!-- RECURSOS PARA ARTISTAS (gerado de src/data/recursos.json): PDFs para baixar -->
+    <section class="section breath-wide" id="recursos">
+      <div class="wrap">
+        <span class="eyebrow">recursos</span>
+        <h2 class="section-title">Recursos para Artistas</h2>
+        <p class="lede">Guias de Augusto Tomba sobre o ofício: materiais, saúde, autenticidade e direitos. Para baixar em PDF.</p>
+
+        <div class="recursos">
+{{recursos}}
+        </div>
       </div>
     </section>
 

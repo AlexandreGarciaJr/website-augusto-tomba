@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<!-- gerado por build.js a partir de src/pages/livro.html — não edite este arquivo; edite src/ e rode: node build.js -->
+<!-- gerado por build.js a partir de src/pages/literatura.html — não edite este arquivo; edite src/ e rode: node build.js -->
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>[ Título do livro ] — Augusto Tomba</title>
-  <meta name="description" content="[ Título do livro ], ficção de Augusto Tomba. Sinopse, onde comprar, resenhas e próximos lançamentos.">
-  <link rel="canonical" href="https://alexandregarciajr.github.io/website-augusto-tomba/livro.html">
-  <meta property="og:type" content="book">
+  <title>Literatura — Augusto Tomba</title>
+  <meta name="description" content="Contos e livros de Augusto Tomba. Sinopses, primeiras linhas, onde comprar, resenhas e próximos lançamentos.">
+  <link rel="canonical" href="https://alexandregarciajr.github.io/website-augusto-tomba/literatura.html">
+  <meta property="og:type" content="website">
   <meta property="og:site_name" content="Augusto Tomba">
   <meta property="og:locale" content="pt_BR">
-  <meta property="og:title" content="[ Título do livro ] — Augusto Tomba">
-  <meta property="og:description" content="[ Título do livro ], ficção de Augusto Tomba. Sinopse, onde comprar, resenhas e próximos lançamentos.">
-  <meta property="og:url" content="https://alexandregarciajr.github.io/website-augusto-tomba/livro.html">
+  <meta property="og:title" content="Literatura — Augusto Tomba">
+  <meta property="og:description" content="Contos e livros de Augusto Tomba. Sinopses, primeiras linhas, onde comprar, resenhas e próximos lançamentos.">
+  <meta property="og:url" content="https://alexandregarciajr.github.io/website-augusto-tomba/literatura.html">
   <meta name="twitter:card" content="summary">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,7 +42,7 @@
       "name": "São Paulo"
     }
   },
-  "url": "https://alexandregarciajr.github.io/website-augusto-tomba/livro.html"
+  "url": "https://alexandregarciajr.github.io/website-augusto-tomba/literatura.html"
 }
   </script>
 </head>
@@ -64,10 +64,10 @@
   <nav class="menu-overlay" aria-hidden="true">
     <ul class="menu-list">
       <li><a href="index.html">Início</a></li>
-      <li><a href="index.html#literatura">Literatura</a></li>
-      <li><a href="livro.html" class="current">Livro</a></li>
+      <li><a href="literatura.html" class="current">Literatura</a></li>
       <li><a href="quadros.html">Quadros</a></li>
       <li><a href="index.html#nigretura">Nigretura</a></li>
+      <li><a href="index.html#recursos">Recursos</a></li>
       <li><a href="index.html#contato">Contato</a></li>
     </ul>
   </nav>
@@ -78,34 +78,68 @@
   <section class="page-banner">
     <div class="wrap">
       <a class="back-link" href="index.html">← início</a>
-      <div class="split">
-        <div class="ph ratio-book reveal-left">
-          <span class="ph-label">[ capa do livro ]</span>
-        </div>
-        <div class="reveal-right delay">
-          <span class="eyebrow">livro</span>
-          <h1 class="section-title" style="font-size:clamp(2rem,4.4vw,3.1rem);">[ Título do livro ]</h1>
-          <p class="lede">[ Subtítulo ou frase de efeito provisória sobre a obra. ]</p>
-          <p style="margin-top:1.6rem; font-style:italic; font-size:.9rem; color:var(--text-soft);">
-            [ Bio curta do autor — uma frase de apresentação. ]
-          </p>
-        </div>
+      <span class="eyebrow">obras</span>
+      <h1 class="section-title" style="font-size:clamp(2rem,4.4vw,3.1rem);">Literatura</h1>
+      <p class="lede">Contos e livros de Augusto Tomba.</p>
+      <nav class="colecoes-index reveal" aria-label="Navegar pela literatura">
+        <a href="#contos">Contos</a>
+        <a href="#livros">Livros</a>
+      </nav>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="ma"></div></div>
+
+  <!-- CONTOS (gerado de src/data/literatura.json) -->
+  <section class="section" id="contos">
+    <div class="wrap">
+      <span class="eyebrow">contos</span>
+      <h2 class="section-title">Contos</h2>
+      <p class="lede">O texto completo chega em PDF para quem assina a newsletter.</p>
+
+      <div class="escritos">
+          <a class="escrito" href="literatura/o-virado.html">
+            <div class="ph escrito-imagem tem-imagem"><img src="literatura/o-virado.jpg" alt="" loading="lazy" decoding="async"></div>
+            <span class="escrito-meta">01 · conto · 2 min de leitura</span>
+            <h3 class="escrito-titulo">O Virado</h3>
+            <p class="escrito-chamada">A casa dorme, mas a cozinha ainda ferve.</p>
+            <span class="escrito-ler">conhecer o conto →</span>
+          </a>
+          <a class="escrito" href="literatura/uma-picada.html">
+            <div class="ph escrito-imagem tem-imagem"><img src="literatura/uma-picada.jpg" alt="" loading="lazy" decoding="async"></div>
+            <span class="escrito-meta">02 · conto · 8 min de leitura</span>
+            <h3 class="escrito-titulo">Uma Picada</h3>
+            <p class="escrito-chamada">Porque ninguém desconfiaria de um guarda-chuva.</p>
+            <span class="escrito-ler">conhecer o conto →</span>
+          </a>
       </div>
     </div>
   </section>
 
   <div class="wrap"><div class="ma"></div></div>
 
-  <!-- DESCRIÇÃO -->
-  <section class="section">
+  <!-- LIVROS -->
+  <section class="section" id="livros">
     <div class="wrap">
-      <span class="eyebrow">sobre o livro</span>
-      <h2 class="section-title">Descrição</h2>
-      <p class="lede reveal" style="max-width:62ch;">
-        [ Texto provisório — descrição completa do livro, sinopse ou nota de
-        apresentação. Este espaço será substituído pelo conteúdo final fornecido
-        pelo autor e pela editora. ]
-      </p>
+      <span class="eyebrow">livros</span>
+      <h2 class="section-title">Livros</h2>
+      <div class="split livro-ficha">
+        <div class="ph ratio-book reveal-left">
+          <span class="ph-label">[ capa do livro ]</span>
+        </div>
+        <div class="reveal-right delay">
+          <h3 class="section-title">[ Título do livro ]</h3>
+          <p class="lede">[ Subtítulo ou frase de efeito provisória sobre a obra. ]</p>
+          <p class="lede" style="margin-top:1.6rem; max-width:62ch;">
+            [ Texto provisório — descrição completa do livro, sinopse ou nota de
+            apresentação. Este espaço será substituído pelo conteúdo final fornecido
+            pelo autor e pela editora. ]
+          </p>
+          <p style="margin-top:1.6rem; font-style:italic; font-size:.9rem; color:var(--text-soft);">
+            [ Bio curta do autor — uma frase de apresentação. ]
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -166,7 +200,7 @@
   <section class="section">
     <div class="wrap reveal">
       <span class="eyebrow">novidades</span>
-      <h2 class="section-title">Receba notícias sobre o livro</h2>
+      <h2 class="section-title">Receba notícias sobre a literatura</h2>
       <form class="newsletter-form">
         <input type="email" placeholder="seu e-mail" aria-label="seu e-mail" required>
         <button type="submit" class="btn">Enviar</button>
@@ -183,7 +217,7 @@
           <h4>navegação</h4>
           <ul>
             <li><a href="index.html">Início</a></li>
-            <li><a href="livro.html">Livro</a></li>
+            <li><a href="literatura.html">Literatura</a></li>
             <li><a href="quadros.html">Quadros</a></li>
           </ul>
         </div>

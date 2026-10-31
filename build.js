@@ -13,6 +13,7 @@ const SRC = path.join(ROOT, 'src');
 const site = readJSON('data/site.json');
 const data = readJSON('data/obras.json');
 const literatura = readJSON('data/literatura.json');
+const recursos = readJSON('data/recursos.json');
 
 function readJSON(rel) { return JSON.parse(fs.readFileSync(path.join(SRC, rel), 'utf8')); }
 function read(rel) { return fs.readFileSync(path.join(SRC, rel), 'utf8').replace(/\r\n?/g, '\n'); }   // sempre LF: o Git no Windows pode trazer CRLF
@@ -135,11 +136,11 @@ function escritoAbertura(root, e) {
     </div>`;
 }
 
-function renderLiteratura(root) {
+function renderLiteratura(root, h) {
   return literatura.escritos.map(e => `          <a class="escrito" href="${escritoHref(root, e)}">
             ${escritoImagem(root, e, 'imagem do conto')}
             <span class="escrito-meta">${e.num} · ${esc(e.tipo)} · ${minutosLeitura(e)} min de leitura</span>
-            <h3 class="escrito-titulo">${esc(e.titulo)}</h3>
+            <${h} class="escrito-titulo">${esc(e.titulo)}</${h}>
             <p class="escrito-chamada">${esc(e.chamada)}</p>
             <span class="escrito-ler">conhecer o ${esc(e.tipo)} →</span>
           </a>`).join('\n');
@@ -156,6 +157,25 @@ function renderTrecho(e) {
     if (n >= 80) break;
   }
   return ps.map(p => `          <p>${esc(p)}</p>`).join('\n');
+}
+
+/* ---------- recursos para artistas (PDFs para baixar) ---------- */
+
+function renderRecursos(root) {
+  return recursos.arquivos.map(r => `          <a class="recurso reveal" href="${root}${r.arquivo}" download aria-label="Baixar ${esc(r.titulo)} (PDF, ${r.paginas} páginas)">
+            <div class="recurso-linha">
+              <span class="recurso-num" aria-hidden="true">${r.num}</span>
+              <div class="recurso-texto">
+                <h3 class="recurso-titulo">${esc(r.titulo)}</h3>
+                <span class="recurso-sub">${esc(r.subtitulo)}</span>
+                <span class="recurso-desc">${esc(r.descricao)}</span>
+              </div>
+              <span class="recurso-acao">
+                <span class="btn recurso-baixar">baixar PDF ↓</span>
+                <span class="recurso-meta">PDF · ${r.paginas} páginas</span>
+              </span>
+            </div>
+          </a>`).join('\n');
 }
 
 /* ---------- JSON-LD ---------- */
@@ -209,7 +229,8 @@ function render(template, vars, source) {
   // blocos gerados a partir dos dados
   out = out.replace(/{{colecoes-index}}/g, () => renderColecoesIndex());
   out = out.replace(/{{colecoes(?::(h\d))?}}/g, (_, h) => renderColecoes({ root: vars.root, h: h || 'h3', cta: !h }));
-  out = out.replace(/{{literatura}}/g, () => renderLiteratura(vars.root));
+  out = out.replace(/{{literatura(?::(h\d))?}}/g, (_, h) => renderLiteratura(vars.root, h || 'h4'));
+  out = out.replace(/{{recursos}}/g, () => renderRecursos(vars.root));
   // variáveis simples (escapadas), exceto as que já vêm prontas em HTML (jsonld, raw)
   out = out.replace(/{{(\w+)}}/g, (m, key) => {
     if (key === 'jsonld') return vars.jsonld;
