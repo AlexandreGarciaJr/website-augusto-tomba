@@ -292,7 +292,7 @@ img{ max-width:100%; display:block; }
   inset:0;
   z-index:1;
   pointer-events:none;
-  background:radial-gradient(ellipse 46% 26% at 50% 50%,
+  background:radial-gradient(ellipse 58% 32% at 50% 50%,
     rgba(242,239,233,.72) 0%,
     rgba(242,239,233,.38) 45%,
     rgba(242,239,233,0) 74%);
@@ -335,7 +335,7 @@ img{ max-width:100%; display:block; }
 }
 /* o nome discreto sobre a imagem: o que interessa é a obra, não o nome */
 .hero-name{
-  font-size:clamp(1.5rem, 2.6vw, 2.4rem);
+  font-size:clamp(2rem, 4vw, 3.8rem);
   font-weight:400;
   letter-spacing:.06em;
   line-height:1.1;
@@ -1277,16 +1277,17 @@ img{ max-width:100%; display:block; }
   margin:clamp(2.2rem, 5vw, 3.6rem) 0 clamp(1.4rem, 3.5vw, 2.4rem);
   font-family:var(--serif-display);
   font-weight:400;
-  font-size:clamp(1rem, 1.5vw, 1.3rem);
+  font-size:clamp(1.5rem, 2.8vw, 2.6rem);
   line-height:1;
   letter-spacing:.08em;
   white-space:nowrap;
   text-align:center;
-  color:var(--text-soft);
+  color:transparent;
+  -webkit-text-stroke:.5px var(--line);
   user-select:none;
 }
 /* o nome que se dissolveu na abertura se recompõe no fim:
-   o nome ganha tinta conforme a pessoa chega ao fim da página */
+   o contorno ganha tinta (diluída) conforme a pessoa chega ao fim da página */
 @supports (animation-timeline: view()){
   @media (prefers-reduced-motion: no-preference){
     .footer-signature{
@@ -1298,7 +1299,7 @@ img{ max-width:100%; display:block; }
 }
 @keyframes nome-recompoe{
   from{ color:transparent; }
-  to{ color:var(--text-soft); }
+  to{ color:rgba(155,145,137,.32); }
 }
 
 /* ---------- respiração desigual ----------
