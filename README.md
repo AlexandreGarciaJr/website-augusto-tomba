@@ -55,6 +55,7 @@ Três regras guiam tudo:
 | **Coleções** | Texto de apresentação e um mosaico em que cada obra se revela em tinta ao entrar na tela. Uma legenda acompanha o cursor, a obra abre num lightbox e atravessa até a sua própria página |
 | **Nigretura** | O dossiê da técnica: definição, nome, nota do artista, relação com a tradição, processo e diferenciação |
 | **Recursos para Artistas** | Quatro guias do artista em PDF, para baixar: química da arte, segurança no ateliê, certificado e conservação, e direito de sequência |
+| **Portfólio** | Fecha a página: uma seleção das principais obras, em PDF. O botão baixa o arquivo assim que `portfolio.pdf` existir na raiz do projeto |
 | **Rodapé** | O nome que se dissolveu na abertura volta a se compor, discreto, no fim da página |
 
 ## Destaques

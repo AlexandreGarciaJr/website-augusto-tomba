@@ -231,6 +231,10 @@ function render(template, vars, source) {
   out = out.replace(/{{colecoes(?::(h\d))?}}/g, (_, h) => renderColecoes({ root: vars.root, h: h || 'h3', cta: !h }));
   out = out.replace(/{{literatura(?::(h\d))?}}/g, (_, h) => renderLiteratura(vars.root, h || 'h4'));
   out = out.replace(/{{recursos}}/g, () => renderRecursos(vars.root));
+  // portfólio: o botão vira download assim que portfolio.pdf existir na raiz do projeto
+  out = out.replace(/{{portfolio-botao}}/g, () => existe('portfolio.pdf')
+    ? `<a class="btn portfolio-botao reveal" href="${vars.root}portfolio.pdf" download>baixar portfólio ↓</a>`
+    : '<span class="btn portfolio-botao portfolio-botao--breve reveal">em breve</span>');
   // variáveis simples (escapadas), exceto as que já vêm prontas em HTML (jsonld, raw)
   out = out.replace(/{{(\w+)}}/g, (m, key) => {
     if (key === 'jsonld') return vars.jsonld;
