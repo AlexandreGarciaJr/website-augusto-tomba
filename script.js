@@ -494,8 +494,8 @@ document.addEventListener('DOMContentLoaded', () => {
      só em dispositivos com mouse; as outras obras recuam pelo CSS (:has) e a
      legenda (número, título, "ver") segue o cursor com um leve atraso */
   (function initMosaicoLegenda() {
-    const grid = document.querySelector('.mosaico');
-    if (!grid || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const grids = document.querySelectorAll('.mosaico');
+    if (!grids.length || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
     const cap = document.createElement('div');
     cap.className = 'mosaico-legenda';
@@ -516,6 +516,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function hide() { active = false; cap.classList.remove('is-on'); }
 
+    grids.forEach(grid => {
     grid.addEventListener('pointerover', (e) => {
       const item = e.target.closest('.mosaico-item');
       if (!item) { hide(); return; }
@@ -533,13 +534,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
     grid.addEventListener('pointerleave', hide);
     grid.addEventListener('click', hide);   // o lightbox abre por cima
+    });
     window.addEventListener('scroll', hide, { passive: true });
   })();
 
   /* ---------- índice lateral do mosaico ---------- */
-  (function initMosaicoIndex() {
-    const indexNav = document.querySelector('.mosaico-index');
-    const mosaico = document.querySelector('.mosaico');
+  // um índice por coleção, ligado ao mosaico da mesma coleção
+  document.querySelectorAll('.colecao').forEach(function initMosaicoIndex(colecao) {
+    const indexNav = colecao.querySelector('.mosaico-index');
+    const mosaico = colecao.querySelector('.mosaico');
     if (!indexNav || !mosaico) return;
 
     const items = Array.from(mosaico.querySelectorAll('.mosaico-item'));
@@ -580,7 +583,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       indexNav.classList.add('is-active');
     }
-  })();
+  });
 
   /* ---------- download do conto pela newsletter (protótipo) ----------
      Ao assinar, o formulário dá lugar à confirmação com o link do PDF. Na versão

@@ -58,10 +58,10 @@ function renderColecao(c, { root, h, cta }) {
       </div>`;
   }
 
-  const items = c.obras.map(o => `          <a href="${obraHref(root, o)}" class="mosaico-item" id="obra-${o.num}" data-lightbox data-num="${o.num}" data-title="${esc(o.titulo)}" data-meta="${esc(obraMeta(o))}">
+  const items = c.obras.map(o => `          <a href="${obraHref(root, o)}" class="mosaico-item" id="${c.id}-obra-${o.num}" data-lightbox data-num="${o.num}" data-title="${esc(o.titulo)}" data-meta="${esc(obraMeta(o))}">
             <div class="ph"><span class="ph-label">${o.num}</span></div>
           </a>`).join('\n');
-  const index = c.obras.map(o => `          <a href="#obra-${o.num}">${o.num}</a>`).join('\n');
+  const index = c.obras.map(o => `          <a href="#${c.id}-obra-${o.num}">${o.num}</a>`).join('\n');
   const intro = c.intro.map(p => `                <p>${esc(p)}</p>`).join('\n');
 
   return `
@@ -203,7 +203,7 @@ function jsonld(kind, page) {
     const o = page.obra;
     obj = {
       '@type': 'VisualArtwork', name: o.titulo, url: page.url, creator: person,
-      artform: 'Desenho', artMedium: 'Carvão', artworkSurface: 'Papel de aquarela 300 g/m²',
+      artMedium: o.tecnica,
       dateCreated: o.ano, description: o.descricao, isPartOf: { '@type': 'Collection', name: page.colecaoTitulo }
     };
   }
@@ -231,10 +231,11 @@ function render(template, vars, source) {
   out = out.replace(/{{colecoes(?::(h\d))?}}/g, (_, h) => renderColecoes({ root: vars.root, h: h || 'h3', cta: !h }));
   out = out.replace(/{{literatura(?::(h\d))?}}/g, (_, h) => renderLiteratura(vars.root, h || 'h4'));
   out = out.replace(/{{recursos}}/g, () => renderRecursos(vars.root));
-  // portfólio: o botão vira download assim que portfolio.pdf existir na raiz do projeto
-  out = out.replace(/{{portfolio-botao}}/g, () => existe('portfolio.pdf')
-    ? `<a class="btn portfolio-botao reveal" href="${vars.root}portfolio.pdf" download>baixar portfólio ↓</a>`
-    : '<span class="btn portfolio-botao portfolio-botao--breve reveal">em breve</span>');
+  // portfólio no rodapé, igual ao mídia kit: vira download assim que portfolio.pdf existir na raiz
+  // do projeto; até lá o link aparece, mas não responde (aria-disabled, ver script.js)
+  out = out.replace(/{{portfolio}}/g, () => existe('portfolio.pdf')
+    ? `<a href="${vars.root}portfolio.pdf" download>Portfólio (PDF) ↓</a>`
+    : '<a href="#" aria-disabled="true">Portfólio (PDF) ↓</a>');
   // variáveis simples (escapadas), exceto as que já vêm prontas em HTML (jsonld, raw)
   out = out.replace(/{{(\w+)}}/g, (m, key) => {
     if (key === 'jsonld') return vars.jsonld;

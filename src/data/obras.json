@@ -96,9 +96,153 @@
     {
       "id": "colecao-02",
       "num": "02",
-      "titulo": "[ Próxima coleção ]",
-      "desc": "[ Título, descrição e obras a definir. ]",
-      "placeholder": true
+      "slug": "naturalismo-do-onirico",
+      "titulo": "Naturalismo do Onírico",
+      "desc": "Existe uma natureza que a ciência ainda não catalogou. Para observá-la, é preciso um instrumento que o microscópio não é, e que o sonho quase é.",
+      "introAbertura": "Naturalismo do Onírico é uma coleção de doze pinturas em têmpera ao ovo.",
+      "intro": [
+        "São organismos de materialidade impossível, que habitam com naturalidade o imaginário. Cada obra é uma meditação sobre o que persiste quando tudo passa, como o tempo, a memória, o corpo, a presença, a dignidade, o poder, a dança, a origem, a cedência, o limiar e, por fim, o acolhimento.",
+        "A coleção parte de um gesto linneano. Nomear é conhecer. Seus títulos seguem a nomenclatura binomial, e cada criatura é um híbrido de elementos da natureza. Da ciência vêm a forma e o rigor; do surrealismo, a crença de que o imaginário tem estrutura própria. O título é uma síntese operativa que cataloga o sonho com o material que a natureza oferece.",
+        "De Espinosa, a inspiração. Uma única substância, representada em modos infinitos. Nada aqui é hierárquico, e por isso nada é condenado. O que a taxonomia separou, a coleção reúne.",
+        "A técnica é antiga por necessidade. A têmpera ao ovo não permite arrependimento. À luz de velas, cada obra vira ícone de uma teologia sem nome, em que o sagrado está na matéria viva.",
+        "Esta coleção não ilustra mitos. Ela os corrige. Aqui, nomear o imaginado é conhecer o lado sutil da natureza.",
+        "O catálogo tem doze espécies. Todas impossíveis. Todas verdadeiras."
+      ],
+      "meta": "Técnica: têmpera ao ovo.",
+      "obras": [
+        {
+          "num": "01",
+          "slug": "naturalismo-do-onirico-01",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Têmpera ao ovo",
+          "ano": "[ ano ]",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "02",
+          "slug": "naturalismo-do-onirico-02",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Têmpera ao ovo",
+          "ano": "[ ano ]",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "03",
+          "slug": "naturalismo-do-onirico-03",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Têmpera ao ovo",
+          "ano": "[ ano ]",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "04",
+          "slug": "naturalismo-do-onirico-04",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Têmpera ao ovo",
+          "ano": "[ ano ]",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "05",
+          "slug": "naturalismo-do-onirico-05",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Têmpera ao ovo",
+          "ano": "[ ano ]",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "06",
+          "slug": "naturalismo-do-onirico-06",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Têmpera ao ovo",
+          "ano": "[ ano ]",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "07",
+          "slug": "naturalismo-do-onirico-07",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Têmpera ao ovo",
+          "ano": "[ ano ]",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "08",
+          "slug": "naturalismo-do-onirico-08",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Têmpera ao ovo",
+          "ano": "[ ano ]",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "09",
+          "slug": "naturalismo-do-onirico-09",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Têmpera ao ovo",
+          "ano": "[ ano ]",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "10",
+          "slug": "naturalismo-do-onirico-10",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Têmpera ao ovo",
+          "ano": "[ ano ]",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "11",
+          "slug": "naturalismo-do-onirico-11",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Têmpera ao ovo",
+          "ano": "[ ano ]",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        },
+        {
+          "num": "12",
+          "slug": "naturalismo-do-onirico-12",
+          "titulo": "[ Título da obra ]",
+          "tecnica": "Têmpera ao ovo",
+          "ano": "[ ano ]",
+          "dimensoes": "[ 00 × 00 cm ]",
+          "disponibilidade": "[ disponível / vendido / sob consulta ]",
+          "descricao": "[ Texto provisório — descrição ou nota curatorial sobre a obra, seu contexto de produção e intenção do artista. ]",
+          "imagem": null
+        }
+      ]
     }
   ]
 }

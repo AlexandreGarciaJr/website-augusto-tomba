@@ -341,9 +341,9 @@
      mosaico desenha todas as folhas; fora das obras ele é transparente, então
      cliques e hover passam direto. Quando todas se revelaram, o canvas sai. */
   (function mosaico() {
-    const grid = document.querySelector('.mosaico');
-    if (!grid) return;
-    const items = Array.from(grid.querySelectorAll('.mosaico-item'));
+    const grids = Array.from(document.querySelectorAll('.mosaico'));
+    if (!grids.length) return;
+    const items = grids.flatMap(g => Array.from(g.querySelectorAll('.mosaico-item')));
     const MAX = 32;
     if (!items.length || items.length > MAX) return;
 
@@ -390,7 +390,7 @@
     const uN = gl.getUniformLocation(prog, 'uN'), uDpr = gl.getUniformLocation(prog, 'uDpr'), uVh = gl.getUniformLocation(prog, 'uVh');
 
     document.body.appendChild(canvas);
-    grid.classList.add('has-gl');   // desliga a revelação em CSS: quem revela agora é a tinta
+    grids.forEach(g => g.classList.add('has-gl'));   // desliga a revelação em CSS: quem revela agora é a tinta
 
     const shown = new Float32Array(MAX);   // progresso de cada obra; só cresce (não se cobre de novo)
     const rects = new Float32Array(MAX * 4);
@@ -425,10 +425,14 @@
 
     window.addEventListener('scroll', request, { passive: true });
     window.addEventListener('resize', request);
-    new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
+    // visível enquanto qualquer um dos mosaicos (um por coleção) estiver na tela
+    const naTela = new Set();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => (e.isIntersecting ? naTela.add(e.target) : naTela.delete(e.target)));
+      visible = naTela.size > 0;
       canvas.style.visibility = visible ? 'visible' : 'hidden';
       if (visible) request();
-    }, { rootMargin: '0px 0px 10% 0px' }).observe(grid);
+    }, { rootMargin: '0px 0px 10% 0px' });
+    grids.forEach(g => io.observe(g));
   })();
 })();
